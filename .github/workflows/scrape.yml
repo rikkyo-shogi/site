@@ -24,9 +24,11 @@ jobs:
         run: pip install -r scraper/requirements.txt
       - name: Run Kanto federation scraper
         working-directory: scraper
+        env:
+          SEASONS: ${{ github.event.inputs.seasons }}
         run: |
           python3 fetch_kanto.py
-          python3 run_kanto.py ${{ github.event.inputs.seasons }}
+          python3 run_kanto.py $SEASONS
       - name: Run BBS scraper (optional)
         if: ${{ github.event.inputs.run_bbs == 'true' }}
         working-directory: scraper
