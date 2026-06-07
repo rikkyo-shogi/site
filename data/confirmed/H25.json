@@ -35,7 +35,7 @@
         {
           "name": "大平",
           "grade": null,
-          "best_result": "本戦出場",
+          "best_result": "ベスト64",
           "rank": null
         }
       ],
@@ -48,7 +48,7 @@
         "players": [
           {
             "name": "大平",
-            "result": "本戦出場",
+            "result": "ベスト64",
             "wins": null,
             "losses": null,
             "board": null

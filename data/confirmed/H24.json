@@ -17,7 +17,7 @@
         {
           "name": "久保田",
           "grade": null,
-          "best_result": "本戦出場",
+          "best_result": "ベスト64",
           "rank": null
         },
         {
@@ -29,7 +29,7 @@
         {
           "name": "吉田",
           "grade": null,
-          "best_result": "本戦出場",
+          "best_result": "ベスト64",
           "rank": null
         },
         {
@@ -440,7 +440,7 @@
         {
           "name": "大平 健太",
           "grade": 2,
-          "best_result": "本戦出場",
+          "best_result": "ベスト64",
           "rank": null
         },
         {
@@ -452,7 +452,7 @@
         {
           "name": "佐藤 津",
           "grade": 1,
-          "best_result": "本戦出場",
+          "best_result": "ベスト64",
           "rank": null
         }
       ],
@@ -479,13 +479,13 @@
         {
           "name": "久保田",
           "grade": 4,
-          "best_result": "本戦出場",
+          "best_result": "ベスト64",
           "rank": null
         },
         {
           "name": "大平",
           "grade": 2,
-          "best_result": "本戦出場",
+          "best_result": "ベスト64",
           "rank": null
         },
         {
@@ -497,7 +497,7 @@
         {
           "name": "吉田",
           "grade": 2,
-          "best_result": "本戦出場",
+          "best_result": "ベスト64",
           "rank": null
         }
       ],
@@ -510,21 +510,21 @@
         "players": [
           {
             "name": "久保田",
-            "result": "本戦出場",
+            "result": "ベスト64",
             "wins": null,
             "losses": null,
             "board": null
           },
           {
             "name": "大平",
-            "result": "本戦出場",
+            "result": "ベスト64",
             "wins": null,
             "losses": null,
             "board": null
           },
           {
             "name": "吉田",
-            "result": "本戦出場",
+            "result": "ベスト64",
             "wins": null,
             "losses": null,
             "board": null
