@@ -24,15 +24,14 @@
 | **SSGサイト** | Astro によるサイト生成。全 18 年度分が表示される |
 | **サイト表示** | 罫線・立教行黄色ハイライト・昇降級バッジ（順位列右）・複数日程表示 すべて実装済み |
 | **バリデーション** | `data/schema.json` + CI (`validate.yml`) でスキーマ検証 |
-| **GitHub Actions** | `deploy.yml`（push → GitHub Pages）・`validate.yml`・`scrape.yml` 用意済み |
+| **GitHub Actions** | `deploy.yml`（push → GitHub Pages, Node.js 22）・`validate.yml`・`scrape.yml` 実働中 |
 | **掲示板データ** | 13 イベントに `bbs_detail`（対戦相手別スコア）が付与済み |
+| **公開** | **https://rikkyo-shogi.github.io/site/** で公開済み（Organization: rikkyo-shogi / repo: site）|
 
 ### 未完了・残作業
 
 | 項目 | 状態 |
 |------|------|
-| **GitHub リポジトリ作成** | ユーザーが手動で作成 → `git remote add` & `git push` が必要 |
-| **GitHub Pages 有効化** | リポジトリ作成後、Settings → Pages → Source: GitHub Actions |
 | **全国連盟スクレイパー** | `fetch_national.py` 未実装。立教の全国出場実績は未確認 |
 | **R02 データ** | 0件（コロナ禍による開催なし。要確認） |
 | **一部年度の kanto_table 欠損** | H28秋・H22秋・H22春・H25春 等（PDF解析失敗または立教不在） |
@@ -620,8 +619,8 @@ repo-root/
 **公開**
 - [x] SSG は `data/confirmed/` のみを読んでビルドする。
 - [x] GitHub Actions ワークフロー（deploy.yml・validate.yml）が用意されている。
-- [ ] `rikkyo-shogi.github.io` 形式の URL で公開できる。**GitHubリポジトリ作成待ち**
-- [ ] 実データが揃い、ユーザーが内容を承認してから公開している。**ユーザー承認待ち**
+- [x] `https://rikkyo-shogi.github.io/site/` で公開されている（Organization: rikkyo-shogi / repo: site）。
+- [x] 実データが揃い、ユーザーが内容を承認してから公開している。
 
 ---
 
@@ -676,11 +675,8 @@ repo-root/
 7. ここまでで関東+掲示板の実データを人手確認 → `confirmed` 化 → ユーザー承認 → 初回公開。 **← 現在地**
    - `data/confirmed/` に H21〜R08 の 18 年度分・77 イベントが格納済み
    - ユーザーが内容を確認・承認してから公開する
-8. GitHub Actions 自動デプロイ → `rikkyo-shogi.github.io`。 ← **次のステップ（GitHubリポジトリ作成が必要）**
-   1. GitHub で `rikkyo-shogi` リポジトリを作成
-   2. `git remote add origin https://github.com/<user>/rikkyo-shogi.git`
-   3. `git push -u origin main`
-   4. Settings → Pages → Source: GitHub Actions で有効化
+8. GitHub Actions 自動デプロイ → `https://rikkyo-shogi.github.io/site/`。 ✓
+   - Organization: rikkyo-shogi / repo: site / Node.js 22 / `deploy.yml` 実働中
 9. (任意)全国連盟: サイト走査で立教実績を確認 → あればパーサ実装し全国成績を追加。 **未実装**
 10. (任意)地区→全国の関連付け表示。 **未実装**
 11. 古い年度(関東=平成期 / 全国=2011年度〜 / 掲示板=遡及分)の形式差に順次対応。 ✓ 対応済み(H21〜)
