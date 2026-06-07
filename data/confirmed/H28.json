@@ -73,8 +73,8 @@
       "season_half": "spring",
       "date": null,
       "venue": null,
-      "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/358.html",
-      "source_type": "bbs",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H28/h28sdantai1.pdf",
+      "source_type": "kanto_pdf",
       "rikkyo_present": true,
       "rikkyo_result": {
         "rank": 4,
@@ -150,7 +150,193 @@
         "players": [],
         "comment": ""
       },
-      "confidence": "confirmed"
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成28年5月1日(日)",
+          "venue": "東京農業大学世田谷キャンパス"
+        },
+        {
+          "day": 2,
+          "date": "平成28年5月8日(日)",
+          "venue": "東京農業大学農学部キャンパス"
+        },
+        {
+          "day": 3,
+          "date": "平成28年5月15日(日)",
+          "venue": "東京理科大学神楽坂キャンパス"
+        }
+      ],
+      "kanto_table": {
+        "division": "B2級",
+        "teams": [
+          "専修大学",
+          "神奈川大学",
+          "芝浦工業大学",
+          "東京都市大学",
+          "埼玉大学",
+          "理大理工",
+          "立教大学",
+          "東京電機大学"
+        ],
+        "team_abbrevs": [
+          "専修",
+          "神奈川",
+          "芝浦",
+          "都市",
+          "埼玉",
+          "理工",
+          "立教",
+          "電機"
+        ],
+        "rows": [
+          {
+            "team": "専修大学",
+            "seeding": 1,
+            "scores": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              6.0,
+              null
+            ],
+            "wins": null,
+            "points": null,
+            "rank": null,
+            "promotion": null
+          },
+          {
+            "team": "神奈川大学",
+            "seeding": 2,
+            "scores": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              4.0,
+              null
+            ],
+            "wins": null,
+            "points": null,
+            "rank": null,
+            "promotion": null
+          },
+          {
+            "team": "芝浦工業大学",
+            "seeding": 3,
+            "scores": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              5.0,
+              null
+            ],
+            "wins": null,
+            "points": null,
+            "rank": null,
+            "promotion": null
+          },
+          {
+            "team": "東京都市大学",
+            "seeding": 4,
+            "scores": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              1.0,
+              null
+            ],
+            "wins": null,
+            "points": null,
+            "rank": null,
+            "promotion": null
+          },
+          {
+            "team": "埼玉大学",
+            "seeding": 5,
+            "scores": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              2.0,
+              null
+            ],
+            "wins": null,
+            "points": null,
+            "rank": null,
+            "promotion": null
+          },
+          {
+            "team": "理大理工",
+            "seeding": 6,
+            "scores": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              2.0,
+              null
+            ],
+            "wins": null,
+            "points": null,
+            "rank": null,
+            "promotion": null
+          },
+          {
+            "team": "立教大学",
+            "seeding": 7,
+            "scores": [
+              1.0,
+              3.0,
+              2.0,
+              6.0,
+              5.0,
+              5.0,
+              null,
+              4.0
+            ],
+            "wins": 4.0,
+            "points": 26.0,
+            "rank": 4,
+            "promotion": null
+          },
+          {
+            "team": "東京電機大学",
+            "seeding": 8,
+            "scores": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              3.0,
+              null
+            ],
+            "wins": null,
+            "points": null,
+            "rank": null,
+            "promotion": null
+          }
+        ]
+      }
     },
     {
       "level": "regional",

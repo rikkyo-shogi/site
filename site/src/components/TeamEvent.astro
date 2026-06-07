@@ -85,7 +85,7 @@ const rikkyoRow = kt?.rows.find(r => r.team.includes('立教'));
     </div>
   )}
 
-  {bbs && bbs.matches.length > 0 && (
+  {bbs && bbs.matches.length > 0 && !kt && (
     <div class="match-table-wrap">
       <table class="match-table">
         <thead>

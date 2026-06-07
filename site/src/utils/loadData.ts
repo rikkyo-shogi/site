@@ -109,6 +109,9 @@ export async function loadAllSeasons(): Promise<SeasonData[]> {
     const data = JSON.parse(content) as SeasonData;
     // rikkyo_present=true のイベントのみ表示
     data.events = data.events.filter(e => e.rikkyo_present !== false);
+    // 秋季→春季の順(新しいほど上)
+    const halfOrder = (h: string | null) => h === 'autumn' ? 0 : h === 'spring' ? 1 : 2;
+    data.events.sort((a, b) => halfOrder(a.season_half) - halfOrder(b.season_half));
     seasons.push(data);
   }
 

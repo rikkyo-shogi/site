@@ -5,7 +5,7 @@
     {
       "level": "regional",
       "type": "team",
-      "name": "春季団体戦B級",
+      "name": "春季団体戦",
       "division": "B2級",
       "season_half": "spring",
       "date": "2025年6月1日(日)",
@@ -208,7 +208,7 @@
           "name": "傳田結菜",
           "grade": 2,
           "best_result": "5位",
-          "rank": 5
+          "rank": null
         }
       ],
       "confidence": "confirmed"
@@ -216,7 +216,7 @@
     {
       "level": "regional",
       "type": "team",
-      "name": "秋季団体戦B級",
+      "name": "秋季団体戦",
       "division": "B2級",
       "season_half": "autumn",
       "date": "2025年12月14日、21日(日)",

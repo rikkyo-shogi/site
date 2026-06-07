@@ -5,7 +5,7 @@
     {
       "level": "regional",
       "type": "team",
-      "name": "春季団体戦B2級・C1級・C2級",
+      "name": "春季団体戦",
       "division": "C1級",
       "season_half": "spring",
       "date": "2023年8月28日(月)",
@@ -168,7 +168,7 @@
     {
       "level": "regional",
       "type": "team",
-      "name": "秋季団体戦B級",
+      "name": "秋季団体戦",
       "division": "B2級",
       "season_half": "autumn",
       "date": "2023年11月12日(日)",

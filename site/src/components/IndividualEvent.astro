@@ -26,7 +26,7 @@ const sourceLabel = event.source_type.startsWith('kanto') ? '関東大学将棋�
           <span class="player-name">{p.name}</span>
           {p.grade != null && <span class="grade">{p.grade}年</span>}
           {p.best_result && <span class="best-result">{p.best_result}</span>}
-          {p.rank != null && <span class="rank">{p.rank}位</span>}
+          {p.rank != null && !p.best_result && <span class="rank">{p.rank}位</span>}
         </li>
       ))}
     </ul>
