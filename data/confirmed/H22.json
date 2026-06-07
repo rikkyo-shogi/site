@@ -108,7 +108,8 @@
             "opponent_score": 5,
             "result": "負け",
             "round": null,
-            "walkover": null
+            "walkover": null,
+            "note": "村上、小金沢勝ち"
           },
           {
             "opponent": "千葉工業大学",
@@ -116,7 +117,8 @@
             "opponent_score": 6,
             "result": "負け",
             "round": null,
-            "walkover": null
+            "walkover": null,
+            "note": "久保田勝ち"
           },
           {
             "opponent": "千葉商科大学",
@@ -124,12 +126,292 @@
             "opponent_score": 2,
             "result": "勝ち",
             "round": null,
-            "walkover": null
+            "walkover": null,
+            "note": "久保田、村上、唐澤勝ち。野田、藤井不戦勝"
           }
         ],
         "players": [],
         "comment": ""
-      }
+      },
+      "kanto_table": {
+        "division": "C級",
+        "teams": [
+          "千葉工業大学",
+          "学習院大学",
+          "芝浦工業大学",
+          "東京電機大学",
+          "昭和大学",
+          "首都大学東京",
+          "大東文化大学",
+          "高崎経済大学",
+          "東海大学",
+          "千葉商科大学",
+          "立教大学"
+        ],
+        "team_abbrevs": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11"
+        ],
+        "rows": [
+          {
+            "team": "千葉工業大学",
+            "seeding": 1,
+            "scores": [
+              null,
+              2.0,
+              4.0,
+              5.0,
+              6.0,
+              2.0,
+              3.0,
+              5.0,
+              5.0,
+              5.0,
+              6.0
+            ],
+            "wins": 7.0,
+            "points": 43.0,
+            "rank": 4,
+            "promotion": null
+          },
+          {
+            "team": "学習院大学",
+            "seeding": 2,
+            "scores": [
+              5.0,
+              null,
+              4.0,
+              5.0,
+              4.0,
+              3.0,
+              3.0,
+              6.0,
+              6.0,
+              6.0,
+              5.0
+            ],
+            "wins": 8.0,
+            "points": 47.0,
+            "rank": 2,
+            "promotion": "昇級"
+          },
+          {
+            "team": "芝浦工業大学",
+            "seeding": 3,
+            "scores": [
+              3.0,
+              3.0,
+              null,
+              3.0,
+              5.0,
+              3.0,
+              5.0,
+              4.0,
+              6.0,
+              5.0,
+              2.0
+            ],
+            "wins": 5.0,
+            "points": 39.0,
+            "rank": 5,
+            "promotion": null
+          },
+          {
+            "team": "東京電機大学",
+            "seeding": 4,
+            "scores": [
+              2.0,
+              2.0,
+              4.0,
+              null,
+              4.0,
+              1.0,
+              3.0,
+              2.0,
+              4.0,
+              4.0,
+              5.0
+            ],
+            "wins": 5.0,
+            "points": 31.0,
+            "rank": 6,
+            "promotion": null
+          },
+          {
+            "team": "昭和大学",
+            "seeding": 5,
+            "scores": [
+              1.0,
+              3.0,
+              2.0,
+              3.0,
+              null,
+              1.0,
+              2.0,
+              3.0,
+              5.0,
+              5.0,
+              5.0
+            ],
+            "wins": 3.0,
+            "points": 30.0,
+            "rank": 8,
+            "promotion": null
+          },
+          {
+            "team": "首都大学東京",
+            "seeding": 6,
+            "scores": [
+              5.0,
+              4.0,
+              4.0,
+              6.0,
+              6.0,
+              null,
+              5.0,
+              5.0,
+              5.0,
+              7.0,
+              6.0
+            ],
+            "wins": 10.0,
+            "points": 53.0,
+            "rank": 1,
+            "promotion": "昇級"
+          },
+          {
+            "team": "大東文化大学",
+            "seeding": 7,
+            "scores": [
+              4.0,
+              4.0,
+              2.0,
+              4.0,
+              5.0,
+              2.0,
+              null,
+              5.0,
+              6.0,
+              6.0,
+              4.0
+            ],
+            "wins": 8.0,
+            "points": 42.0,
+            "rank": 3,
+            "promotion": null
+          },
+          {
+            "team": "高崎経済大学",
+            "seeding": 8,
+            "scores": [
+              2.0,
+              1.0,
+              3.0,
+              5.0,
+              4.0,
+              2.0,
+              2.0,
+              null,
+              4.0,
+              4.0,
+              4.0
+            ],
+            "wins": 5.0,
+            "points": 31.0,
+            "rank": 7,
+            "promotion": null
+          },
+          {
+            "team": "東海大学",
+            "seeding": 9,
+            "scores": [
+              2.0,
+              1.0,
+              1.0,
+              2.0,
+              2.0,
+              2.0,
+              0.0,
+              3.0,
+              null,
+              5.0,
+              2.0
+            ],
+            "wins": 1.0,
+            "points": 20.0,
+            "rank": 10,
+            "promotion": null
+          },
+          {
+            "team": "千葉商科大学",
+            "seeding": 10,
+            "scores": [
+              2.0,
+              1.0,
+              2.0,
+              2.0,
+              2.0,
+              0.0,
+              1.0,
+              3.0,
+              2.0,
+              null,
+              2.0
+            ],
+            "wins": 0.0,
+            "points": 17.0,
+            "rank": 11,
+            "promotion": null
+          },
+          {
+            "team": "立教大学",
+            "seeding": 11,
+            "scores": [
+              1.0,
+              2.0,
+              4.0,
+              2.0,
+              2.0,
+              1.0,
+              3.0,
+              3.0,
+              5.0,
+              5.0,
+              null
+            ],
+            "wins": 3.0,
+            "points": 28.0,
+            "rank": 9,
+            "promotion": null
+          }
+        ]
+      },
+      "schedule": [
+        {
+          "day": 1,
+          "date": null,
+          "venue": null
+        },
+        {
+          "day": 2,
+          "date": null,
+          "venue": null
+        },
+        {
+          "day": 3,
+          "date": null,
+          "venue": null
+        }
+      ]
     },
     {
       "level": "regional",
@@ -155,7 +437,8 @@
             "opponent_score": 2,
             "result": "勝ち",
             "round": null,
-            "walkover": null
+            "walkover": null,
+            "note": "村上勝ち 小金沢、松永、野田、藤井不戦勝"
           },
           {
             "opponent": "高崎経済大学",
@@ -163,7 +446,8 @@
             "opponent_score": 4,
             "result": "負け",
             "round": null,
-            "walkover": null
+            "walkover": null,
+            "note": "久保田、松永、藤井勝ち"
           },
           {
             "opponent": "大東文化大学",
@@ -171,7 +455,8 @@
             "opponent_score": 4,
             "result": "負け",
             "round": null,
-            "walkover": null
+            "walkover": null,
+            "note": "唐澤、小金沢、松永勝ち"
           },
           {
             "opponent": "首都大学東京",
@@ -179,7 +464,8 @@
             "opponent_score": 6,
             "result": "負け",
             "round": null,
-            "walkover": null
+            "walkover": null,
+            "note": "久保田勝ち"
           }
         ],
         "players": [],
@@ -211,7 +497,8 @@
             "opponent_score": 5,
             "result": "負け",
             "round": null,
-            "walkover": null
+            "walkover": null,
+            "note": "久保田、村上勝ち"
           },
           {
             "opponent": "東京電機大学",
@@ -219,7 +506,8 @@
             "opponent_score": 4,
             "result": "負け",
             "round": null,
-            "walkover": null
+            "walkover": null,
+            "note": "久保田、松永、野田勝ち"
           },
           {
             "opponent": "芝浦工業大学",
@@ -227,7 +515,8 @@
             "opponent_score": 2,
             "result": "勝ち",
             "round": null,
-            "walkover": null
+            "walkover": null,
+            "note": "村上、小金沢、松永勝ち 野田不戦勝"
           }
         ],
         "players": [],

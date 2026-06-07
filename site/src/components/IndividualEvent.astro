@@ -7,7 +7,7 @@ const { event } = Astro.props;
 const players = event.rikkyo_players ?? [];
 const bbs = event.bbs_detail;
 const highlight = isHighlight(event);
-const sourceLabel = event.source_type.startsWith('kanto') ? '関東連盟' : event.source_type === 'bbs' ? '掲示板' : '全国連盟';
+const sourceLabel = event.source_type.startsWith('kanto') ? '関東大学将棋連盟' : event.source_type === 'bbs' ? '掲示板' : '全国連盟';
 ---
 
 <div class:list={['event-card', 'event-individual', { highlight }]}>
@@ -32,10 +32,15 @@ const sourceLabel = event.source_type.startsWith('kanto') ? '関東連盟' : eve
     </ul>
   )}
 
-  {bbs && bbs.players.length > 0 && (
-    <div class="bbs-players">
-      {bbs.players.map(p => <span class="bbs-player">{p.name}{p.result ? `(${p.result})` : ''}</span>)}
-    </div>
+  {bbs && bbs.players.length > 0 && players.length === 0 && (
+    <ul class="player-list">
+      {bbs.players.map(p => (
+        <li>
+          <span class="player-name">{p.name}</span>
+          {p.result && <span class="best-result">{p.result}</span>}
+        </li>
+      ))}
+    </ul>
   )}
 
   <div class="source-link">

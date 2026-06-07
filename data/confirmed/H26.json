@@ -128,7 +128,193 @@
         "promotion": null,
         "note": ""
       },
-      "confidence": "confirmed"
+      "confidence": "confirmed",
+      "kanto_table": {
+        "division": "B1級",
+        "teams": [
+          "千葉大学",
+          "中央大学",
+          "東京理科大学",
+          "神奈川大学",
+          "理大理工",
+          "駒澤大学",
+          "専修大学",
+          "立教大学"
+        ],
+        "team_abbrevs": [
+          "千葉",
+          "中央",
+          "理科",
+          "神奈川",
+          "理理工",
+          "駒澤",
+          "専修",
+          "立教"
+        ],
+        "rows": [
+          {
+            "team": "千葉大学",
+            "seeding": 1,
+            "scores": [
+              null,
+              3.0,
+              3.0,
+              4.0,
+              5.0,
+              7.0,
+              6.0,
+              4.0
+            ],
+            "wins": 5.0,
+            "points": 32.0,
+            "rank": 3,
+            "promotion": null
+          },
+          {
+            "team": "中央大学",
+            "seeding": 2,
+            "scores": [
+              4.0,
+              null,
+              4.0,
+              7.0,
+              4.0,
+              4.0,
+              6.0,
+              5.0
+            ],
+            "wins": 7.0,
+            "points": 34.0,
+            "rank": 1,
+            "promotion": "昇級"
+          },
+          {
+            "team": "東京理科大学",
+            "seeding": 3,
+            "scores": [
+              4.0,
+              3.0,
+              null,
+              5.0,
+              5.0,
+              6.0,
+              5.0,
+              4.0
+            ],
+            "wins": 6.0,
+            "points": 32.0,
+            "rank": 2,
+            "promotion": "昇級"
+          },
+          {
+            "team": "神奈川大学",
+            "seeding": 4,
+            "scores": [
+              3.0,
+              0.0,
+              2.0,
+              null,
+              3.0,
+              4.0,
+              6.0,
+              2.0
+            ],
+            "wins": 2.0,
+            "points": 20.0,
+            "rank": 7,
+            "promotion": "降級"
+          },
+          {
+            "team": "理大理工",
+            "seeding": 5,
+            "scores": [
+              2.0,
+              3.0,
+              2.0,
+              4.0,
+              null,
+              2.0,
+              7.0,
+              2.0
+            ],
+            "wins": 2.0,
+            "points": 22.0,
+            "rank": 6,
+            "promotion": null
+          },
+          {
+            "team": "駒澤大学",
+            "seeding": 6,
+            "scores": [
+              0.0,
+              3.0,
+              1.0,
+              3.0,
+              5.0,
+              null,
+              7.0,
+              5.0
+            ],
+            "wins": 3.0,
+            "points": 24.0,
+            "rank": 5,
+            "promotion": null
+          },
+          {
+            "team": "専修大学",
+            "seeding": 7,
+            "scores": [
+              1.0,
+              1.0,
+              2.0,
+              1.0,
+              0.0,
+              0.0,
+              null,
+              2.0
+            ],
+            "wins": 0.0,
+            "points": 7.0,
+            "rank": 8,
+            "promotion": "降級"
+          },
+          {
+            "team": "立教大学",
+            "seeding": 8,
+            "scores": [
+              3.0,
+              2.0,
+              3.0,
+              5.0,
+              5.0,
+              2.0,
+              5.0,
+              null
+            ],
+            "wins": 3.0,
+            "points": 25.0,
+            "rank": 4,
+            "promotion": null
+          }
+        ]
+      },
+      "schedule": [
+        {
+          "day": 1,
+          "date": "4月27日",
+          "venue": "東京理科大学神楽坂キャンパス"
+        },
+        {
+          "day": 2,
+          "date": "5月11日",
+          "venue": "日本大学商学部"
+        },
+        {
+          "day": 3,
+          "date": "5月18日",
+          "venue": "東京農業大学世田谷キャンパス"
+        }
+      ]
     },
     {
       "level": "regional",
@@ -252,7 +438,193 @@
         "promotion": null,
         "note": ""
       },
-      "confidence": "confirmed"
+      "confidence": "confirmed",
+      "kanto_table": {
+        "division": "B1級",
+        "teams": [
+          "電気通信大学",
+          "東京工業大学",
+          "千葉大学",
+          "立教大学",
+          "駒澤大学",
+          "理大理工",
+          "法政大学",
+          "横浜国立大学"
+        ],
+        "team_abbrevs": [
+          "電通",
+          "東工",
+          "千葉",
+          "立教",
+          "駒澤",
+          "理工",
+          "法政",
+          "横国"
+        ],
+        "rows": [
+          {
+            "team": "電気通信大学",
+            "seeding": 1,
+            "scores": [
+              null,
+              3.0,
+              1.0,
+              2.0,
+              4.0,
+              5.0,
+              3.0,
+              2.0
+            ],
+            "wins": 2.0,
+            "points": 20.0,
+            "rank": 7,
+            "promotion": "降級"
+          },
+          {
+            "team": "東京工業大学",
+            "seeding": 2,
+            "scores": [
+              4.0,
+              null,
+              7.0,
+              4.0,
+              4.0,
+              5.0,
+              4.0,
+              4.0
+            ],
+            "wins": 7.0,
+            "points": 32.0,
+            "rank": 1,
+            "promotion": "昇級"
+          },
+          {
+            "team": "千葉大学",
+            "seeding": 3,
+            "scores": [
+              6.0,
+              0.0,
+              null,
+              3.0,
+              3.0,
+              5.0,
+              4.0,
+              3.0
+            ],
+            "wins": 3.0,
+            "points": 24.0,
+            "rank": 5,
+            "promotion": null
+          },
+          {
+            "team": "立教大学",
+            "seeding": 4,
+            "scores": [
+              5.0,
+              3.0,
+              4.0,
+              null,
+              4.0,
+              3.0,
+              5.0,
+              3.0
+            ],
+            "wins": 4.0,
+            "points": 27.0,
+            "rank": 3,
+            "promotion": null
+          },
+          {
+            "team": "駒澤大学",
+            "seeding": 5,
+            "scores": [
+              3.0,
+              3.0,
+              4.0,
+              3.0,
+              null,
+              4.0,
+              2.0,
+              3.0
+            ],
+            "wins": 2.0,
+            "points": 22.0,
+            "rank": 6,
+            "promotion": null
+          },
+          {
+            "team": "理大理工",
+            "seeding": 6,
+            "scores": [
+              2.0,
+              2.0,
+              2.0,
+              4.0,
+              3.0,
+              null,
+              3.0,
+              2.0
+            ],
+            "wins": 1.0,
+            "points": 18.0,
+            "rank": 8,
+            "promotion": "降級"
+          },
+          {
+            "team": "法政大学",
+            "seeding": 7,
+            "scores": [
+              4.0,
+              3.0,
+              3.0,
+              2.0,
+              5.0,
+              4.0,
+              null,
+              4.0
+            ],
+            "wins": 4.0,
+            "points": 25.0,
+            "rank": 4,
+            "promotion": null
+          },
+          {
+            "team": "横浜国立大学",
+            "seeding": 8,
+            "scores": [
+              5.0,
+              3.0,
+              4.0,
+              4.0,
+              4.0,
+              5.0,
+              3.0,
+              null
+            ],
+            "wins": 5.0,
+            "points": 28.0,
+            "rank": 2,
+            "promotion": "昇級"
+          }
+        ]
+      },
+      "schedule": [
+        {
+          "day": 1,
+          "date": "10月12日",
+          "venue": "東京農業大学世田谷キャンパス"
+        },
+        {
+          "day": 2,
+          "date": "10月19日",
+          "venue": "東京理科大学神楽坂キャンパス"
+        },
+        {
+          "day": 3,
+          "date": "10月26日",
+          "venue": "日本大学商学部"
+        }
+      ]
     }
   ]
 }

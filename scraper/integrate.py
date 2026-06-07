@@ -119,6 +119,23 @@ def integrate_bbs_into_season(season_data: dict, bbs_posts: list[dict]) -> dict:
                 score -= 5
             return score
 
+        # 既存 bbs_detail の match note を更新（既紐付け済みイベントのnote補完）
+        bbs_url = bbs_detail.get("source_url", "")
+        for ev in events:
+            existing_bbs = ev.get("bbs_detail")
+            if not existing_bbs or existing_bbs.get("source_url") != bbs_url:
+                continue
+            new_matches = bbs_detail.get("matches", [])
+            old_matches = existing_bbs.get("matches", [])
+            if len(new_matches) == len(old_matches):
+                updated = False
+                for old_m, new_m in zip(old_matches, new_matches):
+                    if old_m.get("note") is None and new_m.get("note"):
+                        old_m["note"] = new_m["note"]
+                        updated = True
+                if updated:
+                    logger.info("  note更新: %s", ev.get("name", ""))
+
         # 既存イベントと名寄せ(件名スコアが最大かつ正のものを選択)
         matched = False
         candidates = []

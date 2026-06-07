@@ -21,7 +21,321 @@
         "promotion": null,
         "note": ""
       },
-      "confidence": "confirmed"
+      "confidence": "confirmed",
+      "kanto_table": {
+        "division": "C級",
+        "teams": [
+          "法政大学",
+          "東海大学",
+          "東京電機大学",
+          "学習院大学",
+          "高崎経済大学",
+          "昭和大学",
+          "東京薬科大学",
+          "獨協大学",
+          "千葉商科大学",
+          "専修大学",
+          "日本薬科大学",
+          "立教大学"
+        ],
+        "team_abbrevs": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12"
+        ],
+        "rows": [
+          {
+            "team": "法政大学",
+            "seeding": 1,
+            "scores": [
+              null,
+              6.0,
+              6.0,
+              6.0,
+              6.0,
+              7.0,
+              7.0,
+              7.0,
+              7.0,
+              6.0,
+              6.0,
+              7.0
+            ],
+            "wins": 11.0,
+            "points": 71.0,
+            "rank": 1,
+            "promotion": "昇級"
+          },
+          {
+            "team": "東海大学",
+            "seeding": 2,
+            "scores": [
+              1.0,
+              null,
+              2.0,
+              3.0,
+              4.0,
+              5.0,
+              4.0,
+              3.0,
+              5.0,
+              2.0,
+              4.0,
+              7.0
+            ],
+            "wins": 6.0,
+            "points": 40.0,
+            "rank": 6,
+            "promotion": null
+          },
+          {
+            "team": "東京電機大学",
+            "seeding": 3,
+            "scores": [
+              1.0,
+              5.0,
+              null,
+              3.0,
+              4.0,
+              5.0,
+              5.0,
+              6.0,
+              6.0,
+              3.0,
+              7.0,
+              7.0
+            ],
+            "wins": 8.0,
+            "points": 52.0,
+            "rank": 4,
+            "promotion": null
+          },
+          {
+            "team": "学習院大学",
+            "seeding": 4,
+            "scores": [
+              1.0,
+              4.0,
+              4.0,
+              null,
+              6.0,
+              6.0,
+              6.0,
+              6.0,
+              6.0,
+              2.0,
+              6.0,
+              7.0
+            ],
+            "wins": 9.0,
+            "points": 54.0,
+            "rank": 3,
+            "promotion": null
+          },
+          {
+            "team": "高崎経済大学",
+            "seeding": 5,
+            "scores": [
+              1.0,
+              3.0,
+              3.0,
+              1.0,
+              null,
+              2.0,
+              3.0,
+              5.0,
+              7.0,
+              1.0,
+              6.0,
+              6.0
+            ],
+            "wins": 4.0,
+            "points": 38.0,
+            "rank": 8,
+            "promotion": null
+          },
+          {
+            "team": "昭和大学",
+            "seeding": 6,
+            "scores": [
+              0.0,
+              2.0,
+              2.0,
+              1.0,
+              5.0,
+              null,
+              7.0,
+              4.0,
+              7.0,
+              3.0,
+              5.0,
+              5.0
+            ],
+            "wins": 6.0,
+            "points": 41.0,
+            "rank": 5,
+            "promotion": null
+          },
+          {
+            "team": "東京薬科大学",
+            "seeding": 7,
+            "scores": [
+              0.0,
+              2.0,
+              2.0,
+              1.0,
+              4.0,
+              0.0,
+              null,
+              1.0,
+              4.0,
+              0.0,
+              5.0,
+              7.0
+            ],
+            "wins": 4.0,
+            "points": 26.0,
+            "rank": 9,
+            "promotion": null
+          },
+          {
+            "team": "獨協大学",
+            "seeding": 8,
+            "scores": [
+              0.0,
+              4.0,
+              1.0,
+              1.0,
+              2.0,
+              3.0,
+              6.0,
+              null,
+              6.0,
+              3.0,
+              6.0,
+              7.0
+            ],
+            "wins": 5.0,
+            "points": 39.0,
+            "rank": 7,
+            "promotion": null
+          },
+          {
+            "team": "千葉商科大学",
+            "seeding": 9,
+            "scores": [
+              0.0,
+              2.0,
+              1.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              null,
+              1.0,
+              6.0,
+              7.0
+            ],
+            "wins": 2.0,
+            "points": 19.0,
+            "rank": 10,
+            "promotion": null
+          },
+          {
+            "team": "専修大学",
+            "seeding": 10,
+            "scores": [
+              1.0,
+              5.0,
+              4.0,
+              5.0,
+              6.0,
+              4.0,
+              7.0,
+              4.0,
+              6.0,
+              null,
+              6.0,
+              7.0
+            ],
+            "wins": 10.0,
+            "points": 55.0,
+            "rank": 2,
+            "promotion": "昇級"
+          },
+          {
+            "team": "日本薬科大学",
+            "seeding": 11,
+            "scores": [
+              1.0,
+              1.0,
+              0.0,
+              1.0,
+              1.0,
+              2.0,
+              2.0,
+              1.0,
+              1.0,
+              1.0,
+              null,
+              3.0
+            ],
+            "wins": 0.0,
+            "points": 14.0,
+            "rank": 11,
+            "promotion": null
+          },
+          {
+            "team": "立教大学",
+            "seeding": 12,
+            "scores": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              2.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              2.0,
+              null
+            ],
+            "wins": 0.0,
+            "points": 5.0,
+            "rank": 12,
+            "promotion": null
+          }
+        ]
+      },
+      "schedule": [
+        {
+          "day": 1,
+          "date": null,
+          "venue": null
+        },
+        {
+          "day": 2,
+          "date": null,
+          "venue": null
+        },
+        {
+          "day": 3,
+          "date": null,
+          "venue": null
+        }
+      ]
     },
     {
       "level": "regional",

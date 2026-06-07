@@ -23,6 +23,7 @@ export interface BbsMatch {
   opponent_score: number | null;
   result: '勝ち' | '負け' | '引分';
   round: string | null;
+  note: string | null;
   walkover: { win: number; loss: number } | null;
 }
 
@@ -32,6 +33,29 @@ export interface BbsPlayer {
   wins: number | null;
   losses: number | null;
   board: string | null;
+}
+
+export interface KantoTableRow {
+  seeding: number;
+  team: string;
+  scores: (number | null)[];
+  wins: number | null;
+  points: number | null;
+  rank: number | null;  // integer
+  promotion: '昇級' | '降級' | null;
+}
+
+export interface KantoTable {
+  division: string;
+  teams: string[];
+  team_abbrevs: string[];
+  rows: KantoTableRow[];
+}
+
+export interface ScheduleDay {
+  day: number;
+  date: string | null;
+  venue: string | null;
 }
 
 export interface BbsDetail {
@@ -58,6 +82,8 @@ export interface Event {
   rikkyo_players: RikkyoPlayer[];
   national_qualification: string | null;
   bbs_detail: BbsDetail | null;
+  kanto_table: KantoTable | null;
+  schedule: ScheduleDay[] | null;
   confidence: 'auto' | 'confirmed';
 }
 

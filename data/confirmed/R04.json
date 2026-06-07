@@ -21,7 +21,124 @@
         "promotion": "昇級",
         "note": ""
       },
-      "confidence": "confirmed"
+      "confidence": "confirmed",
+      "kanto_table": {
+        "division": "C2級",
+        "teams": [
+          "関東学院大学",
+          "専修大学",
+          "立教大学",
+          "駒澤大学",
+          "成蹊大学",
+          "山梨大学"
+        ],
+        "team_abbrevs": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "rows": [
+          {
+            "team": "関東学院大学",
+            "seeding": 1,
+            "scores": [
+              null,
+              4.0,
+              5.0,
+              4.0,
+              5.0,
+              5.0
+            ],
+            "wins": 5.0,
+            "points": 23.0,
+            "rank": 1,
+            "promotion": "昇級"
+          },
+          {
+            "team": "専修大学",
+            "seeding": 2,
+            "scores": [
+              1.0,
+              null,
+              2.0,
+              1.0,
+              4.0,
+              3.0
+            ],
+            "wins": 2.0,
+            "points": 11.0,
+            "rank": 4,
+            "promotion": null
+          },
+          {
+            "team": "立教大学",
+            "seeding": 3,
+            "scores": [
+              0.0,
+              3.0,
+              null,
+              2.0,
+              5.0,
+              3.0
+            ],
+            "wins": 3.0,
+            "points": 13.0,
+            "rank": 2,
+            "promotion": "昇級"
+          },
+          {
+            "team": "駒澤大学",
+            "seeding": 4,
+            "scores": [
+              1.0,
+              4.0,
+              3.0,
+              null,
+              3.0,
+              2.0
+            ],
+            "wins": 3.0,
+            "points": 13.0,
+            "rank": 3,
+            "promotion": null
+          },
+          {
+            "team": "成蹊大学",
+            "seeding": 5,
+            "scores": [
+              0.0,
+              1.0,
+              0.0,
+              2.0,
+              null,
+              3.0
+            ],
+            "wins": 1.0,
+            "points": 6.0,
+            "rank": 6,
+            "promotion": null
+          },
+          {
+            "team": "山梨大学",
+            "seeding": 6,
+            "scores": [
+              0.0,
+              2.0,
+              2.0,
+              3.0,
+              2.0,
+              null
+            ],
+            "wins": 1.0,
+            "points": 9.0,
+            "rank": 5,
+            "promotion": null
+          }
+        ]
+      }
     },
     {
       "level": "regional",
@@ -63,7 +180,124 @@
         "promotion": null,
         "note": ""
       },
-      "confidence": "confirmed"
+      "confidence": "confirmed",
+      "kanto_table": {
+        "division": "C1級",
+        "teams": [
+          "青山学院大学",
+          "國學院大學",
+          "神奈川工科大学",
+          "大東文化大学",
+          "関東学院大学",
+          "立教大学"
+        ],
+        "team_abbrevs": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "rows": [
+          {
+            "team": "青山学院大学",
+            "seeding": 1,
+            "scores": [
+              null,
+              1.0,
+              4.0,
+              3.0,
+              1.0,
+              2.0
+            ],
+            "wins": 1.5,
+            "points": 11.0,
+            "rank": 4,
+            "promotion": null
+          },
+          {
+            "team": "國學院大學",
+            "seeding": 2,
+            "scores": [
+              6.0,
+              null,
+              5.0,
+              6.0,
+              2.0,
+              4.0
+            ],
+            "wins": 4.0,
+            "points": 23.0,
+            "rank": 2,
+            "promotion": "昇級"
+          },
+          {
+            "team": "神奈川工科大学",
+            "seeding": 3,
+            "scores": [
+              0.0,
+              2.0,
+              null,
+              3.0,
+              2.0,
+              1.0
+            ],
+            "wins": 0.5,
+            "points": 8.0,
+            "rank": 6,
+            "promotion": "降級"
+          },
+          {
+            "team": "大東文化大学",
+            "seeding": 4,
+            "scores": [
+              3.0,
+              1.0,
+              3.0,
+              null,
+              1.0,
+              2.0
+            ],
+            "wins": 1.0,
+            "points": 10.0,
+            "rank": 5,
+            "promotion": null
+          },
+          {
+            "team": "関東学院大学",
+            "seeding": 5,
+            "scores": [
+              6.0,
+              5.0,
+              5.0,
+              6.0,
+              null,
+              4.0
+            ],
+            "wins": 5.0,
+            "points": 26.0,
+            "rank": 1,
+            "promotion": "昇級"
+          },
+          {
+            "team": "立教大学",
+            "seeding": 6,
+            "scores": [
+              5.0,
+              3.0,
+              6.0,
+              5.0,
+              3.0,
+              null
+            ],
+            "wins": 3.0,
+            "points": 22.0,
+            "rank": 3,
+            "promotion": null
+          }
+        ]
+      }
     }
   ]
 }

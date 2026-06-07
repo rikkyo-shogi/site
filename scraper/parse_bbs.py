@@ -58,7 +58,15 @@ TEAM_SCORE_NO_TAI_RE = re.compile(
 ROUND_PREFIX_RE = re.compile(r"^([0-9０-９]+回戦)")
 
 
-def _make_match(m: re.Match, round_str: str | None) -> dict:
+def _extract_match_note(text_after: str) -> str | None:
+    """スコア直後の括弧内テキスト「(村上、小金沢勝ち)」を抽出する。"""
+    m = re.search(r"[（(]([^）)]+)[）)]", text_after)
+    if m:
+        return m.group(1).strip()
+    return None
+
+
+def _make_match(m: re.Match, round_str: str | None, note: str | None = None) -> dict:
     opponent = _normalize_uni(m.group(1).strip("　 "))
     rikkyo_score = _to_int(m.group(2))
     opp_score = _to_int(m.group(3))
@@ -75,6 +83,7 @@ def _make_match(m: re.Match, round_str: str | None) -> dict:
         "opponent_score": opp_score,
         "result": result,
         "round": round_str,
+        "note": note,
         "walkover": None,
     }
 
@@ -94,7 +103,8 @@ def parse_team_scores(body: str) -> list[dict]:
 
         if "対" in line:
             for m in TEAM_SCORE_WITH_TAI_RE.finditer(line):
-                entry = _make_match(m, round_str)
+                note = _extract_match_note(line[m.end():])
+                entry = _make_match(m, round_str, note)
                 key = (entry["opponent"], entry["rikkyo_score"], entry["opponent_score"])
                 if key not in seen_keys:
                     seen_keys.add(key)
@@ -102,7 +112,8 @@ def parse_team_scores(body: str) -> list[dict]:
         else:
             m = TEAM_SCORE_NO_TAI_RE.match(line)
             if m:
-                entry = _make_match(m, round_str)
+                note = _extract_match_note(line[m.end():])
+                entry = _make_match(m, round_str, note)
                 key = (entry["opponent"], entry["rikkyo_score"], entry["opponent_score"])
                 if key not in seen_keys:
                     seen_keys.add(key)
@@ -141,12 +152,14 @@ def parse_round_results(body: str) -> list[dict]:
             total_wins = (wins or 0) + (wv_win or 0)
             total_losses = (losses or 0) + (wv_loss or 0)
             result = "勝ち" if total_wins > total_losses else ("負け" if total_wins < total_losses else "引分")
+            note = _extract_match_note(line[m.end():])
             matches.append({
                 "opponent": opponent,
                 "rikkyo_score": wins,
                 "opponent_score": losses,
                 "result": result,
                 "round": round_str,
+                "note": note,
                 "walkover": walkover,
             })
     return matches

@@ -6,8 +6,12 @@ interface Props { event: Event }
 const { event } = Astro.props;
 const result = event.rikkyo_result;
 const bbs = event.bbs_detail;
+const kt = event.kanto_table;
+const sched = event.schedule;
 const highlight = isHighlight(event);
-const sourceLabel = event.source_type.startsWith('kanto') ? '関東連盟' : event.source_type === 'bbs' ? '掲示板' : '全国連盟';
+const sourceLabel = event.source_type.startsWith('kanto') ? '関東大学将棋連盟' : event.source_type === 'bbs' ? '掲示板' : '全国連盟';
+
+const rikkyoRow = kt?.rows.find(r => r.team.includes('立教'));
 ---
 
 <div class:list={['event-card', 'event-team', { highlight }]}>
@@ -18,7 +22,19 @@ const sourceLabel = event.source_type.startsWith('kanto') ? '関東連盟' : eve
     {bbs && !bbs.is_official && <span class="badge unofficial">非公式</span>}
   </div>
 
-  {event.date && <div class="event-meta">📅 {event.date}{event.venue ? ` ／ ${event.venue}` : ''}</div>}
+  {sched && sched.length > 1 ? (
+    <div class="event-schedule">
+      {sched.map(d => (
+        <div class="sched-day">
+          <span class="sched-label">{d.day}日目</span>
+          {d.date && <span class="sched-date">{d.date}</span>}
+          {d.venue && <span class="sched-venue">@ {d.venue}</span>}
+        </div>
+      ))}
+    </div>
+  ) : event.date && (
+    <div class="event-meta">📅 {event.date}{event.venue ? ` ／ ${event.venue}` : ''}</div>
+  )}
 
   {result && (
     <div class="result-row">
@@ -30,30 +46,131 @@ const sourceLabel = event.source_type.startsWith('kanto') ? '関東連盟' : eve
     </div>
   )}
 
+  {kt && kt.rows.length > 0 && (
+    <div class="kanto-table-wrap">
+      <table class="kanto-table">
+        <thead>
+          <tr>
+            <th class="col-seed"></th>
+            <th class="col-team">チーム</th>
+            {kt.team_abbrevs.map(a => <th class="col-score">{a}</th>)}
+            <th class="col-wins">勝数</th>
+            <th class="col-pts">勝点</th>
+            <th class="col-rank">順位</th>
+          </tr>
+        </thead>
+        <tbody>
+          {kt.rows.map(row => {
+            const isRikkyo = row.team.includes('立教');
+            return (
+              <tr class:list={[{ 'rikkyo-row': isRikkyo }]}>
+                <td class="col-seed">{row.seeding}</td>
+                <td class="col-team">{row.team}</td>
+                {row.scores.map((s) => (
+                  <td class:list={['col-score', { diagonal: s === null }]}>
+                    {s === null ? '' : s % 1 === 0 ? s.toFixed(0) : s.toFixed(1)}
+                  </td>
+                ))}
+                <td class="col-wins">{row.wins != null ? (row.wins % 1 === 0 ? row.wins.toFixed(0) : row.wins.toFixed(1)) : '-'}</td>
+                <td class="col-pts">{row.points != null ? (row.points % 1 === 0 ? row.points.toFixed(0) : row.points.toFixed(1)) : '-'}</td>
+                <td class="col-rank">
+                  {row.rank ?? '-'}
+                  {row.promotion && <span class:list={['promo-badge', row.promotion === '昇級' ? 'up' : 'down']}>{row.promotion}</span>}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  )}
+
   {bbs && bbs.matches.length > 0 && (
-    <details class="bbs-matches">
-      <summary>対戦詳細（掲示板より）</summary>
-      <ul class="match-list">
-        {bbs.matches.map(m => (
-          <li class:list={[m.result === '勝ち' ? 'win' : m.result === '負け' ? 'loss' : 'draw']}>
-            {m.round && <span class="round">{m.round}</span>}
-            {m.opponent}
-            {m.rikkyo_score != null && <span class="match-score">{m.rikkyo_score}-{m.opponent_score} {m.result}</span>}
-            {m.walkover && <span class="walkover">（不戦勝{m.walkover.win}不戦敗{m.walkover.loss}）</span>}
-          </li>
-        ))}
-      </ul>
+    <div class="match-table-wrap">
+      <table class="match-table">
+        <thead>
+          <tr>
+            <th>対戦相手</th>
+            <th>立教</th>
+            <th>相手</th>
+            <th>結果</th>
+          </tr>
+        </thead>
+        <tbody>
+          {bbs.matches.map(m => (
+            <tr class:list={[m.result === '勝ち' ? 'win' : m.result === '負け' ? 'loss' : 'draw']}>
+              <td>
+                {m.round ? <span class="round">{m.round}　</span> : ''}{m.opponent}
+                {m.note && <span class="match-note">（{m.note}）</span>}
+              </td>
+              <td class="score-cell">{m.rikkyo_score != null ? m.rikkyo_score : '-'}</td>
+              <td class="score-cell">{m.opponent_score != null ? m.opponent_score : '-'}</td>
+              <td class:list={['result-cell', m.result === '勝ち' ? 'win' : m.result === '負け' ? 'loss' : 'draw']}>
+                {m.result}
+                {m.walkover && <span class="walkover">（不戦勝{m.walkover.win}不戦敗{m.walkover.loss}）</span>}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       {bbs.players.length > 0 && (
         <div class="bbs-players">
-          <strong>個人別:</strong>
           {bbs.players.map(p => <span class="bbs-player">{p.name}{p.result ? `(${p.result})` : ''}</span>)}
         </div>
       )}
       {bbs.comment && <p class="bbs-comment">{bbs.comment}</p>}
-    </details>
+      <p class="bbs-source">出典: <a href={bbs.source_url} target="_blank" rel="noopener">掲示板</a></p>
+    </div>
   )}
 
   <div class="source-link">
     <a href={event.source_url} target="_blank" rel="noopener">[{sourceLabel} 出典]</a>
   </div>
 </div>
+
+<style>
+  .event-schedule { margin-bottom: 0.4rem; }
+  .sched-day { font-size: 0.78rem; color: #666; line-height: 1.6; }
+  .sched-label { font-weight: bold; color: #555; margin-right: 0.4rem; }
+  .sched-date { margin-right: 0.4rem; }
+  .sched-venue { color: #888; }
+
+  .kanto-table-wrap { margin-top: 0.6rem; overflow-x: auto; }
+  .kanto-table { border-collapse: collapse; font-size: 0.75rem; white-space: nowrap; }
+  .kanto-table th,
+  .kanto-table td { border: 1px solid #bbb; padding: 0.2rem 0.45rem; text-align: center; }
+  .kanto-table th { background: #e8e8e8; color: #444; font-weight: normal; }
+  .kanto-table .col-team { text-align: left; font-size: 0.78rem; white-space: nowrap; padding-right: 0.6rem; }
+  .kanto-table .col-seed { color: #aaa; font-size: 0.7rem; min-width: 1.2rem; border-right-color: #ddd; }
+  .kanto-table .col-score { min-width: 1.8rem; }
+  .kanto-table .col-wins { font-weight: bold; border-left: 2px solid #aaa; }
+  .kanto-table .col-pts { font-weight: bold; }
+  .kanto-table .col-rank { font-weight: bold; color: #5b0000; }
+  .kanto-table td.diagonal { background: #e0e0e0; }
+  .kanto-table tr.rikkyo-row td { background: #fff8d8 !important; font-weight: bold; }
+  .kanto-table tr.rikkyo-row td.diagonal { background: #e8d880 !important; }
+
+  .promo-badge { font-size: 0.65rem; padding: 0.1rem 0.3rem; border-radius: 3px; margin-left: 0.3rem; font-weight: normal; display: inline-block; }
+  .promo-badge.up { background: #d0ffd0; color: #055; }
+  .promo-badge.down { background: #ffd0d0; color: #500; }
+
+  .match-table-wrap { margin-top: 0.6rem; font-size: 0.82rem; overflow-x: auto; }
+  .match-table { border-collapse: collapse; font-size: 0.82rem; min-width: 260px; }
+  .match-table th { background: #f0f0f0; padding: 0.25rem 0.6rem; text-align: center; font-size: 0.75rem; color: #555; border: 1px solid #ddd; }
+  .match-table td { padding: 0.2rem 0.6rem; border: 1px solid #eee; }
+  .match-table tr.win td { background: #f0faf0; }
+  .match-table tr.loss td { background: #fdf3f3; }
+  .match-table tr.draw td { background: #fafafa; }
+  .score-cell { text-align: center; font-weight: bold; }
+  .result-cell { text-align: center; font-weight: bold; }
+  .result-cell.win { color: #2a7a2a; }
+  .result-cell.loss { color: #a03030; }
+  .round { color: #888; font-size: 0.75rem; }
+  .match-note { font-size: 0.75rem; color: #666; margin-left: 0.2rem; }
+  .walkover { font-size: 0.72rem; color: #888; }
+  .bbs-players { margin-top: 0.4rem; font-size: 0.8rem; color: #555; }
+  .bbs-player { background: #f5f5f5; padding: 0.1rem 0.4rem; border-radius: 3px; margin-right: 0.3rem; display: inline-block; }
+  .bbs-comment { color: #666; font-size: 0.78rem; margin: 0.4rem 0 0; font-style: italic; }
+  .bbs-source { font-size: 0.72rem; color: #aaa; margin: 0.3rem 0 0; }
+  .bbs-source a { color: #aaa; }
+</style>

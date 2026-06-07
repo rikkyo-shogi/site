@@ -21,7 +21,193 @@
         "promotion": null,
         "note": ""
       },
-      "confidence": "confirmed"
+      "confidence": "confirmed",
+      "kanto_table": {
+        "division": "B1級",
+        "teams": [
+          "慶應義塾大学",
+          "東京理科大学",
+          "立教大学",
+          "法政大学",
+          "千葉大学",
+          "駒澤大学",
+          "筑波大学",
+          "神奈川大学"
+        ],
+        "team_abbrevs": [
+          "慶應",
+          "理科",
+          "立教",
+          "法政",
+          "千葉",
+          "駒澤",
+          "筑波",
+          "神大"
+        ],
+        "rows": [
+          {
+            "team": "慶應義塾大学",
+            "seeding": 1,
+            "scores": [
+              null,
+              4.0,
+              6.0,
+              3.0,
+              4.0,
+              6.0,
+              4.0,
+              5.0
+            ],
+            "wins": 6.0,
+            "points": 32.0,
+            "rank": 2,
+            "promotion": "昇級"
+          },
+          {
+            "team": "東京理科大学",
+            "seeding": 2,
+            "scores": [
+              3.0,
+              null,
+              4.0,
+              3.0,
+              5.0,
+              5.0,
+              6.0,
+              3.0
+            ],
+            "wins": 4.0,
+            "points": 29.0,
+            "rank": 3,
+            "promotion": null
+          },
+          {
+            "team": "立教大学",
+            "seeding": 3,
+            "scores": [
+              1.0,
+              3.0,
+              null,
+              2.0,
+              5.0,
+              3.0,
+              3.0,
+              5.0
+            ],
+            "wins": 2.0,
+            "points": 22.0,
+            "rank": 5,
+            "promotion": null
+          },
+          {
+            "team": "法政大学",
+            "seeding": 4,
+            "scores": [
+              4.0,
+              4.0,
+              5.0,
+              null,
+              6.0,
+              4.0,
+              5.0,
+              6.0
+            ],
+            "wins": 7.0,
+            "points": 34.0,
+            "rank": 1,
+            "promotion": "昇級"
+          },
+          {
+            "team": "千葉大学",
+            "seeding": 5,
+            "scores": [
+              3.0,
+              2.0,
+              2.0,
+              1.0,
+              null,
+              4.0,
+              4.0,
+              3.0
+            ],
+            "wins": 2.0,
+            "points": 19.0,
+            "rank": 6,
+            "promotion": null
+          },
+          {
+            "team": "駒澤大学",
+            "seeding": 6,
+            "scores": [
+              1.0,
+              2.0,
+              4.0,
+              3.0,
+              3.0,
+              null,
+              2.0,
+              4.0
+            ],
+            "wins": 2.0,
+            "points": 19.0,
+            "rank": 7,
+            "promotion": "降級"
+          },
+          {
+            "team": "筑波大学",
+            "seeding": 7,
+            "scores": [
+              3.0,
+              1.0,
+              4.0,
+              2.0,
+              3.0,
+              5.0,
+              null,
+              4.0
+            ],
+            "wins": 3.0,
+            "points": 22.0,
+            "rank": 4,
+            "promotion": null
+          },
+          {
+            "team": "神奈川大学",
+            "seeding": 8,
+            "scores": [
+              2.0,
+              4.0,
+              2.0,
+              1.0,
+              4.0,
+              3.0,
+              3.0,
+              null
+            ],
+            "wins": 2.0,
+            "points": 19.0,
+            "rank": 8,
+            "promotion": "降級"
+          }
+        ]
+      },
+      "schedule": [
+        {
+          "day": 1,
+          "date": "4月26日",
+          "venue": "東京理科大学神楽坂キャンパス"
+        },
+        {
+          "day": 2,
+          "date": "5月3日",
+          "venue": "東京理科大学神楽坂キャンパス"
+        },
+        {
+          "day": 3,
+          "date": "5月10日",
+          "venue": "日本大学商学部"
+        }
+      ]
     },
     {
       "level": "regional",
@@ -63,7 +249,176 @@
         "promotion": "降級",
         "note": ""
       },
-      "confidence": "confirmed"
+      "confidence": "confirmed",
+      "kanto_table": {
+        "division": "B1級",
+        "teams": [
+          "横浜国立大学",
+          "中央大学",
+          "東京理科大学",
+          "筑波大学",
+          "立教大学",
+          "千葉大学",
+          "電気通信大学",
+          "東京都市大学"
+        ],
+        "team_abbrevs": [
+          "横浜",
+          "中央",
+          "理科",
+          "筑波",
+          "立教",
+          "千葉",
+          "電通",
+          "都市"
+        ],
+        "rows": [
+          {
+            "team": "横浜国立大学",
+            "seeding": 1,
+            "scores": [
+              null,
+              1.0,
+              5.0,
+              4.0,
+              5.0,
+              5.0,
+              3.0,
+              5.0
+            ],
+            "wins": 5.0,
+            "points": 28.0,
+            "rank": 2,
+            "promotion": "昇級"
+          },
+          {
+            "team": "中央大学",
+            "seeding": 2,
+            "scores": [
+              6.0,
+              null,
+              4.0,
+              4.0,
+              7.0,
+              5.0,
+              6.0,
+              6.0
+            ],
+            "wins": 7.0,
+            "points": 38.0,
+            "rank": 1,
+            "promotion": "昇級"
+          },
+          {
+            "team": "東京理科大学",
+            "seeding": 3,
+            "scores": [
+              2.0,
+              3.0,
+              null,
+              5.0,
+              4.0,
+              3.5,
+              3.0,
+              5.0
+            ],
+            "wins": 3.5,
+            "points": 25.5,
+            "rank": 4,
+            "promotion": null
+          },
+          {
+            "team": "筑波大学",
+            "seeding": 4,
+            "scores": [
+              3.0,
+              3.0,
+              2.0,
+              null,
+              5.0,
+              1.0,
+              2.0,
+              4.0
+            ],
+            "wins": 2.0,
+            "points": 20.0,
+            "rank": 6,
+            "promotion": null
+          },
+          {
+            "team": "立教大学",
+            "seeding": 5,
+            "scores": [
+              2.0,
+              0.0,
+              3.0,
+              2.0,
+              null,
+              2.0,
+              4.0,
+              2.0
+            ],
+            "wins": 1.0,
+            "points": 15.0,
+            "rank": 8,
+            "promotion": "降級"
+          },
+          {
+            "team": "千葉大学",
+            "seeding": 6,
+            "scores": [
+              2.0,
+              2.0,
+              3.5,
+              6.0,
+              5.0,
+              null,
+              1.0,
+              6.0
+            ],
+            "wins": 3.5,
+            "points": 25.5,
+            "rank": 5,
+            "promotion": null
+          },
+          {
+            "team": "電気通信大学",
+            "seeding": 7,
+            "scores": [
+              4.0,
+              1.0,
+              4.0,
+              5.0,
+              3.0,
+              6.0,
+              null,
+              4.0
+            ],
+            "wins": 5.0,
+            "points": 27.0,
+            "rank": 3,
+            "promotion": null
+          },
+          {
+            "team": "東京都市大学",
+            "seeding": 8,
+            "scores": [
+              2.0,
+              1.0,
+              2.0,
+              3.0,
+              5.0,
+              1.0,
+              3.0,
+              null
+            ],
+            "wins": 1.0,
+            "points": 17.0,
+            "rank": 7,
+            "promotion": "降級"
+          }
+        ]
+      }
     },
     {
       "level": "regional",
@@ -97,7 +452,8 @@
             "opponent_score": 1,
             "result": "勝ち",
             "round": "2回戦",
-            "walkover": null
+            "walkover": null,
+            "note": "不戦勝1"
           },
           {
             "opponent": "日大Ａ",
@@ -105,7 +461,8 @@
             "opponent_score": 3,
             "result": "負け",
             "round": "3回戦",
-            "walkover": null
+            "walkover": null,
+            "note": "不戦敗1"
           }
         ],
         "players": [],

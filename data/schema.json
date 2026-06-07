@@ -78,6 +78,21 @@
             { "type": "null" }
           ]
         },
+        "kanto_table": {
+          "oneOf": [
+            { "$ref": "#/definitions/KantoTable" },
+            { "type": "null" }
+          ]
+        },
+        "schedule": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ScheduleDay" }
+            },
+            { "type": "null" }
+          ]
+        },
         "confidence": {
           "type": "string",
           "enum": ["auto", "confirmed"]
@@ -145,6 +160,7 @@
           "enum": ["勝ち", "負け", "引分"]
         },
         "round": { "type": ["string", "null"] },
+        "note": { "type": ["string", "null"] },
         "walkover": {
           "oneOf": [
             {
@@ -159,6 +175,49 @@
             { "type": "null" }
           ]
         }
+      }
+    },
+    "KantoTable": {
+      "type": "object",
+      "required": ["division", "teams", "team_abbrevs", "rows"],
+      "additionalProperties": false,
+      "properties": {
+        "division": { "type": "string" },
+        "teams": { "type": "array", "items": { "type": "string" } },
+        "team_abbrevs": { "type": "array", "items": { "type": "string" } },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["seeding", "team", "scores"],
+            "additionalProperties": false,
+            "properties": {
+              "seeding": { "type": "integer" },
+              "team": { "type": "string" },
+              "scores": {
+                "type": "array",
+                "items": { "type": ["number", "null"] }
+              },
+              "wins": { "type": ["number", "null"] },
+              "points": { "type": ["number", "null"] },
+              "rank": { "type": ["integer", "null"] },
+              "promotion": {
+                "type": ["string", "null"],
+                "enum": ["昇級", "降級", null]
+              }
+            }
+          }
+        }
+      }
+    },
+    "ScheduleDay": {
+      "type": "object",
+      "required": ["day"],
+      "additionalProperties": false,
+      "properties": {
+        "day": { "type": "integer" },
+        "date": { "type": ["string", "null"] },
+        "venue": { "type": ["string", "null"] }
       }
     },
     "BbsPlayer": {

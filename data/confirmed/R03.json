@@ -21,7 +21,97 @@
         "promotion": null,
         "note": ""
       },
-      "confidence": "confirmed"
+      "confidence": "confirmed",
+      "kanto_table": {
+        "division": "C2級",
+        "teams": [
+          "4",
+          "上智大学",
+          "駒澤大学",
+          "立教大学",
+          "関東学院大学"
+        ],
+        "team_abbrevs": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "rows": [
+          {
+            "team": "4",
+            "seeding": 1,
+            "scores": [
+              null
+            ],
+            "wins": 2.0,
+            "points": 3.0,
+            "rank": 2,
+            "promotion": null
+          },
+          {
+            "team": "上智大学",
+            "seeding": 2,
+            "scores": [
+              4.0,
+              null,
+              5.0,
+              3.0,
+              3.0
+            ],
+            "wins": 4.0,
+            "points": 15.0,
+            "rank": 1,
+            "promotion": "昇級"
+          },
+          {
+            "team": "駒澤大学",
+            "seeding": 3,
+            "scores": [
+              1.0,
+              0.0,
+              null,
+              1.0,
+              0.0
+            ],
+            "wins": 0.0,
+            "points": 2.0,
+            "rank": 5,
+            "promotion": null
+          },
+          {
+            "team": "立教大学",
+            "seeding": 4,
+            "scores": [
+              3.0,
+              2.0,
+              4.0,
+              null,
+              1.0
+            ],
+            "wins": 2.0,
+            "points": 10.0,
+            "rank": 4,
+            "promotion": null
+          },
+          {
+            "team": "関東学院大学",
+            "seeding": 5,
+            "scores": [
+              2.0,
+              2.0,
+              5.0,
+              4.0,
+              null
+            ],
+            "wins": 2.0,
+            "points": 13.0,
+            "rank": 2,
+            "promotion": null
+          }
+        ]
+      }
     }
   ]
 }
