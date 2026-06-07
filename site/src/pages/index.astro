@@ -79,8 +79,8 @@ const seasons = await loadAllSeasons();
   <header>
     <h1>立教大学将棋部</h1>
     <nav>
-      <a href="/">大会結果</a>
-      <a href="/archives/">掲示板アーカイブ</a>
+      <a href={import.meta.env.BASE_URL}>大会結果</a>
+      <a href={`${import.meta.env.BASE_URL}archives/`}>掲示板アーカイブ</a>
     </nav>
   </header>
 
