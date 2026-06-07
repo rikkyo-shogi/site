@@ -3,6 +3,7 @@ import { loadAllSeasons } from '../utils/loadData';
 import SeasonSection from '../components/SeasonSection.astro';
 
 const seasons = await loadAllSeasons();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <!doctype html>
@@ -79,8 +80,8 @@ const seasons = await loadAllSeasons();
   <header>
     <h1>立教大学将棋部</h1>
     <nav>
-      <a href={import.meta.env.BASE_URL}>大会結果</a>
-      <a href={`${import.meta.env.BASE_URL}archives/`}>掲示板アーカイブ</a>
+      <a href={`${base}/`}>大会結果</a>
+      <a href={`${base}/archives/`}>掲示板アーカイブ</a>
     </nav>
   </header>
 

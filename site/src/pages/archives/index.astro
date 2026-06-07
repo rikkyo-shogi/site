@@ -1,5 +1,5 @@
 ---
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <!doctype html>
 <html lang="ja">
@@ -25,8 +25,8 @@ const base = import.meta.env.BASE_URL;
   <header>
     <h1>立教大学将棋部</h1>
     <nav>
-      <a href={base}>大会結果</a>
-      <a href={`${base}archives/`}>掲示板アーカイブ</a>
+      <a href={`${base}/`}>大会結果</a>
+      <a href={`${base}/archives/`}>掲示板アーカイブ</a>
     </nav>
   </header>
   <main>
