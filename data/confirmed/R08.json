@@ -1,0 +1,33 @@
+{
+  "season": "R08",
+  "season_label": "令和8年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "春季個人戦選手権の部",
+      "division": null,
+      "season_half": "spring",
+      "date": "2026年5月10日(日)・17日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R08/R8harukojinsensyukenkekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "冨永 和冶",
+          "grade": 3,
+          "best_result": "本戦出場",
+          "rank": null
+        },
+        {
+          "name": "青木 聖悟",
+          "grade": 3,
+          "best_result": "本戦出場",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "season": "H21",
+  "season_label": "平成21年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "C級",
+      "season_half": "spring",
+      "date": "平成21年4月26日(日)",
+      "venue": "東京理科大学(九段校舎)",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H21/21sdantai.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 12,
+        "wins": 0,
+        "losses": null,
+        "points": 5,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "新人戦(予選)",
+      "division": null,
+      "season_half": null,
+      "date": "平成21年6月14日(日)",
+      "venue": "明治大学(アカデミーコモン)",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H21/21shinjin1.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "久保田",
+          "grade": null,
+          "best_result": "本戦出場",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "新人戦(ベスト32以上)",
+      "division": null,
+      "season_half": null,
+      "date": "平成21年6月14日(日)",
+      "venue": "明治大学(アカデミーコモン)",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H21/21shinjin2.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "久保田 耕介",
+          "grade": null,
+          "best_result": "本戦出場",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "関東オール学生最強者戦(本選)",
+      "division": null,
+      "season_half": null,
+      "date": "平成21年8月11日(火)",
+      "venue": "北とぴあ",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H21/21all.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "久保田 耕介",
+          "grade": 1,
+          "best_result": "本戦出場",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "season": "R03",
+  "season_label": "令和3年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦(2022年2月5日内容再訂正）",
+      "division": "C2級",
+      "season_half": "spring",
+      "date": "2021年8月9日(月)",
+      "venue": "板橋区立グリーンホール1階ホール",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R03/R3harudantaisenkekka3.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 4,
+        "wins": 2,
+        "losses": null,
+        "points": 10,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed"
+    }
+  ]
+}

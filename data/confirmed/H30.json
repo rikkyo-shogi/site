@@ -1,0 +1,75 @@
+{
+  "season": "H30",
+  "season_label": "平成30年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "春季個人戦1日目",
+      "division": null,
+      "season_half": "spring",
+      "date": "平成30年4月15日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H30/h30kojinkekka1.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "小久江",
+          "grade": 4,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "斉藤",
+          "grade": 3,
+          "best_result": "予選敗退",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦1・2・3日目",
+      "division": "C1級",
+      "season_half": "spring",
+      "date": "平成30年5月6日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H30/H30harudantai.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 8,
+        "wins": 1,
+        "losses": null,
+        "points": 10,
+        "promotion": "降級",
+        "note": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦1・2・3日目",
+      "division": "C2級",
+      "season_half": "autumn",
+      "date": "平成30年10月28日(日)",
+      "venue": "東京理科大学葛飾キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H30/H30adantaikekka3.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 1,
+        "wins": 7,
+        "losses": null,
+        "points": 29,
+        "promotion": "昇級",
+        "note": ""
+      },
+      "confidence": "confirmed"
+    }
+  ]
+}

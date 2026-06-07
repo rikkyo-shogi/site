@@ -1,0 +1,9 @@
+.venv/
+cache/
+data/auto/
+node_modules/
+site/dist/
+site/.astro/
+__pycache__/
+*.pyc
+.env

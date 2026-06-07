@@ -1,0 +1,59 @@
+---
+import type { Event } from '../utils/loadData';
+import { isHighlight } from '../utils/loadData';
+
+interface Props { event: Event }
+const { event } = Astro.props;
+const result = event.rikkyo_result;
+const bbs = event.bbs_detail;
+const highlight = isHighlight(event);
+const sourceLabel = event.source_type.startsWith('kanto') ? '関東連盟' : event.source_type === 'bbs' ? '掲示板' : '全国連盟';
+---
+
+<div class:list={['event-card', 'event-team', { highlight }]}>
+  <div class="event-header">
+    <span class="event-name">{event.name}</span>
+    {event.division && <span class="badge division">{event.division}</span>}
+    {event.level === 'national' && <span class="badge national">全国</span>}
+    {bbs && !bbs.is_official && <span class="badge unofficial">非公式</span>}
+  </div>
+
+  {event.date && <div class="event-meta">📅 {event.date}{event.venue ? ` ／ ${event.venue}` : ''}</div>}
+
+  {result && (
+    <div class="result-row">
+      {result.rank != null && <span class="rank">{result.rank}位</span>}
+      {result.wins != null && <span class="score">{result.wins}勝{result.losses != null ? `${result.losses}敗` : ''}</span>}
+      {result.points != null && <span class="points">勝点{result.points}</span>}
+      {result.promotion && <span class:list={['promo', result.promotion === '昇級' ? 'up' : 'down']}>{result.promotion}</span>}
+      {result.note && <span class="note">{result.note}</span>}
+    </div>
+  )}
+
+  {bbs && bbs.matches.length > 0 && (
+    <details class="bbs-matches">
+      <summary>対戦詳細（掲示板より）</summary>
+      <ul class="match-list">
+        {bbs.matches.map(m => (
+          <li class:list={[m.result === '勝ち' ? 'win' : m.result === '負け' ? 'loss' : 'draw']}>
+            {m.round && <span class="round">{m.round}</span>}
+            {m.opponent}
+            {m.rikkyo_score != null && <span class="match-score">{m.rikkyo_score}-{m.opponent_score} {m.result}</span>}
+            {m.walkover && <span class="walkover">（不戦勝{m.walkover.win}不戦敗{m.walkover.loss}）</span>}
+          </li>
+        ))}
+      </ul>
+      {bbs.players.length > 0 && (
+        <div class="bbs-players">
+          <strong>個人別:</strong>
+          {bbs.players.map(p => <span class="bbs-player">{p.name}{p.result ? `(${p.result})` : ''}</span>)}
+        </div>
+      )}
+      {bbs.comment && <p class="bbs-comment">{bbs.comment}</p>}
+    </details>
+  )}
+
+  <div class="source-link">
+    <a href={event.source_url} target="_blank" rel="noopener">[{sourceLabel} 出典]</a>
+  </div>
+</div>

@@ -1,0 +1,173 @@
+{
+  "season": "H29",
+  "season_label": "平成29年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "C1級",
+      "season_half": "spring",
+      "date": "平成29年5月7日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H29/h29dantai.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 6,
+        "wins": 3,
+        "losses": null,
+        "points": 25,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "新人戦１日目",
+      "division": null,
+      "season_half": null,
+      "date": "平成29年6月18日(日)",
+      "venue": "明治大学リバティタワー",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H29/h29sinzinsenkekka1.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "清水",
+          "grade": 1,
+          "best_result": "予選敗退",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "秋季個人戦1日目",
+      "division": null,
+      "season_half": "autumn",
+      "date": "平成29年9月17日（日）",
+      "venue": "専修大学生田キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H29/h29akikojinkekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "斉藤",
+          "grade": 2,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "日下",
+          "grade": 2,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "田中",
+          "grade": 3,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "石井",
+          "grade": 3,
+          "best_result": "予選敗退",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦",
+      "division": "C1級",
+      "season_half": "autumn",
+      "date": "平成29年10月8日",
+      "venue": "東京理科大学葛飾キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H29/h29akidantai.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 4,
+        "wins": 3,
+        "losses": null,
+        "points": 23,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/383.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [
+          {
+            "opponent": "獨協大",
+            "rikkyo_score": 2,
+            "opponent_score": 5,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "駒澤大",
+            "rikkyo_score": 6,
+            "opponent_score": 1,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "理大理工",
+            "rikkyo_score": 4,
+            "opponent_score": 3,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "高崎経済大学",
+            "rikkyo_score": 2,
+            "opponent_score": 5,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "茨城大学",
+            "rikkyo_score": 4,
+            "opponent_score": 3,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "東京農業大学",
+            "rikkyo_score": 2,
+            "opponent_score": 5,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "東京都市大学",
+            "rikkyo_score": 3,
+            "opponent_score": 4,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          }
+        ],
+        "players": [],
+        "comment": ""
+      }
+    }
+  ]
+}

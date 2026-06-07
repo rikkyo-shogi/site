@@ -1,0 +1,239 @@
+{
+  "season": "H22",
+  "season_label": "平成22年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "春季個人戦1日目",
+      "division": null,
+      "season_half": "spring",
+      "date": "平成22年4月11日(日)",
+      "venue": "東京理科大学(九段校舎)",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H22/22skojin1.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "久保田",
+          "grade": null,
+          "best_result": "予選敗退",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "新人戦1日目",
+      "division": null,
+      "season_half": null,
+      "date": "平成22年6月20日(日)",
+      "venue": "日本大学商学部",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H22/22shinjin1.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "村上",
+          "grade": null,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "唐澤",
+          "grade": null,
+          "best_result": "予選敗退",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "秋季個人戦1日目",
+      "division": null,
+      "season_half": "autumn",
+      "date": "平成22年9月19日(日)",
+      "venue": "日本大学商学部(祖師谷キャンパス)",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H22/22akojin1.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "唐澤",
+          "grade": null,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "久保田",
+          "grade": null,
+          "best_result": "予選敗退",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦",
+      "division": "C級",
+      "season_half": "autumn",
+      "date": "平成22年10月10日(日)",
+      "venue": "東京農業大学(世田谷キャンパス)",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H22/22adantai.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 9,
+        "wins": 3,
+        "losses": null,
+        "points": 28,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/49.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [
+          {
+            "opponent": "学習院大学",
+            "rikkyo_score": 2,
+            "opponent_score": 5,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "千葉工業大学",
+            "rikkyo_score": 1,
+            "opponent_score": 6,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "千葉商科大学",
+            "rikkyo_score": 5,
+            "opponent_score": 2,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          }
+        ],
+        "players": [],
+        "comment": ""
+      }
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "団体戦二日目結果",
+      "division": null,
+      "season_half": null,
+      "date": null,
+      "venue": null,
+      "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/51.html",
+      "source_type": "bbs",
+      "rikkyo_present": true,
+      "rikkyo_result": null,
+      "rikkyo_players": [],
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/51.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [
+          {
+            "opponent": "東海大学",
+            "rikkyo_score": 5,
+            "opponent_score": 2,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "高崎経済大学",
+            "rikkyo_score": 3,
+            "opponent_score": 4,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "大東文化大学",
+            "rikkyo_score": 3,
+            "opponent_score": 4,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "首都大学東京",
+            "rikkyo_score": 1,
+            "opponent_score": 6,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          }
+        ],
+        "players": [],
+        "comment": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "団体戦三日目結果",
+      "division": null,
+      "season_half": null,
+      "date": null,
+      "venue": null,
+      "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/52.html",
+      "source_type": "bbs",
+      "rikkyo_present": true,
+      "rikkyo_result": null,
+      "rikkyo_players": [],
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/52.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [
+          {
+            "opponent": "昭和大学",
+            "rikkyo_score": 2,
+            "opponent_score": 5,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "東京電機大学",
+            "rikkyo_score": 3,
+            "opponent_score": 4,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "芝浦工業大学",
+            "rikkyo_score": 4,
+            "opponent_score": 2,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          }
+        ],
+        "players": [],
+        "comment": ""
+      },
+      "confidence": "confirmed"
+    }
+  ]
+}

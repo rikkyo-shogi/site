@@ -1,0 +1,117 @@
+{
+  "season": "H27",
+  "season_label": "平成27年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "B1級",
+      "season_half": "spring",
+      "date": null,
+      "venue": null,
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H27/27sdantai3.xlsx",
+      "source_type": "kanto_xlsx",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 5,
+        "wins": 2,
+        "losses": null,
+        "points": 22,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "秋季個人戦1日目",
+      "division": null,
+      "season_half": "autumn",
+      "date": "平成27年9月20日(日)",
+      "venue": "日本大学商学部",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H27/27akojin1.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "吉井",
+          "grade": 4,
+          "best_result": "予選敗退",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦1-3日目",
+      "division": "B1級",
+      "season_half": "autumn",
+      "date": "平成27年10月11日(日)",
+      "venue": "東京理科大学葛飾キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H27/27adantai3.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 8,
+        "wins": 1,
+        "losses": null,
+        "points": 15,
+        "promotion": "降級",
+        "note": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "古新戦１日目 結果",
+      "division": null,
+      "season_half": null,
+      "date": null,
+      "venue": null,
+      "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/307.html",
+      "source_type": "bbs",
+      "rikkyo_present": true,
+      "rikkyo_result": null,
+      "rikkyo_players": [],
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/307.html",
+        "is_official": false,
+        "opponents": [],
+        "matches": [
+          {
+            "opponent": "早稲田Ｅ",
+            "rikkyo_score": 2,
+            "opponent_score": 2,
+            "result": "引分",
+            "round": "1回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "駒沢Ａ",
+            "rikkyo_score": 3,
+            "opponent_score": 1,
+            "result": "勝ち",
+            "round": "2回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "日大Ａ",
+            "rikkyo_score": 2,
+            "opponent_score": 3,
+            "result": "負け",
+            "round": "3回戦",
+            "walkover": null
+          }
+        ],
+        "players": [],
+        "comment": ""
+      },
+      "confidence": "confirmed"
+    }
+  ]
+}

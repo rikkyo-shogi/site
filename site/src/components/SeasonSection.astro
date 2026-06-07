@@ -1,0 +1,47 @@
+---
+import type { SeasonData } from '../utils/loadData';
+import TeamEvent from './TeamEvent.astro';
+import IndividualEvent from './IndividualEvent.astro';
+
+interface Props { season: SeasonData }
+const { season } = Astro.props;
+
+const teamEvents = season.events.filter(e => e.type === 'team' && e.level === 'regional');
+const individualEvents = season.events.filter(e => e.type === 'individual' && e.level === 'regional');
+const nationalEvents = season.events.filter(e => e.level === 'national');
+---
+
+<section class="season-section" id={season.season}>
+  <h2 class="season-title">
+    <a href={`#${season.season}`}>{season.season_label}</a>
+  </h2>
+
+  {teamEvents.length > 0 && (
+    <div class="event-group">
+      <h3>団体戦</h3>
+      {teamEvents.map(e => <TeamEvent event={e} />)}
+    </div>
+  )}
+
+  {individualEvents.length > 0 && (
+    <div class="event-group">
+      <h3>個人戦・その他</h3>
+      {individualEvents.map(e => <IndividualEvent event={e} />)}
+    </div>
+  )}
+
+  {nationalEvents.length > 0 && (
+    <div class="event-group national-group">
+      <h3>全国大会</h3>
+      {nationalEvents.map(e =>
+        e.type === 'team'
+          ? <TeamEvent event={e} />
+          : <IndividualEvent event={e} />
+      )}
+    </div>
+  )}
+
+  {teamEvents.length === 0 && individualEvents.length === 0 && nationalEvents.length === 0 && (
+    <p class="no-data">このシーズンのデータはまだ登録されていません。</p>
+  )}
+</section>

@@ -1,0 +1,666 @@
+{
+  "season": "H25",
+  "season_label": "平成25年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "春季個人戦1日目",
+      "division": null,
+      "season_half": "spring",
+      "date": "平成25年4月7日(日)",
+      "venue": "東京理科大学(神楽坂校舎)",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H25/25skojin1.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "佐藤",
+          "grade": null,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "井上",
+          "grade": null,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "粟田口",
+          "grade": null,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "大平",
+          "grade": null,
+          "best_result": "本戦出場",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed",
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/154.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [],
+        "players": [
+          {
+            "name": "大平",
+            "result": "本戦出場",
+            "wins": null,
+            "losses": null,
+            "board": null
+          },
+          {
+            "name": "粟田口",
+            "result": "予選敗退",
+            "wins": null,
+            "losses": null,
+            "board": null
+          },
+          {
+            "name": "佐藤",
+            "result": "予選敗退",
+            "wins": null,
+            "losses": null,
+            "board": null
+          },
+          {
+            "name": "井上",
+            "result": "予選敗退",
+            "wins": null,
+            "losses": null,
+            "board": null
+          }
+        ],
+        "comment": ""
+      }
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "春季個人戦2,3日目",
+      "division": null,
+      "season_half": "spring",
+      "date": "平成25年4月14日(日)",
+      "venue": "明治大学(リバティータワー)",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H25/25skojin2.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "吉田 隼",
+          "grade": 3,
+          "best_result": "ベスト4",
+          "rank": null
+        },
+        {
+          "name": "大平 健太",
+          "grade": 3,
+          "best_result": "ベスト32",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed",
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/156.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [],
+        "players": [
+          {
+            "name": "吉田",
+            "result": "ベスト4",
+            "wins": null,
+            "losses": null,
+            "board": null
+          },
+          {
+            "name": "大平",
+            "result": "ベスト32",
+            "wins": null,
+            "losses": null,
+            "board": null
+          }
+        ],
+        "comment": ""
+      }
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "B2級",
+      "season_half": "spring",
+      "date": "平成25年4月21日(日)",
+      "venue": "東京農業大学(世田谷キャンパス)",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H25/25sdantai.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 5,
+        "wins": 3,
+        "losses": null,
+        "points": 25,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/160.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [
+          {
+            "opponent": "上智大学",
+            "rikkyo_score": 5,
+            "opponent_score": 2,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "青山学院大学",
+            "rikkyo_score": 5,
+            "opponent_score": 2,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "駒澤大学",
+            "rikkyo_score": 3,
+            "opponent_score": 4,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "東京農工大学",
+            "rikkyo_score": 5,
+            "opponent_score": 2,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "筑波大学",
+            "rikkyo_score": 2,
+            "opponent_score": 5,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "東京工業大学",
+            "rikkyo_score": 3,
+            "opponent_score": 4,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "首都大学東京",
+            "rikkyo_score": 2,
+            "opponent_score": 5,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          }
+        ],
+        "players": [],
+        "comment": ""
+      }
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "新人戦1日目",
+      "division": null,
+      "season_half": null,
+      "date": "平成25年6月23日(日)",
+      "venue": "明治大学(リバティータワー)",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H25/25shinjin.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "内山",
+          "grade": null,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "鳥居",
+          "grade": null,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "石川",
+          "grade": null,
+          "best_result": "予選敗退",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "関東オール学生最強者戦1,2日目",
+      "division": null,
+      "season_half": null,
+      "date": "平成25年8月6日(火)",
+      "venue": "北とぴあ",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H25/25kanto.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "佐藤",
+          "grade": null,
+          "best_result": "ベスト16",
+          "rank": null
+        },
+        {
+          "name": "吉田",
+          "grade": 3,
+          "best_result": "ベスト64",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed",
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/180.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [],
+        "players": [
+          {
+            "name": "佐藤",
+            "result": "ベスト16",
+            "wins": null,
+            "losses": null,
+            "board": null
+          },
+          {
+            "name": "吉田",
+            "result": "ベスト64",
+            "wins": null,
+            "losses": null,
+            "board": null
+          }
+        ],
+        "comment": ""
+      }
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "秋季個人戦1日目",
+      "division": null,
+      "season_half": "autumn",
+      "date": "平成25年9月22日(日)",
+      "venue": "東京理科大学(神楽坂校舎)",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H25/25akojin1.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "石川",
+          "grade": 1,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "佐藤",
+          "grade": 2,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "内山",
+          "grade": 1,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "大平",
+          "grade": 3,
+          "best_result": "ベスト16",
+          "rank": null
+        },
+        {
+          "name": "粟田口",
+          "grade": 3,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "大石",
+          "grade": 2,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "小久江",
+          "grade": 2,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "鳥居",
+          "grade": 1,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "吉田",
+          "grade": null,
+          "best_result": "ベスト8",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed",
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/188.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [],
+        "players": [
+          {
+            "name": "吉田",
+            "result": "ベスト8",
+            "wins": null,
+            "losses": null,
+            "board": null
+          },
+          {
+            "name": "大平",
+            "result": "ベスト16",
+            "wins": null,
+            "losses": null,
+            "board": null
+          }
+        ],
+        "comment": ""
+      }
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "秋季個人戦2,3日目",
+      "division": null,
+      "season_half": "autumn",
+      "date": "平成25年9月29日(日)",
+      "venue": "明治大学(リバティータワー)",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H25/25akojin2.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "大平 健太",
+          "grade": 3,
+          "best_result": "ベスト16",
+          "rank": null
+        },
+        {
+          "name": "吉田 隼",
+          "grade": 3,
+          "best_result": "ベスト8",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦",
+      "division": "B2級",
+      "season_half": "autumn",
+      "date": "平成25年10月13日(日)",
+      "venue": "日本大学商学部",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H25/25adantai.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 2,
+        "wins": 5,
+        "losses": null,
+        "points": 28,
+        "promotion": "昇級",
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/190.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [
+          {
+            "opponent": "東洋大学",
+            "rikkyo_score": 4,
+            "opponent_score": 3,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "専修大学",
+            "rikkyo_score": 2,
+            "opponent_score": 5,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "東京電機大学",
+            "rikkyo_score": 5,
+            "opponent_score": 2,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "上智大学",
+            "rikkyo_score": 6,
+            "opponent_score": 1,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "東京農業大学",
+            "rikkyo_score": 5,
+            "opponent_score": 2,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          }
+        ],
+        "players": [],
+        "comment": ""
+      }
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "春季古豪新鋭戦",
+      "division": null,
+      "season_half": "spring",
+      "date": "2013-06-09",
+      "venue": null,
+      "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/172.html",
+      "source_type": "bbs",
+      "rikkyo_present": true,
+      "rikkyo_result": null,
+      "rikkyo_players": [],
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/172.html",
+        "is_official": false,
+        "opponents": [],
+        "matches": [
+          {
+            "opponent": "中央大学Ｂ",
+            "rikkyo_score": 2,
+            "opponent_score": 3,
+            "result": "負け",
+            "round": "1回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "杏林大学",
+            "rikkyo_score": 4,
+            "opponent_score": 1,
+            "result": "勝ち",
+            "round": "2回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "横浜国立大学Ｂ",
+            "rikkyo_score": 2,
+            "opponent_score": 3,
+            "result": "負け",
+            "round": "3回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "埼玉大学",
+            "rikkyo_score": 2,
+            "opponent_score": 3,
+            "result": "負け",
+            "round": "4回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "学習院大学Ｂ",
+            "rikkyo_score": 4,
+            "opponent_score": 1,
+            "result": "勝ち",
+            "round": "5回戦",
+            "walkover": null
+          }
+        ],
+        "players": [],
+        "comment": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "東日本選抜トーナメント",
+      "division": null,
+      "season_half": null,
+      "date": null,
+      "venue": null,
+      "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/197.html",
+      "source_type": "bbs",
+      "rikkyo_present": true,
+      "rikkyo_result": null,
+      "rikkyo_players": [],
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/197.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [
+          {
+            "opponent": "芝浦工業大学",
+            "rikkyo_score": 4,
+            "opponent_score": 3,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "東京大学",
+            "rikkyo_score": 2,
+            "opponent_score": 5,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          }
+        ],
+        "players": [],
+        "comment": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "秋季古豪新鋭戦",
+      "division": null,
+      "season_half": "autumn",
+      "date": "2013-11-17",
+      "venue": null,
+      "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/200.html",
+      "source_type": "bbs",
+      "rikkyo_present": true,
+      "rikkyo_result": null,
+      "rikkyo_players": [],
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/200.html",
+        "is_official": false,
+        "opponents": [],
+        "matches": [
+          {
+            "opponent": "東京工業大学A",
+            "rikkyo_score": 1,
+            "opponent_score": 4,
+            "result": "負け",
+            "round": "1回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "帝京大学A",
+            "rikkyo_score": 5,
+            "opponent_score": 0,
+            "result": "勝ち",
+            "round": "2回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "東京大学B",
+            "rikkyo_score": 0,
+            "opponent_score": 5,
+            "result": "負け",
+            "round": "3回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "法政大学",
+            "rikkyo_score": 2,
+            "opponent_score": 3,
+            "result": "負け",
+            "round": "4回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "千葉・横浜国立大学",
+            "rikkyo_score": 3,
+            "opponent_score": 2,
+            "result": "勝ち",
+            "round": "5回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "明治大学B",
+            "rikkyo_score": 3,
+            "opponent_score": 2,
+            "result": "勝ち",
+            "round": "6回戦",
+            "walkover": null
+          }
+        ],
+        "players": [],
+        "comment": ""
+      },
+      "confidence": "confirmed"
+    }
+  ]
+}

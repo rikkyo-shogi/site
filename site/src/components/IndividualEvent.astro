@@ -1,0 +1,44 @@
+---
+import type { Event } from '../utils/loadData';
+import { isHighlight } from '../utils/loadData';
+
+interface Props { event: Event }
+const { event } = Astro.props;
+const players = event.rikkyo_players ?? [];
+const bbs = event.bbs_detail;
+const highlight = isHighlight(event);
+const sourceLabel = event.source_type.startsWith('kanto') ? '関東連盟' : event.source_type === 'bbs' ? '掲示板' : '全国連盟';
+---
+
+<div class:list={['event-card', 'event-individual', { highlight }]}>
+  <div class="event-header">
+    <span class="event-name">{event.name}</span>
+    {event.level === 'national' && <span class="badge national">全国</span>}
+    {bbs && !bbs.is_official && <span class="badge unofficial">非公式</span>}
+  </div>
+
+  {event.date && <div class="event-meta">📅 {event.date}{event.venue ? ` ／ ${event.venue}` : ''}</div>}
+
+  {players.length > 0 && (
+    <ul class="player-list">
+      {players.map(p => (
+        <li class:list={[{ highlight: ['優勝','準優勝','第三位'].includes(p.best_result ?? '') }]}>
+          <span class="player-name">{p.name}</span>
+          {p.grade != null && <span class="grade">{p.grade}年</span>}
+          {p.best_result && <span class="best-result">{p.best_result}</span>}
+          {p.rank != null && <span class="rank">{p.rank}位</span>}
+        </li>
+      ))}
+    </ul>
+  )}
+
+  {bbs && bbs.players.length > 0 && (
+    <div class="bbs-players">
+      {bbs.players.map(p => <span class="bbs-player">{p.name}{p.result ? `(${p.result})` : ''}</span>)}
+    </div>
+  )}
+
+  <div class="source-link">
+    <a href={event.source_url} target="_blank" rel="noopener">[{sourceLabel} 出典]</a>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+{
+  "season": "R06",
+  "season_label": "令和6年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦B級",
+      "division": "B2級",
+      "season_half": "spring",
+      "date": "2024年5月19日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R06/R6harudantaiBkekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 7,
+        "wins": 1,
+        "losses": null,
+        "points": 16,
+        "promotion": "降級",
+        "note": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "新人戦1日目",
+      "division": null,
+      "season_half": null,
+      "date": "2024年6月16日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R06/R6shinjin1kekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "127ブロック\n冨永",
+          "grade": null,
+          "best_result": "本戦出場",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "秋季個人戦2日目",
+      "division": null,
+      "season_half": "autumn",
+      "date": "2024年11月3日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R06/R6akikojinkekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "福田",
+          "grade": 1,
+          "best_result": "本戦出場",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦C級",
+      "division": "C1級",
+      "season_half": "autumn",
+      "date": "2024年11月10日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R06/R6akidantaiCkekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 2,
+        "wins": 5,
+        "losses": null,
+        "points": 27,
+        "promotion": "昇級",
+        "note": ""
+      },
+      "confidence": "confirmed"
+    }
+  ]
+}

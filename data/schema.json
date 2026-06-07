@@ -1,0 +1,177 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RikkyoShogiSeasonData",
+  "type": "object",
+  "required": ["season", "season_label", "events"],
+  "additionalProperties": false,
+  "properties": {
+    "season": {
+      "type": "string",
+      "description": "年度キー。例: R08, H30, 2016"
+    },
+    "season_label": {
+      "type": "string",
+      "description": "表示用。例: 令和8年度, 2016年度"
+    },
+    "events": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/Event" }
+    }
+  },
+  "definitions": {
+    "Event": {
+      "type": "object",
+      "required": ["level", "type", "name", "source_url", "source_type", "rikkyo_present", "confidence"],
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": ["regional", "national"]
+        },
+        "type": {
+          "type": "string",
+          "enum": ["team", "individual"]
+        },
+        "name": {
+          "type": "string"
+        },
+        "division": {
+          "type": ["string", "null"]
+        },
+        "season_half": {
+          "type": ["string", "null"],
+          "enum": ["spring", "autumn", null]
+        },
+        "date": {
+          "type": ["string", "null"]
+        },
+        "venue": {
+          "type": ["string", "null"]
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "source_type": {
+          "type": "string",
+          "enum": ["kanto_pdf", "kanto_html", "kanto_xlsx", "national_pdf", "national_html", "national_xlsx", "bbs"]
+        },
+        "rikkyo_present": {
+          "type": "boolean"
+        },
+        "rikkyo_result": {
+          "oneOf": [
+            { "$ref": "#/definitions/RikkyoResult" },
+            { "type": "null" }
+          ]
+        },
+        "rikkyo_players": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/RikkyoPlayer" }
+        },
+        "national_qualification": {
+          "type": ["string", "null"]
+        },
+        "bbs_detail": {
+          "oneOf": [
+            { "$ref": "#/definitions/BbsDetail" },
+            { "type": "null" }
+          ]
+        },
+        "confidence": {
+          "type": "string",
+          "enum": ["auto", "confirmed"]
+        }
+      }
+    },
+    "RikkyoResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rank": { "type": ["integer", "null"] },
+        "wins": { "type": ["integer", "null"] },
+        "losses": { "type": ["integer", "null"] },
+        "points": { "type": ["integer", "null"] },
+        "promotion": {
+          "type": ["string", "null"],
+          "enum": ["昇級", "降級", null]
+        },
+        "note": { "type": "string" }
+      }
+    },
+    "RikkyoPlayer": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "grade": { "type": ["integer", "null"] },
+        "best_result": { "type": ["string", "null"] },
+        "rank": { "type": ["integer", "null"] }
+      }
+    },
+    "BbsDetail": {
+      "type": "object",
+      "required": ["source_url", "is_official"],
+      "additionalProperties": false,
+      "properties": {
+        "source_url": { "type": "string", "format": "uri" },
+        "is_official": { "type": "boolean" },
+        "opponents": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "matches": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/BbsMatch" }
+        },
+        "players": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/BbsPlayer" }
+        },
+        "comment": { "type": "string" }
+      }
+    },
+    "BbsMatch": {
+      "type": "object",
+      "required": ["opponent", "result"],
+      "additionalProperties": false,
+      "properties": {
+        "opponent": { "type": "string" },
+        "rikkyo_score": { "type": ["integer", "null"] },
+        "opponent_score": { "type": ["integer", "null"] },
+        "result": {
+          "type": "string",
+          "enum": ["勝ち", "負け", "引分"]
+        },
+        "round": { "type": ["string", "null"] },
+        "walkover": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["win", "loss"],
+              "additionalProperties": false,
+              "properties": {
+                "win": { "type": "integer" },
+                "loss": { "type": "integer" }
+              }
+            },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "BbsPlayer": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "result": { "type": ["string", "null"] },
+        "wins": { "type": ["integer", "null"] },
+        "losses": { "type": ["integer", "null"] },
+        "board": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

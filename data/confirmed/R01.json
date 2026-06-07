@@ -1,0 +1,48 @@
+{
+  "season": "R01",
+  "season_label": "令和1年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦1・2・3日目",
+      "division": "C1級",
+      "season_half": "spring",
+      "date": "2019年5月5日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R01/R01Sdantai.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 8,
+        "wins": 0,
+        "losses": null,
+        "points": 6,
+        "promotion": "降級",
+        "note": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦1・2・3日目",
+      "division": "C2級",
+      "season_half": "autumn",
+      "date": "2019年9月22日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R01/R01Adantai.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 8,
+        "wins": 4,
+        "losses": null,
+        "points": 26,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed"
+    }
+  ]
+}

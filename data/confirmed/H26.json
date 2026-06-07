@@ -1,0 +1,258 @@
+{
+  "season": "H26",
+  "season_label": "平成26年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "春季個人戦1日目",
+      "division": null,
+      "season_half": "spring",
+      "date": "平成26年4月13日(日)",
+      "venue": "明治大学リバティータワー",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H26/26skojin1.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "大平",
+          "grade": 4,
+          "best_result": "ベスト16",
+          "rank": null
+        },
+        {
+          "name": "佐藤",
+          "grade": 3,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "大石",
+          "grade": 3,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "石川",
+          "grade": null,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "内山",
+          "grade": 2,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "杉本",
+          "grade": null,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "吉田",
+          "grade": null,
+          "best_result": "ベスト32",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed",
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/238.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [],
+        "players": [
+          {
+            "name": "大平",
+            "result": "ベスト16",
+            "wins": null,
+            "losses": null,
+            "board": null
+          },
+          {
+            "name": "吉田",
+            "result": "ベスト32",
+            "wins": null,
+            "losses": null,
+            "board": null
+          }
+        ],
+        "comment": ""
+      }
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "春季個人戦2・3日目",
+      "division": null,
+      "season_half": "spring",
+      "date": "平成26年4月20日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H26/26skojin2.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "吉田 隼",
+          "grade": 4,
+          "best_result": "本戦出場",
+          "rank": null
+        },
+        {
+          "name": "大平 健太",
+          "grade": 4,
+          "best_result": "ベスト16",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦1-3日目",
+      "division": "B1級",
+      "season_half": "spring",
+      "date": "平成26年4月27日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H26/26sdantai3.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 4,
+        "wins": 3,
+        "losses": null,
+        "points": 25,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "関東オール学生最強者戦2日目(pdf)",
+      "division": null,
+      "season_half": null,
+      "date": "平成26年8月12日(火)",
+      "venue": null,
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H26/26skall.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "吉田 隼",
+          "grade": 4,
+          "best_result": "本戦出場",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "秋季個人戦1日目(pdf)",
+      "division": null,
+      "season_half": "autumn",
+      "date": "平成26年9月21日(日)",
+      "venue": "明治大学リバティータワー",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H26/26akojin1.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "粟田口",
+          "grade": 4,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "鳥居",
+          "grade": 2,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "大石",
+          "grade": 3,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "吉田",
+          "grade": 4,
+          "best_result": "本戦出場",
+          "rank": null
+        },
+        {
+          "name": "佐藤",
+          "grade": 3,
+          "best_result": "予選敗退",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "秋季個人戦2・3日目",
+      "division": null,
+      "season_half": "autumn",
+      "date": "平成26年9月28日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H26/26akojin2.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "吉田 隼",
+          "grade": 4,
+          "best_result": "ベスト64",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed",
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/270.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [],
+        "players": [
+          {
+            "name": "吉田",
+            "result": "ベスト64",
+            "wins": null,
+            "losses": null,
+            "board": null
+          }
+        ],
+        "comment": ""
+      }
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦1-3日目",
+      "division": "B1級",
+      "season_half": "autumn",
+      "date": "平成26年10月12日(日)",
+      "venue": "東京農業大学",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H26/26adantai.htm",
+      "source_type": "kanto_html",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 3,
+        "wins": 4,
+        "losses": null,
+        "points": 27,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed"
+    }
+  ]
+}

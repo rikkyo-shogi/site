@@ -1,0 +1,48 @@
+{
+  "season": "R05",
+  "season_label": "令和5年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦B2級・C1級・C2級",
+      "division": "C1級",
+      "season_half": "spring",
+      "date": "2023年8月28日(月)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R05/R5harudantaiB2C1C2kekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 2,
+        "wins": 5,
+        "losses": null,
+        "points": 27,
+        "promotion": "昇級",
+        "note": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦B級",
+      "division": "B2級",
+      "season_half": "autumn",
+      "date": "2023年11月12日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R05/R5akidantaiBkekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 6,
+        "wins": 2,
+        "losses": null,
+        "points": 23,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed"
+    }
+  ]
+}

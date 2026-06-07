@@ -1,0 +1,69 @@
+{
+  "season": "R07",
+  "season_label": "令和7年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦B級",
+      "division": "B2級",
+      "season_half": "spring",
+      "date": "2025年6月1日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R07/R7harudantaiBkekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 3,
+        "wins": 5,
+        "losses": null,
+        "points": 30,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "春季女流戦",
+      "division": null,
+      "season_half": "spring",
+      "date": "2025年7月22日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R07/R7harujyoryukekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "傳田結菜",
+          "grade": 2,
+          "best_result": "5位",
+          "rank": 5
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦B級",
+      "division": "B2級",
+      "season_half": "autumn",
+      "date": "2025年12月14日、21日(日)",
+      "venue": "駒澤大学駒沢キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R07/R7akidantaiBkekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 4,
+        "wins": 4,
+        "losses": null,
+        "points": 28,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed"
+    }
+  ]
+}

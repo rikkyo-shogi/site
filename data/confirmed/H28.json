@@ -1,0 +1,328 @@
+{
+  "season": "H28",
+  "season_label": "平成28年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "新人戦１日目",
+      "division": null,
+      "season_half": null,
+      "date": "平成28年6月19日(日)",
+      "venue": "明治大学リバティータワー",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H28/h28ssinjinsen1.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "二村",
+          "grade": 1,
+          "best_result": "予選一回戦突破",
+          "rank": null
+        },
+        {
+          "name": "斎藤",
+          "grade": 1,
+          "best_result": "予選一回戦突破",
+          "rank": null
+        },
+        {
+          "name": "吉武",
+          "grade": 1,
+          "best_result": "予選一回戦突破",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed",
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/364.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [],
+        "players": [
+          {
+            "name": "斎藤",
+            "result": "予選一回戦突破",
+            "wins": null,
+            "losses": null,
+            "board": null
+          },
+          {
+            "name": "二村",
+            "result": "予選一回戦突破",
+            "wins": null,
+            "losses": null,
+            "board": null
+          },
+          {
+            "name": "吉武",
+            "result": "予選一回戦突破",
+            "wins": null,
+            "losses": null,
+            "board": null
+          }
+        ],
+        "comment": ""
+      }
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "B2級",
+      "season_half": "spring",
+      "date": null,
+      "venue": null,
+      "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/358.html",
+      "source_type": "bbs",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 4,
+        "wins": 4,
+        "losses": 3,
+        "points": 26,
+        "promotion": null,
+        "note": ""
+      },
+      "rikkyo_players": [],
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/358.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [
+          {
+            "opponent": "東京電機大学",
+            "rikkyo_score": 4,
+            "opponent_score": 3,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "芝浦工業大学",
+            "rikkyo_score": 2,
+            "opponent_score": 5,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "専修大学",
+            "rikkyo_score": 1,
+            "opponent_score": 6,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "理大理工",
+            "rikkyo_score": 5,
+            "opponent_score": 2,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "神奈川大学",
+            "rikkyo_score": 3,
+            "opponent_score": 4,
+            "result": "負け",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "埼玉大学",
+            "rikkyo_score": 5,
+            "opponent_score": 2,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          },
+          {
+            "opponent": "東京都市大学",
+            "rikkyo_score": 6,
+            "opponent_score": 1,
+            "result": "勝ち",
+            "round": null,
+            "walkover": null
+          }
+        ],
+        "players": [],
+        "comment": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "関東オール1日目",
+      "division": null,
+      "season_half": null,
+      "date": "平成28年8月4日(木)",
+      "venue": "板橋グリーンホール",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H28/28allkojin1.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "鳥居",
+          "grade": 4,
+          "best_result": "予選敗退",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "秋季個人戦1日目",
+      "division": null,
+      "season_half": "autumn",
+      "date": "平成28年9月25日(日)",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H28/28akojinkekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "並木",
+          "grade": 1,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "吉武",
+          "grade": 1,
+          "best_result": "予選1回戦を突破",
+          "rank": null
+        },
+        {
+          "name": "鳥居",
+          "grade": 4,
+          "best_result": "予選敗退",
+          "rank": null
+        },
+        {
+          "name": "平田",
+          "grade": 1,
+          "best_result": "予選敗退",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed",
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/370.html",
+        "is_official": true,
+        "opponents": [],
+        "matches": [],
+        "players": [
+          {
+            "name": "吉武",
+            "result": "予選1回戦を突破",
+            "wins": null,
+            "losses": null,
+            "board": null
+          }
+        ],
+        "comment": ""
+      }
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦",
+      "division": "B2級",
+      "season_half": "autumn",
+      "date": "平成28年10月16日(日）",
+      "venue": "東京理科大学神楽坂キャンパス",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/H28/28adantaikekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 7,
+        "wins": 2,
+        "losses": null,
+        "points": 20,
+        "promotion": "降級",
+        "note": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "古新戦",
+      "division": null,
+      "season_half": null,
+      "date": null,
+      "venue": null,
+      "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/373.html",
+      "source_type": "bbs",
+      "rikkyo_present": true,
+      "rikkyo_result": null,
+      "rikkyo_players": [],
+      "bbs_detail": {
+        "source_url": "https://d35s62fmhuthp2.cloudfront.net/rikkyo_shogi/rikkyoshogiclub/bbs/373.html",
+        "is_official": false,
+        "opponents": [],
+        "matches": [
+          {
+            "opponent": "埼玉大",
+            "rikkyo_score": 1,
+            "opponent_score": 3,
+            "result": "負け",
+            "round": "1回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "法政大D",
+            "rikkyo_score": 1,
+            "opponent_score": 3,
+            "result": "負け",
+            "round": "2回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "中央大A",
+            "rikkyo_score": 0,
+            "opponent_score": 5,
+            "result": "負け",
+            "round": "3回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "法政大C",
+            "rikkyo_score": 2,
+            "opponent_score": 0,
+            "result": "勝ち",
+            "round": "4回戦",
+            "walkover": {
+              "win": 1,
+              "loss": 0
+            }
+          },
+          {
+            "opponent": "東洋大",
+            "rikkyo_score": 0,
+            "opponent_score": 2,
+            "result": "負け",
+            "round": "5回戦",
+            "walkover": null
+          },
+          {
+            "opponent": "東京大C",
+            "rikkyo_score": 0,
+            "opponent_score": 2,
+            "result": "負け",
+            "round": "6回戦",
+            "walkover": null
+          }
+        ],
+        "players": [],
+        "comment": ""
+      },
+      "confidence": "confirmed"
+    }
+  ]
+}

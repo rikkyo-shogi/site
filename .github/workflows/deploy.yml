@@ -1,0 +1,66 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/confirmed/**'
+      - 'site/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - name: Validate JSON (must pass before build)
+        run: |
+          pip install jsonschema
+          python3 -c "
+          import json, jsonschema, sys
+          from pathlib import Path
+          schema = json.loads(Path('data/schema.json').read_text())
+          for f in Path('data/confirmed').glob('*.json'):
+              data = json.loads(f.read_text())
+              errs = list(jsonschema.Draft7Validator(schema).iter_errors(data))
+              if errs:
+                  print(f'SCHEMA ERROR in {f.name}: {[e.message for e in errs]}')
+                  sys.exit(1)
+          print('Schema validation passed.')
+          "
+      - name: Install site dependencies
+        working-directory: site
+        run: npm ci
+      - name: Build Astro site
+        working-directory: site
+        run: npm run build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

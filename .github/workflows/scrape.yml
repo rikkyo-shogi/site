@@ -1,0 +1,42 @@
+name: Scrape (Manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      seasons:
+        description: '対象年度(スペース区切り、空欄=全年度) 例: R08 R07'
+        required: false
+        default: ''
+      run_bbs:
+        description: '掲示板も収集する'
+        type: boolean
+        default: true
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Python dependencies
+        run: pip install -r scraper/requirements.txt
+      - name: Run Kanto federation scraper
+        working-directory: scraper
+        run: |
+          python3 fetch_kanto.py
+          python3 run_kanto.py ${{ github.event.inputs.seasons }}
+      - name: Run BBS scraper (optional)
+        if: ${{ github.event.inputs.run_bbs == 'true' }}
+        working-directory: scraper
+        run: |
+          python3 fetch_bbs.py active
+          python3 integrate.py active
+      - name: Commit auto data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/auto/
+          git diff --cached --quiet || git commit -m "chore: update auto-scraped data [skip ci]"
+          git push

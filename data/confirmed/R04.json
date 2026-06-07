@@ -1,0 +1,69 @@
+{
+  "season": "R04",
+  "season_label": "令和4年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "C2級",
+      "season_half": "spring",
+      "date": "2022年8月11日(木)",
+      "venue": "板橋区立グリーンホール",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R04/R4syunkidantaikekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 2,
+        "wins": 3,
+        "losses": null,
+        "points": 13,
+        "promotion": "昇級",
+        "note": ""
+      },
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "individual",
+      "name": "秋季個人戦2日目",
+      "division": null,
+      "season_half": "autumn",
+      "date": "2022年9月25日(日)",
+      "venue": "板橋区立グリーンホール",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R04/R4akikojinkekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_players": [
+        {
+          "name": "小寺",
+          "grade": 3,
+          "best_result": "本戦出場",
+          "rank": null
+        }
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦B2級・C1級・C2級",
+      "division": "C1級",
+      "season_half": "autumn",
+      "date": "2023年3月17日(金)",
+      "venue": "板橋区立グリーンホール",
+      "source_url": "http://kantoshogi.web.fc2.com/kekka/R04/R4akidantaiB2C1C2kekka.pdf",
+      "source_type": "kanto_pdf",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 3,
+        "wins": 3,
+        "losses": null,
+        "points": 22,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed"
+    }
+  ]
+}
