@@ -348,18 +348,18 @@
       "schedule": [
         {
           "day": 1,
-          "date": null,
-          "venue": null
+          "date": "平成24年4月22日",
+          "venue": "駒澤大学駒沢キャンパス"
         },
         {
           "day": 2,
-          "date": null,
-          "venue": null
+          "date": "平成24年5月6日",
+          "venue": "日本大学商学部"
         },
         {
           "day": 3,
-          "date": null,
-          "venue": null
+          "date": "平成24年5月13日",
+          "venue": "東京農業大学世田谷キャンパス"
         }
       ]
     },
@@ -867,18 +867,18 @@
       "schedule": [
         {
           "day": 1,
-          "date": null,
-          "venue": null
+          "date": "平成24年10月14日",
+          "venue": "東京農業大学世田谷キャンパス"
         },
         {
           "day": 2,
-          "date": null,
-          "venue": null
+          "date": "平成24年10月21日",
+          "venue": "東京理科大学神楽坂校舎"
         },
         {
           "day": 3,
-          "date": null,
-          "venue": null
+          "date": "平成24年10月28日",
+          "venue": "東京農業大学世田谷キャンパス"
         }
       ]
     }

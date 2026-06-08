@@ -398,18 +398,18 @@
       "schedule": [
         {
           "day": 1,
-          "date": null,
-          "venue": null
+          "date": "平成22年10月10日",
+          "venue": "東京農業大学"
         },
         {
           "day": 2,
-          "date": null,
-          "venue": null
+          "date": "平成22年10月17日",
+          "venue": "東京理科大学"
         },
         {
           "day": 3,
-          "date": null,
-          "venue": null
+          "date": "平成22年10月24日",
+          "venue": "東京農業大学"
         }
       ]
     },

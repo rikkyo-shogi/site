@@ -137,18 +137,18 @@
       "schedule": [
         {
           "day": 1,
-          "date": null,
-          "venue": null
+          "date": "平成23年5月1日",
+          "venue": "東京理科大学神楽坂キャンパス"
         },
         {
           "day": 2,
-          "date": null,
-          "venue": null
+          "date": "平成23年5月8日",
+          "venue": "日本大学祖師谷キャンパス"
         },
         {
           "day": 3,
-          "date": null,
-          "venue": null
+          "date": "平成23年5月15日",
+          "venue": "東洋大学白山キャンパス"
         }
       ]
     },
@@ -392,18 +392,18 @@
       "schedule": [
         {
           "day": 1,
-          "date": null,
-          "venue": null
+          "date": "平成23年10月16日",
+          "venue": "東京農業大学世田谷キャンパス"
         },
         {
           "day": 2,
-          "date": null,
-          "venue": null
+          "date": "平成23年10月23日",
+          "venue": "東京農業大学世田谷キャンパス"
         },
         {
           "day": 3,
-          "date": null,
-          "venue": null
+          "date": "平成23年10月30日",
+          "venue": "日本大学祖師谷キャンパス"
         }
       ]
     },

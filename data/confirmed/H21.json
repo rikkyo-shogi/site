@@ -322,18 +322,18 @@
       "schedule": [
         {
           "day": 1,
-          "date": null,
-          "venue": null
+          "date": "平成21年4月26日",
+          "venue": "東京理科大学"
         },
         {
           "day": 2,
-          "date": null,
-          "venue": null
+          "date": "平成21年5月10日",
+          "venue": "東洋大学"
         },
         {
           "day": 3,
-          "date": null,
-          "venue": null
+          "date": "平成21年5月17日",
+          "venue": "獨協大学"
         }
       ]
     },
