@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rikkyo-shogi.github.io/site/sitemap-index.xml

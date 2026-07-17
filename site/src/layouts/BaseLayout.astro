@@ -1,0 +1,88 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  /** OGP画像のパス(base込み)。省略時はデフォルト画像 */
+  image?: string;
+  /** og:type。省略時 'website' */
+  ogType?: string;
+  /** フッターの表記。省略時は出典付きの標準表記 */
+  footerText?: string;
+}
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const {
+  title,
+  description,
+  image = `${base}/ogp.png`,
+  ogType = 'website',
+  footerText = '立教大学将棋部 ／ 出典: 関東大学将棋連盟・全日本学生将棋連盟・部内掲示板',
+} = Astro.props;
+
+// Astro.site は astro.config.mjs の site (https://rikkyo-shogi.github.io/site)
+// Astro.url.pathname は base(/site) を含むため、origin と組み合わせて絶対URLを生成する
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const imageURL = new URL(image, Astro.site);
+---
+
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+
+  <!-- OGP -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={imageURL} />
+  <meta property="og:site_name" content="立教大学将棋部" />
+  <meta property="og:locale" content="ja_JP" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={imageURL} />
+
+  <!-- Google Search Console 所有権確認用。
+       Search Console にプロパティ登録後、発行されたトークンで content を差し替えること。 -->
+  <meta name="google-site-verification" content="TODO_REPLACE_WITH_GSC_TOKEN" />
+
+  <slot name="head" />
+</head>
+<body>
+  <header>
+    <h1><a href={`${base}/`}>立教大学将棋部</a></h1>
+    <nav>
+      <a href={`${base}/result/`}>大会結果</a>
+      <a href={`${base}/archives/`}>掲示板アーカイブ</a>
+    </nav>
+  </header>
+
+  <slot />
+
+  <footer>{footerText}</footer>
+</body>
+</html>
+
+<style>
+  body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    background: #fafaf8; color: #333; margin: 0; padding: 0;
+  }
+  header {
+    background: #5b0000; color: #fff;
+    padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem;
+  }
+  header h1 { margin: 0; font-size: 1.4rem; }
+  header h1 a { color: inherit; text-decoration: none; }
+  header nav a { color: #ffd0d0; text-decoration: none; margin-left: 1rem; font-size: 0.9rem; }
+  header nav a:hover { text-decoration: underline; }
+  footer { text-align: center; font-size: 0.75rem; color: #aaa; padding: 2rem 1rem; border-top: 1px solid #eee; margin-top: 3rem; }
+</style>
