@@ -582,7 +582,7 @@ repo-root/
   - PDF / HTML / xlsx の3形式に対応(全国連盟は形式が混在するため)。
   - Shift-JIS デコード処理を共通化(`common.py`)。
   - 両連盟サーバへ負荷をかけないよう逐次・スリープ・リトライ付き・キャッシュあり。
-  - venv: `/home/kskks/rikkyo-shogi/.venv`（全パッケージ収録済み）
+  - venv: リポジトリ直下の `.venv`（全パッケージ収録済み・gitignore対象）
 - 取得した PDF/HTML/xlsx とテキストは `cache/` に保存し、再実行時は差分のみ取得。
   キャッシュファイル名は URL の MD5 ハッシュ（例: `3148d858544ab5407409e44db8f1c9bb.xlsx`）。
 - 文字コードは全て UTF-8 で出力。
