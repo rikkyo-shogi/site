@@ -434,7 +434,7 @@ HTML/xlsx ファイル先頭行付近から `1日目 ○月○日 於 ○○大�
 | `events[].date` | string\|null | – | 判明範囲で。`YYYY` / `YYYY-MM` / `YYYY-MM-DD` / 期間は `開始/終了`。不明は `null` |
 | `events[].venue` | string\|null | – | 会場。不明は `null` か `""` |
 | `events[].source_url` | string | ✓ | 一次情報の URL(連盟PDF/HTMLページ/掲示板記事のいずれか) |
-| `events[].source_type` | enum | ✓ | `kanto_pdf` \| `kanto_html` \| `kanto_xlsx` \| `national_pdf` \| `national_html` \| `national_xlsx` \| `bbs` |
+| `events[].source_type` | enum | ✓ | `kanto_pdf` \| `kanto_html` \| `kanto_xlsx` \| `national_pdf` \| `national_html` \| `national_xlsx` \| `bbs` \| `manual` |
 | `events[].rikkyo_present` | bool | ✓ | 立教が登場するか。`false` のイベントは原則保存しない(§2.4) |
 | `events[].rikkyo_result` | object\|null | 団体 | 下記参照。個人イベントでは `null` |
 | `events[].rikkyo_players` | array | 個人 | 下記参照。団体イベントでは省略可 |
@@ -444,7 +444,12 @@ HTML/xlsx ファイル先頭行付近から `1日目 ○月○日 於 ○○大�
 | `events[].schedule` | array\|null | – | 複数日程（`ScheduleDay[]`）。HTML/xlsx から自動抽出 |
 | `events[].confidence` | enum | ✓ | `confirmed`(人手確認済み)\| `auto`(自動抽出のみ・未確認) |
 
+- `manual` は黒板写真・口頭情報など非公式ソースの手動入力（サイト上の出典ラベルは「部内記録」表示）。
+  公式PDFが後から公開されたら該当の `kanto_*` に変更し `source_url` を実URLへ更新する。
+  enum を増やす場合は `data/schema.json` にも追記が必要。
+
 `rikkyo_result`(団体): `{ "rank": int|null, "wins": int|null, "losses": int|null, "points": int|null, "promotion": "昇級"|"降級"|null, "note": string }`
+- `wins`/`losses` は**チームマッチ単位**の勝敗数（「5勝2敗」表示用）。
 
 `rikkyo_players[]`(個人): `{ "name": string, "grade": int|null, "best_result": string|null, "rank": int|null }`
 - `best_result` は表示用の自由文字列だが、可能な範囲で次の語彙に寄せる:
@@ -457,6 +462,9 @@ HTML/xlsx ファイル先頭行付近から `1日目 ○月○日 於 ○○大�
 
 `kanto_table`: `{ "division": string, "teams": [string], "team_abbrevs": [string], "rows": [...] }`
 - `rows[]`: `{ "seeding": int, "team": string, "scores": [(number|null)], "wins": number|null, "points": number|null, "rank": int|null, "promotion": "昇級"|"降級"|null }`
+- `rows[].wins` = **勝数**（個人戦局の合計勝利数、対戦表の「勝数」列）、
+  `rows[].points` = **勝点**（チームマッチの勝利数、対戦表の「勝点」列）。
+  `rikkyo_result` の `wins`/`losses`（チームマッチ単位）とは意味が異なる点に注意。
 - `update_kanto_tables.py --force` で全年度を再処理できる。
 
 `ScheduleDay`: `{ "day": int, "date": string|null, "venue": string|null }`
