@@ -54,7 +54,7 @@
         },
         "source_type": {
           "type": "string",
-          "enum": ["kanto_pdf", "kanto_html", "kanto_xlsx", "national_pdf", "national_html", "national_xlsx", "bbs"]
+          "enum": ["kanto_pdf", "kanto_html", "kanto_xlsx", "national_pdf", "national_html", "national_xlsx", "bbs", "manual"]
         },
         "rikkyo_present": {
           "type": "boolean"

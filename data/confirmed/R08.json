@@ -11,7 +11,7 @@
       "date": null,
       "venue": null,
       "source_url": "http://kantoshogi.web.fc2.com/",
-      "source_type": "kanto_table",
+      "source_type": "manual",
       "rikkyo_present": true,
       "rikkyo_result": {
         "rank": 2,
