@@ -49,6 +49,28 @@
 - 被リンク獲得（立教大学公式サークル一覧、関東大学将棋連盟サイト、部のSNSアカウントからのリンク）
 - Core Web Vitals / PageSpeed Insights での確認（未実施、Astro静的サイトのため大きな問題は想定していない）
 
+## データ手動入力のルール（2026-07-17 確立）
+
+### source_type
+- `kanto_pdf` / `kanto_html` 等: 関東将棋連盟の公式ページから取得
+- `manual`: 黒板写真・口頭情報など非公式の手動入力。出典リンクのラベルは「部内記録」と表示される
+- 公式PDFが後から公開されたら `source_type` を `kanto_pdf` 等に戻し、`source_url` を実URLに更新する（実際にR08春季団体戦でこのパターンが発生）
+
+### kanto_table の wins / points の意味
+- `wins` = **勝数**（個人戦局の合計勝利数、黒板の「勝数」列）
+- `points` = **勝点**（チームマッチの勝利数、黒板の「勝点」列）
+- rikkyo_result の `wins`/`losses` はチームマッチ単位（「5勝2敗」表示用）
+
+### 団体戦スケジュール（schedule フィールド）
+- H21〜H24 春秋団体戦の schedule に日時・会場データを追記済み（2026-07-17）
+- schedule が 2件以上あると `TeamEvent.astro` が「1日目 / 2日目…」形式で表示、1件以下だと `event.date` にフォールバック
+- 日付フォーマット: 平成年度は「平成〇年〇月〇日」、令和年度は「令和〇年〇月〇日」
+
+### スキーマバリデーション
+- `data/schema.json` で全 confirmed JSON を検証。GitHub Actions の validate ジョブで毎 push 実行される
+- 新しい `source_type` の値を追加する際は schema.json の enum に追記が必要
+- ローカル確認: `python3 -c "import json,jsonschema,sys; from pathlib import Path; schema=json.loads(Path('data/schema.json').read_text()); [print('FAIL',f.name) or sys.exit(1) for f in sorted(Path('data/confirmed').glob('*.json')) if list(jsonschema.Draft7Validator(schema).iter_errors(json.loads(f.read_text())))]"`
+
 ## 既知の環境上の注意点
 
 - このリポジトリを操作する環境によっては、`.git/index.lock` 等のロックファイルが `rm` で削除できない（`mv` でのリネームは可能）ケースがある。通常のローカル環境では発生しないはずだが、`git` コマンドが `unable to unlink` の警告を出しつつも実際には正常に処理を完了していることがあるため、警告だけで失敗と判断しないこと。
