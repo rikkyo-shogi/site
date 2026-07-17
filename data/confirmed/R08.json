@@ -4,6 +4,49 @@
   "events": [
     {
       "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "B級2組",
+      "season_half": "spring",
+      "date": null,
+      "venue": null,
+      "source_url": "http://kantoshogi.web.fc2.com/",
+      "source_type": "kanto_table",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 2,
+        "wins": 5,
+        "losses": 2,
+        "points": 5,
+        "promotion": "昇級",
+        "note": ""
+      },
+      "rikkyo_players": [],
+      "national_qualification": null,
+      "bbs_detail": null,
+      "kanto_table": {
+        "division": "B級2組",
+        "teams": ["東海大学", "東京都立大学", "高崎経済大学", "立教大学", "山梨大学", "埼玉大学", "帝京大学", "東京農業大学"],
+        "team_abbrevs": ["東海", "都立", "高崎経", "立教", "山梨", "埼玉", "帝京", "農業"],
+        "rows": [
+          {"seeding": 1, "team": "東海大学",     "scores": [null, 1, 4, 2, 3, 4, 1, 4], "wins": 19, "points": 3, "rank": 5, "promotion": null},
+          {"seeding": 2, "team": "東京都立大学",  "scores": [6, null, 5, 4, 3, 5, 2, 5], "wins": 30, "points": 5, "rank": 3, "promotion": null},
+          {"seeding": 3, "team": "高崎経済大学",  "scores": [2, 2, null, 2, 2, 4, 2, 4], "wins": 18, "points": 2, "rank": 7, "promotion": "降級"},
+          {"seeding": 4, "team": "立教大学",     "scores": [5, 3, 5, null, 5, 7, 3, 6], "wins": 34, "points": 5, "rank": 2, "promotion": "昇級"},
+          {"seeding": 5, "team": "山梨大学",     "scores": [4, 4, 5, 2, null, 1, 4, 5], "wins": 25, "points": 5, "rank": 4, "promotion": null},
+          {"seeding": 6, "team": "埼玉大学",     "scores": [3, 2, 3, 0, 6, null, 1, 4], "wins": 19, "points": 2, "rank": 6, "promotion": null},
+          {"seeding": 7, "team": "帝京大学",     "scores": [6, 5, 5, 4, 3, 6, null, 6], "wins": 35, "points": 6, "rank": 1, "promotion": "昇級"},
+          {"seeding": 8, "team": "東京農業大学",  "scores": [3, 2, 3, 1, 2, 3, 1, null], "wins": 15, "points": 0, "rank": 8, "promotion": "降級"}
+        ]
+      },
+      "schedule": [
+        {"day": 1, "date": "令和8年7月5日", "venue": "東京理科大学神楽坂キャンパス"},
+        {"day": 2, "date": "令和8年7月12日", "venue": "東京理科大学神楽坂キャンパス"}
+      ],
+      "confidence": "confirmed"
+    },
+    {
+      "level": "regional",
       "type": "individual",
       "name": "春季個人戦選手権の部",
       "division": null,
