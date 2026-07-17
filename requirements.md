@@ -11,7 +11,7 @@
 
 ---
 
-## 0. 実装状況サマリー（2026-06-07 現在）
+## 0. 実装状況サマリー（2026-07-17 更新）
 
 ### 完了済み
 
@@ -27,6 +27,7 @@
 | **GitHub Actions** | `deploy.yml`（push → GitHub Pages, Node.js 22）・`validate.yml`・`scrape.yml` 実働中 |
 | **掲示板データ** | 13 イベントに `bbs_detail`（対戦相手別スコア）が付与済み |
 | **公開** | **https://rikkyo-shogi.github.io/site/** で公開済み（Organization: rikkyo-shogi / repo: site）|
+| **SEO（フェーズ1・2）** | robots.txt・sitemap自動生成・BaseLayout（description/canonical/OGP/Twitter Card/GSC確認タグ）・JSON-LD・OGP画像。詳細は §11 |
 
 ### 未完了・残作業
 
@@ -680,3 +681,58 @@ repo-root/
 9. (任意)全国連盟: サイト走査で立教実績を確認 → あればパーサ実装し全国成績を追加。 **未実装**
 10. (任意)地区→全国の関連付け表示。 **未実装**
 11. 古い年度(関東=平成期 / 全国=2011年度〜 / 掲示板=遡及分)の形式差に順次対応。 ✓ 対応済み(H21〜)
+
+---
+
+## 11. SEO要件と実装状況（2026-07-17 追加）
+
+### 11.1 背景・目的
+
+公開後、サイトが Google 検索にヒットしない問題が判明した。原因は SEO の土台の欠如
+（sitemap.xml / robots.txt なし、meta description・canonical・OGP・構造化データなし、
+Google Search Console 未登録）。検索エンジンにサイトを発見・インデックスさせ、
+検索結果での見え方を改善することを目的に、フェーズを分けて対応する。
+
+### 11.2 要件
+
+**フェーズ1: Googleに発見・インデックスさせる（実装済み）**
+- robots.txt を配信し、全ページのクロールを許可し、sitemap の場所を明示する
+- sitemap.xml をビルド時に自動生成し、全公開ページを本番絶対URLで含める
+- Google Search Console の所有権確認用 meta タグを設置する
+
+**フェーズ2: インデックス後の評価・見え方を改善する（実装済み）**
+- 全ページに固有の meta description / 自己参照 canonical（絶対URL）を設定
+- 全ページに OGP 一式・Twitter Card（summary_large_image）を設定
+- トップページに SportsOrganization の JSON-LD 構造化データを埋め込む
+- メタ情報は共通レイアウト経由で一元管理し、ページ側は props を渡すだけにする
+
+**フェーズ3: 被リンク・継続改善（未着手）**
+- 被リンク獲得: 立教大学公式サークル一覧・関東大学将棋連盟サイト・部のSNSからのリンク
+- Core Web Vitals / PageSpeed Insights の確認（Astro静的サイトのため優先度低）
+
+### 11.3 実装内容（コミット: 085f4c5, ae00232）
+
+| 変更 | 内容 |
+|------|------|
+| `site/public/robots.txt` | 新規。全ページ許可 + `Sitemap:` 行 |
+| `@astrojs/sitemap` v3.7.3 | `astro.config.mjs` の `integrations` に追加。ビルドで `sitemap-index.xml` / `sitemap-0.xml` を自動生成 |
+| `site/src/layouts/BaseLayout.astro` | 新規。title/description/image/ogType/footerText を props で受け、head メタ一式と共通ヘッダー・フッターを一元管理。GSC 確認トークン設定済み |
+| 3ページの BaseLayout 化 | index / result / archives。ページ固有 description 設定。見た目・CSSは不変（ビルド差分で検証済み） |
+| JSON-LD | index に SportsOrganization を埋め込み |
+| `site/public/ogp.png` | 新規作成（1200×630、サイト配色） |
+
+実装上の注意:
+- canonical / og:url は `new URL(Astro.url.pathname, Astro.site)` で生成。
+  `Astro.url.pathname` は base(`/site`)を含むため二重付与・欠落は起きない（ビルドで検証済み）
+- result ページ固有のモバイルヘッダー縮小は、ヘッダーがレイアウト側に移ったため
+  ページ内 `<style is:global>` で維持している（スコープCSSでは届かない）
+
+### 11.4 Google Search Console の状況（2026-07-17 時点）
+
+- プロパティ `https://rikkyo-shogi.github.io/site/`（URLプレフィックス型）登録・所有権確認 完了
+- トップページ: インデックス登録済み
+- result / archives: 未インデックス。サイトマップ初回取得がデプロイ完了前と重なり
+  「取得できませんでした」表示のまま（sitemap-index.xml 自体は正常配信を確認済み）。
+  Google の再クロール待ち + URL検査からの個別インデックス登録リクエストで対応中
+- 確認方法: サイトマップのステータスが「成功」/ URL検査で「登録されています」/
+  `site:rikkyo-shogi.github.io` 検索でのヒット
