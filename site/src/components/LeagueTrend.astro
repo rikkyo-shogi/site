@@ -56,10 +56,13 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     <p class="lt-empty">推移を表示できるデータがまだありません。</p>
   ) : (
     <>
-      <div class="lt-canvas-wrap">
-        <canvas id="league-trend-canvas" role="img"
-          aria-label="立教大学将棋部 団体戦のリーグ昇降級推移グラフ"></canvas>
+      <div class="lt-scroll">
+        <div class="lt-canvas-wrap">
+          <canvas id="league-trend-canvas" role="img"
+            aria-label="立教大学将棋部 団体戦のリーグ昇降級推移グラフ"></canvas>
+        </div>
       </div>
+      <p class="lt-scroll-hint">← 横にスクロールできます →</p>
       <script type="application/json" id="league-trend-data" set:html={JSON.stringify(chartPayload)} />
 
       {/* JavaScript無効環境向けフォールバック。他コンテンツを壊さない簡易テーブル */}
@@ -223,6 +226,11 @@ const present = slots.filter(s => s.point).map(s => s.point!);
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    // 狭幅画面ではラベル(35+シーズン分)が詰まって判読できないため、
+    // 1ラベルあたりの最低幅を確保した横スクロールに切り替える(CSS側は600px以下でのみ有効化)。
+    const wrap = canvas.parentElement as HTMLElement | null;
+    wrap?.style.setProperty('--lt-min-width', `${chartLabels.length * 34}px`);
+
     new Chart(canvas, {
       type: 'line',
       data: {
@@ -284,6 +292,7 @@ const present = slots.filter(s => s.point).map(s => s.point!);
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        layout: { padding: { left: 4, right: 10, top: 6, bottom: 0 } },
         interaction: { mode: 'index', intersect: false },
         animation: reduceMotion ? false : { duration: 700, easing: 'easeOutQuart' },
         scales: {
@@ -360,11 +369,18 @@ const present = slots.filter(s => s.point).map(s => s.point!);
   .lt-mark.down { color: #b00000; }
   .lt-mark.champ { color: #d4a000; }
   .lt-note { color: #999; }
+  .lt-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -0.2rem; padding: 0 0.2rem; }
   .lt-canvas-wrap { position: relative; height: 340px; width: 100%; }
   .lt-empty { color: #aaa; font-style: italic; font-size: 0.85rem; }
   .lt-fallback { border-collapse: collapse; font-size: 0.8rem; margin-top: 0.5rem; }
   .lt-fallback th, .lt-fallback td { border: 1px solid #ddd; padding: 0.2rem 0.5rem; text-align: left; }
+  .lt-scroll-hint { display: none; }
   @media (max-width: 600px) {
-    .lt-canvas-wrap { height: 280px; }
+    .league-trend { padding: 1rem 0.9rem 1.3rem; }
+    .lt-canvas-wrap { height: 280px; width: max(100%, var(--lt-min-width, 100%)); }
+    .lt-scroll-hint {
+      display: block; text-align: center; font-size: 0.68rem; color: #aaa;
+      margin: 0.4rem 0 0;
+    }
   }
 </style>
