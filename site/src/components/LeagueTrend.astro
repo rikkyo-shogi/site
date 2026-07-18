@@ -12,6 +12,19 @@ interface Props {
 
 const slots = await loadLeagueTrend(Astro.props.seasons);
 
+// 直近の結果が昇級/降級なら、次の半期の所属リーグ(予定)を点線で示す。
+// 例: R08春に B2 で昇級 → R08秋は B1(予定)。
+const lastSlot = slots.length > 0 ? slots[slots.length - 1] : null;
+let projection: { label: string; level: number; division_label: string; reason: '昇級' | '降級' } | null = null;
+if (lastSlot?.point?.promotion) {
+  const dir = lastSlot.point.promotion === '昇級' ? 1 : -1;
+  const level = Math.min(5, Math.max(1, lastSlot.point.level + dir));
+  const label = lastSlot.season_half === 'spring'
+    ? `${lastSlot.season}秋`
+    : `${lastSlot.season[0]}${String(parseInt(lastSlot.season.slice(1)) + 1).padStart(2, '0')}春`;
+  projection = { label, level, division_label: LEAGUE_AXIS_LABELS[level], reason: lastSlot.point.promotion };
+}
+
 // クライアント script へ渡す最小限のデータ(JSON埋め込み)
 const chartPayload = {
   labels: slots.map(s => s.label),
@@ -24,6 +37,7 @@ const chartPayload = {
     champion: s.point.champion,
   }),
   axisLabels: LEAGUE_AXIS_LABELS,
+  projection,
 };
 
 // JS無効時のフォールバック用に、実結果のある半期だけ抜き出す
@@ -36,6 +50,9 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     <span class="lt-legend"><span class="lt-mark up">▲</span>昇級</span>
     <span class="lt-legend"><span class="lt-mark down">▼</span>降級</span>
     <span class="lt-legend"><span class="lt-mark champ">★</span>優勝</span>
+    {projection && (
+      <span class="lt-legend"><span class="lt-mark proj">┄</span>{projection.label} {projection.division_label}(予定)</span>
+    )}
   </p>
 
   {slots.length === 0 ? (
@@ -62,6 +79,14 @@ const present = slots.filter(s => s.point).map(s => s.point!);
                 <td>{p.champion ? '優勝' : p.promotion ?? ''}</td>
               </tr>
             ))}
+            {projection && (
+              <tr>
+                <td>{projection.label}</td>
+                <td>{projection.division_label}級（予定）</td>
+                <td>—</td>
+                <td>{projection.reason}による</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </noscript>
@@ -87,13 +112,14 @@ const present = slots.filter(s => s.point).map(s => s.point!);
   const el = document.getElementById('league-trend-data');
   const canvas = document.getElementById('league-trend-canvas') as HTMLCanvasElement | null;
   if (el && canvas) {
-    const { labels, points, axisLabels } = JSON.parse(el.textContent || '{}') as {
+    const { labels, points, axisLabels, projection } = JSON.parse(el.textContent || '{}') as {
       labels: string[];
       points: (null | {
         level: number; division: string; division_label: string;
         rank: number | null; promotion: '昇級' | '降級' | null; champion: boolean;
       })[];
       axisLabels: Record<string, string>;
+      projection: { label: string; level: number; division_label: string; reason: '昇級' | '降級' } | null;
     };
 
     const THEME = '#5b0000';
@@ -154,6 +180,20 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     const pointBorderWidth = points.map(p => (accentColor(p) ? 2 : 1.5));
     const pointHoverRadius = pointRadius.map(r => (r ? r + 2 : 0));
 
+    // 次期リーグ(予定)の点線セグメント: 最終実績点 → 予定点
+    const chartLabels = [...labels];
+    let projData: (number | null)[] = [];
+    if (projection) {
+      chartLabels.push(projection.label);
+      projData = new Array(chartLabels.length).fill(null);
+      const lastIdx = labels.length - 1;
+      const lastPoint = points[lastIdx];
+      if (lastPoint) {
+        projData[lastIdx] = lastPoint.level;
+        projData[lastIdx + 1] = projection.level;
+      }
+    }
+
     // リーグ帯を1段おきに薄く塗り、「階段を上り下りしている」読み取りを助ける
     const tierBands = {
       id: 'tierBands',
@@ -197,7 +237,7 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     new Chart(canvas, {
       type: 'line',
       data: {
-        labels,
+        labels: chartLabels,
         datasets: [{
           label: '所属リーグ',
           data,
@@ -233,7 +273,23 @@ const present = slots.filter(s => s.point).map(s => s.point!);
           pointBackgroundColor: pointBg,
           pointBorderColor: pointBorder,
           pointBorderWidth,
-        }],
+        },
+        ...(projection ? [{
+          label: '次期リーグ(予定)',
+          data: projData,
+          stepped: true as const,
+          spanGaps: false,
+          borderColor: 'rgba(91, 0, 0, 0.55)',
+          borderWidth: 2,
+          borderDash: [6, 5],
+          fill: false,
+          // 予定点のみ中抜きマーカーを置く(接続元の実績点には重ねない)
+          pointRadius: projData.map((v, i) => (v != null && i === projData.length - 1 ? 5.5 : 0)),
+          pointHoverRadius: projData.map((v, i) => (v != null && i === projData.length - 1 ? 7.5 : 0)),
+          pointBackgroundColor: SURFACE,
+          pointBorderColor: 'rgba(91, 0, 0, 0.55)',
+          pointBorderWidth: 2,
+        }] : [])],
       },
       plugins: [tierBands, crosshair],
       options: {
@@ -274,9 +330,15 @@ const present = slots.filter(s => s.point).map(s => s.point!);
             cornerRadius: 8,
             displayColors: false,
             caretSize: 6,
+            // 点線データセットは予定点(終端)以外ツールチップに出さない
+            filter: (item) => item.datasetIndex === 0 || item.dataIndex >= points.length,
             callbacks: {
               title: (items) => (items[0] ? String(items[0].label) : ''),
               label: (item) => {
+                // 予定点(点線データセットの終端)は専用の文言にする
+                if (projection && item.dataIndex >= points.length) {
+                  return `${projection.division_label}級(${projection.reason}による予定)`;
+                }
                 const p = points[item.dataIndex];
                 if (!p) return '欠測';
                 const parts = [`${p.division}(${p.division_label}) ${p.rank}位`];
@@ -309,6 +371,7 @@ const present = slots.filter(s => s.point).map(s => s.point!);
   .lt-mark.up { color: #067306; }
   .lt-mark.down { color: #b00000; }
   .lt-mark.champ { color: #d4a000; }
+  .lt-mark.proj { color: #9a6a6a; letter-spacing: 0.05em; }
   .lt-note { color: #999; }
   .lt-canvas-wrap { position: relative; height: 340px; width: 100%; }
   .lt-empty { color: #aaa; font-style: italic; font-size: 0.85rem; }

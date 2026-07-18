@@ -68,7 +68,14 @@ const imageURL = new URL(image, Astro.site);
 
   <slot />
 
-  <footer>{footerText}</footer>
+  <footer>
+    <nav class="sns-links" aria-label="公式SNS">
+      <a href="https://x.com/rikkyoshogi" target="_blank" rel="noopener">X (Twitter)</a>
+      <a href="https://www.instagram.com/rikkyoshogi" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://note.com/rikkyoshogi" target="_blank" rel="noopener">note</a>
+    </nav>
+    <p class="footer-text">{footerText}</p>
+  </footer>
 </body>
 </html>
 
@@ -86,4 +93,12 @@ const imageURL = new URL(image, Astro.site);
   header nav a { color: #ffd0d0; text-decoration: none; margin-left: 1rem; font-size: 0.9rem; }
   header nav a:hover { text-decoration: underline; }
   footer { text-align: center; font-size: 0.75rem; color: #aaa; padding: 2rem 1rem; border-top: 1px solid #eee; margin-top: 3rem; }
+  .sns-links { display: flex; justify-content: center; gap: 1.2rem; margin-bottom: 0.8rem; }
+  .sns-links a {
+    color: #5b0000; text-decoration: none; font-size: 0.8rem; font-weight: 600;
+    border: 1px solid #e0d0d0; border-radius: 999px; padding: 0.25rem 0.9rem;
+    background: #fff;
+  }
+  .sns-links a:hover { background: #5b0000; color: #fff; border-color: #5b0000; }
+  .footer-text { margin: 0; }
 </style>
