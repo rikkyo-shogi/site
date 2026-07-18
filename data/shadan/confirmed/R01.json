@@ -4,7 +4,7 @@
   "season_label": "令和1年度",
   "source": {
     "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-R01.htm",
-    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/30/5nitimeitiran1.pdf"
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/30/5nitimeseisekijun1.pdf"
   },
   "teams": [
     {
@@ -17,7 +17,7 @@
       "wins": 56,
       "promotion": null,
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/30/5nitimeitiran1.pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/30/5nitimeseisekijun1.pdf",
       "league_table": null,
       "note": ""
     }

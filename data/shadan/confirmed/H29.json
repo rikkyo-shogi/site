@@ -4,7 +4,7 @@
   "season_label": "平成29年度",
   "source": {
     "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-H29.htm",
-    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/28/5nitimeitiran1.pdf"
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/28/5nitimeseisekijun1.pdf"
   },
   "teams": [
     {
@@ -17,7 +17,7 @@
       "wins": 36,
       "promotion": "降級",
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/28/5nitimeitiran1.pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/28/5nitimeseisekijun1.pdf",
       "league_table": null,
       "note": "翌回5部白所属より判定。"
     }

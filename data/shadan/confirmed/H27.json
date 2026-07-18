@@ -4,7 +4,7 @@
   "season_label": "平成27年度",
   "source": {
     "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-H27.htm",
-    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/26/5nitimeitiran.pdf"
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/26/5nitimeseisekijun.pdf"
   },
   "teams": [
     {
@@ -17,7 +17,7 @@
       "wins": 35,
       "promotion": "降級",
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/26/5nitimeitiran.pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/26/5nitimeseisekijun.pdf",
       "league_table": null,
       "note": "翌回3部白所属より判定。出典PDFの表題は「第25回」表記だが第26回の最終順位表。"
     }

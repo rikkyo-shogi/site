@@ -13,14 +13,18 @@
   順位が特定できない行は rank=null
 - 第21回: 21/page2105.pdf(順位表)。立教大学紫龍会は同PDFの休会欄に記載
   (第20回成績を持って休会)のため第21回は不参加
-- 第22〜30回: NN/5nitimeitiran*.pdf(最終日順位表)のテキスト抽出+ページ画像の目視
+- 第22〜30回: NN/5nitimeitiran*.pdf(最終日順位表)のテキスト抽出+ページ画像の目視。
+  出典リンクは同内容の成績順リーグ表(NN/5nitimeseisekijun*.pdf)を指す(サイト表示の方針)
 - 第31回: オンライン開催。最終順位は 31/rankingA4.pdf(リーグ表A)の5部表から取得
-- 第32〜33回: NN_ichiran_04.pdf のテキスト抽出(第34回と同系式だが前年列なし)
+- 第32〜33回: NN_ichiran_04.pdf のテキスト抽出(第34回と同系式だが前年列なし)。
+  出典リンクは成績順リーグ表(NN_league_04_g.pdf)を指す
 - 第14回(H15)はリーグ表ページが連盟サイト上に現存しないため記録なし(ファイル自体を生成しない)
 - 昇降で「翌回の所属部より判定」と注記したものは、当該回の資料に昇降の記載が無く、
   翌回資料の所属部の変化から確定した事実
 
 第34回(R07)は parse_shadan.py(自動抽出)が担当する。
+開催中の年度(ONGOING)は各節のリーグ表(成績順)から途中経過を記録し、
+status: "ongoing" を付けて出力する(最終結果が出たら RECORDS 側へ移す)。
 """
 
 import json
@@ -90,34 +94,34 @@ RECORDS = [
     (21, "H22", "平成22年度", "shadan/21/page2105.pdf", [
         (OB, "紫龍会", "3部青", 12, 6, 49, None, "6勝9敗。立教大学紫龍会はこの回から休会。"),
     ]),
-    (22, "H23", "平成23年度", "22/5nitimeitiran.pdf", [
+    (22, "H23", "平成23年度", "22/5nitimeseisekijun.pdf", [
         (OB, "紫龍会", "3部青", 5, 10, 64, None, "この年度の3部は赤・白・青の3リーグ制。"),
     ]),
-    (23, "H24", "平成24年度", "23/5nitimeitiran.pdf", [
+    (23, "H24", "平成24年度", "23/5nitimeseisekijun.pdf", [
         (OB, "紫龍会", "3部赤", 9, 8, 51, None, ""),
     ]),
-    (24, "H25", "平成25年度", "24/5nitimeitiran.pdf", [
+    (24, "H25", "平成25年度", "24/5nitimeseisekijun.pdf", [
         (OB, "紫龍会", "3部白", 7, 9, 53, None, ""),
     ]),
-    (25, "H26", "平成26年度", "25/5nitimeitiran.pdf", [
+    (25, "H26", "平成26年度", "25/5nitimeseisekijun.pdf", [
         (OB, "紫龍会", "3部白", 3, 12, 63, "昇級", "入替戦を経て昇級(翌回2部白所属より判定)。"),
     ]),
-    (26, "H27", "平成27年度", "26/5nitimeitiran.pdf", [
+    (26, "H27", "平成27年度", "26/5nitimeseisekijun.pdf", [
         (OB, "紫龍会", "2部白", 16, 2, 35, "降級",
          "翌回3部白所属より判定。出典PDFの表題は「第25回」表記だが第26回の最終順位表。"),
     ]),
-    (27, "H28", "平成28年度", "27/5nitimeitiran1.pdf", [
+    (27, "H28", "平成28年度", "27/5nitimeseisekijun1.pdf", [
         (OB, "紫龍会", "3部白", 14, 4, 41, None, "この回を最後に第32回まで休会。"),
         (UNIV, "立教大紫龍会", "3部赤", 16, 0, 16, "降級",
          "第21回からの休会を経てこの回に3部で復帰。翌回4部白所属より降級と判定。"),
     ]),
-    (28, "H29", "平成29年度", "28/5nitimeitiran1.pdf", [
+    (28, "H29", "平成29年度", "28/5nitimeseisekijun1.pdf", [
         (UNIV, "立教大紫龍会", "4部白", 16, 2, 36, "降級", "翌回5部白所属より判定。"),
     ]),
-    (29, "H30", "平成30年度", "29/5nitimeitiran1.pdf", [
+    (29, "H30", "平成30年度", "29/5nitimeseisekijun1.pdf", [
         (UNIV, "立教大紫龍会", "5部白", 5, 10, 62.5, None, ""),
     ]),
-    (30, "R01", "令和1年度", "30/5nitimeitiran1.pdf", [
+    (30, "R01", "令和1年度", "30/5nitimeseisekijun1.pdf", [
         (UNIV, "立教大紫龍会", "5部白", 9, 8, 56, None, ""),
     ]),
     # 第31回はコロナ禍の影響で令和4年度に開催(令和2・3年度の団体戦は中止)
@@ -126,14 +130,25 @@ RECORDS = [
          "オンライン併用形式・単一5部リーグ(20チーム)。12勝3敗。"
          "勝点は勝利マッチ数。入替戦を経て昇級(翌回4部赤所属より判定)。"),
     ]),
-    (32, "R05", "令和5年度", "32/32_ichiran_04.pdf", [
+    (32, "R05", "令和5年度", "32/32_league_04_g.pdf", [
         (UNIV, "立教大学紫龍会", "4部赤", 5, 9, 57, "昇級", "入替戦勝利により昇級(△昇)。"),
     ]),
-    (33, "R06", "令和6年度", "33/33_ichiran_04.pdf", [
+    (33, "R06", "令和6年度", "33/33_league_04_g.pdf", [
         (UNIV, "立教大学紫龍会", "3部白", 10, 8, 53, None, ""),
         (OB, "紫龍会", "5部白", 13, 4, 45, "降級", "第28回からの休会を経てこの回に5部で復帰(▼降)。"),
     ]),
 ]
+
+# 開催中の年度(途中経過)。リーグ表(成績順)の値を目視確認して更新する。
+# (kai, season, season_label, note, 出典相対パス, teams)
+ONGOING = (
+    35, "R08", "令和8年度", "第1節終了時点の途中経過",
+    "35/35_league_01_g.pdf",
+    [
+        (UNIV, "立教大学紫龍会", "4部白", 8, 3, 15, None, "第1節終了時点で3勝1敗。"),
+        (OB, "紫龍会", "6部白", 15, 1, 7, None, "第1節終了時点で1勝3敗。"),
+    ],
+)
 
 
 def hub_url(season: str) -> str:
@@ -176,14 +191,24 @@ def build_season(kai, season, season_label, src_rel, teams) -> dict:
     }
 
 
+def _save(data: dict) -> None:
+    errors = validate_json(data, SCHEMA)
+    if errors:
+        raise SystemExit(f"{data['season']}: スキーマ検証エラー: {errors}")
+    out = OUT_DIR / f"{data['season']}.json"
+    out.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    logger.info("saved %s (第%d回, %d team(s))", out.name, data["kai"], len(data["teams"]))
+
+
 if __name__ == "__main__":
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for rec in RECORDS:
-        data = build_season(*rec)
-        errors = validate_json(data, SCHEMA)
-        if errors:
-            raise SystemExit(f"{data['season']}: スキーマ検証エラー: {errors}")
-        out = OUT_DIR / f"{data['season']}.json"
-        out.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-        logger.info("saved %s (第%d回, %d team(s))", out.name, data["kai"], len(data["teams"]))
-    print(f"generated {len(RECORDS)} season files in {OUT_DIR}")
+        _save(build_season(*rec))
+
+    kai, season, label, note, src_rel, teams = ONGOING
+    data = build_season(kai, season, label, src_rel, teams)
+    data["status"] = "ongoing"
+    data["note"] = note
+    data["source"] = {"hub_url": SITE, "league_pdf": [_abs_url(src_rel)]}
+    _save(data)
+    print(f"generated {len(RECORDS)} final + 1 ongoing season files in {OUT_DIR}")

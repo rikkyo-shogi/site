@@ -4,7 +4,7 @@
   "season_label": "令和5年度",
   "source": {
     "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-R05.htm",
-    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/32/32_ichiran_04.pdf"
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/32/32_league_04_g.pdf"
   },
   "teams": [
     {
@@ -17,7 +17,7 @@
       "wins": 57,
       "promotion": "昇級",
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/32/32_ichiran_04.pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/32/32_league_04_g.pdf",
       "league_table": null,
       "note": "入替戦勝利により昇級(△昇)。"
     }

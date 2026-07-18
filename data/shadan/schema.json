@@ -9,6 +9,12 @@
     "kai": { "type": "integer", "description": "第N回。例: 34" },
     "season": { "type": "string", "description": "年度キー。例: R07" },
     "season_label": { "type": "string", "description": "表示用。例: 令和7年度" },
+    "status": {
+      "type": "string",
+      "enum": ["ongoing", "final"],
+      "description": "開催中の途中経過なら ongoing。省略時は final(最終結果)"
+    },
+    "note": { "type": "string", "description": "年度全体の補足。例: 第1節終了時点の途中経過" },
     "source": {
       "type": "object",
       "additionalProperties": false,

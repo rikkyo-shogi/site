@@ -4,7 +4,7 @@
   "season_label": "平成23年度",
   "source": {
     "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-H23.htm",
-    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/22/5nitimeitiran.pdf"
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/22/5nitimeseisekijun.pdf"
   },
   "teams": [
     {
@@ -17,7 +17,7 @@
       "wins": 64,
       "promotion": null,
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/22/5nitimeitiran.pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/22/5nitimeseisekijun.pdf",
       "league_table": null,
       "note": "この年度の3部は赤・白・青の3リーグ制。"
     }

@@ -222,7 +222,9 @@ def build() -> tuple[dict, dict[str, int]]:
             "wins": stand["wins"],
             "promotion": stand["promotion"],
             "source_type": "shadan_pdf",
-            "source_url": fetch_shadan.ICHIRAN_URL,
+            # 成績抽出は順位一覧PDFから行うが、サイトに表示する出典リンクは
+            # 同内容を含むリーグ表(成績順)を指す(表示方針)
+            "source_url": fetch_shadan.LEAGUE_URLS[1],
             "league_table": None,  # 順位一覧のみから作成。対戦表はリーグ表PDFの解析(将来)で付与
             "note": spec["note"],
         })

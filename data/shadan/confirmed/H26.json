@@ -4,7 +4,7 @@
   "season_label": "平成26年度",
   "source": {
     "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-H26.htm",
-    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/25/5nitimeitiran.pdf"
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/25/5nitimeseisekijun.pdf"
   },
   "teams": [
     {
@@ -17,7 +17,7 @@
       "wins": 63,
       "promotion": "昇級",
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/25/5nitimeitiran.pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/25/5nitimeseisekijun.pdf",
       "league_table": null,
       "note": "入替戦を経て昇級(翌回2部白所属より判定)。"
     }
