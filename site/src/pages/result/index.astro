@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadAllSeasons } from '../../utils/loadData';
 import SeasonSection from '../../components/SeasonSection.astro';
+import LeagueTrend from '../../components/LeagueTrend.astro';
 
 const seasons = await loadAllSeasons();
 ---
@@ -15,6 +16,8 @@ const seasons = await loadAllSeasons();
     <p style="font-size:0.85rem;color:#888;margin:0 0 1rem;">
       関東大学将棋連盟の公式成績をシーズン別にまとめています。出典リンクから原本をご確認いただけます。
     </p>
+
+    {seasons.length > 0 && <LeagueTrend />}
 
     {seasons.length === 0 ? (
       <div class="empty-notice">

@@ -1,0 +1,181 @@
+---
+// 現役団体戦(関東学生団体戦)の昇降級推移グラフ。
+// data/confirmed/*.json だけで完結する(追加データ収集なし)。
+// 縦軸=リーグ名(C2〜A)、横軸=シーズン(H21春〜)。Chart.js の stepped line。
+// 欠測期(R02=コロナ、H21秋 等)は補間せず線を切る(spanGaps:false + null)。
+import { loadLeagueTrend, LEAGUE_AXIS_LABELS } from '../utils/loadData';
+
+const slots = await loadLeagueTrend();
+
+// クライアント script へ渡す最小限のデータ(JSON埋め込み)
+const chartPayload = {
+  labels: slots.map(s => s.label),
+  points: slots.map(s => s.point && {
+    level: s.point.level,
+    division: s.point.division,
+    division_label: s.point.division_label,
+    rank: s.point.rank,
+    promotion: s.point.promotion,
+    champion: s.point.champion,
+  }),
+  axisLabels: LEAGUE_AXIS_LABELS,
+};
+
+// JS無効時のフォールバック用に、実結果のある半期だけ抜き出す
+const present = slots.filter(s => s.point).map(s => s.point!);
+---
+
+<section class="league-trend" aria-labelledby="league-trend-title">
+  <h3 id="league-trend-title">団体戦 昇降級の推移</h3>
+  <p class="lt-lead">
+    関東大学将棋連盟 団体戦における立教のリーグ所属の変遷です(平成21年度〜)。
+    <span class="lt-legend"><span class="lt-mark up">▲</span>昇級</span>
+    <span class="lt-legend"><span class="lt-mark down">▼</span>降級</span>
+    <span class="lt-legend"><span class="lt-mark champ">★</span>優勝</span>
+    <span class="lt-note">※ 空白の期間はデータ欠測(令和2年度=新型コロナ 等)</span>
+  </p>
+
+  {slots.length === 0 ? (
+    <p class="lt-empty">推移を表示できるデータがまだありません。</p>
+  ) : (
+    <>
+      <div class="lt-canvas-wrap">
+        <canvas id="league-trend-canvas" role="img"
+          aria-label="立教大学将棋部 団体戦のリーグ昇降級推移グラフ"></canvas>
+      </div>
+      <script type="application/json" id="league-trend-data" set:html={JSON.stringify(chartPayload)} />
+
+      {/* JavaScript無効環境向けフォールバック。他コンテンツを壊さない簡易テーブル */}
+      <noscript>
+        <p class="lt-note">グラフの表示には JavaScript が必要です。以下は同じ内容の一覧です。</p>
+        <table class="lt-fallback">
+          <thead><tr><th>シーズン</th><th>リーグ</th><th>順位</th><th></th></tr></thead>
+          <tbody>
+            {present.map(p => (
+              <tr>
+                <td>{p.label}</td>
+                <td>{p.division}</td>
+                <td>{p.rank}位</td>
+                <td>{p.champion ? '優勝' : p.promotion ?? ''}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </noscript>
+    </>
+  )}
+</section>
+
+<script>
+  import Chart from 'chart.js/auto';
+
+  const el = document.getElementById('league-trend-data');
+  const canvas = document.getElementById('league-trend-canvas') as HTMLCanvasElement | null;
+  if (el && canvas) {
+    const { labels, points, axisLabels } = JSON.parse(el.textContent || '{}') as {
+      labels: string[];
+      points: (null | {
+        level: number; division: string; division_label: string;
+        rank: number | null; promotion: '昇級' | '降級' | null; champion: boolean;
+      })[];
+      axisLabels: Record<string, string>;
+    };
+
+    const THEME = '#5b0000';
+    const GOLD = '#d4a000';
+    const GREEN = '#067306';
+    const RED = '#b00000';
+
+    const data = points.map(p => (p ? p.level : null));
+    const pointStyle = points.map(p => (p ? (p.champion ? 'star' : (p.promotion ? 'triangle' : 'circle')) : 'circle'));
+    // 降級は下向き三角(180度回転)、それ以外は既定の向き
+    const pointRotation = points.map(p => (p && p.promotion === '降級' ? 180 : 0));
+    const pointRadius = points.map(p => (p ? (p.champion ? 8 : (p.promotion ? 7 : 4)) : 0));
+    const pointColor = points.map(p => {
+      if (!p) return THEME;
+      if (p.champion) return GOLD;
+      if (p.promotion === '昇級') return GREEN;
+      if (p.promotion === '降級') return RED;
+      return THEME;
+    });
+
+    new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          label: '所属リーグ',
+          data,
+          stepped: true,
+          spanGaps: false,          // 欠測(null)を線で補間しない
+          borderColor: THEME,
+          borderWidth: 2,
+          pointStyle,
+          pointRotation,
+          pointRadius,
+          pointHoverRadius: pointRadius.map(r => (r ? r + 2 : 0)),
+          pointBackgroundColor: pointColor,
+          pointBorderColor: pointColor,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            min: 0.5,
+            max: 5.5,
+            ticks: {
+              stepSize: 1,
+              callback: (v) => axisLabels[String(v)] ?? '',
+            },
+            title: { display: true, text: 'リーグ' },
+            grid: { color: '#eee' },
+          },
+          x: {
+            ticks: { maxRotation: 90, minRotation: 45, autoSkip: false, font: { size: 10 } },
+            grid: { display: false },
+          },
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title: (items) => (items[0] ? String(items[0].label) : ''),
+              label: (item) => {
+                const p = points[item.dataIndex];
+                if (!p) return '欠測';
+                const parts = [`${p.division}(${p.division_label}) ${p.rank}位`];
+                if (p.champion) parts.push('★優勝');
+                else if (p.promotion) parts.push(p.promotion === '昇級' ? '▲昇級' : '▼降級');
+                return parts.join(' / ');
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+</script>
+
+<style>
+  .league-trend {
+    background: #fff; border: 1px solid #e0e0e0; border-radius: 6px;
+    padding: 1rem 1.2rem 1.4rem; margin-bottom: 2rem;
+  }
+  .league-trend h3 { margin: 0 0 0.4rem; font-size: 1.1rem; color: #5b0000; }
+  .lt-lead { font-size: 0.8rem; color: #777; margin: 0 0 0.8rem; display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; align-items: center; }
+  .lt-legend { display: inline-flex; align-items: center; gap: 0.2rem; }
+  .lt-mark { font-weight: bold; }
+  .lt-mark.up { color: #067306; }
+  .lt-mark.down { color: #b00000; }
+  .lt-mark.champ { color: #d4a000; }
+  .lt-note { color: #999; }
+  .lt-canvas-wrap { position: relative; height: 320px; width: 100%; }
+  .lt-empty { color: #aaa; font-style: italic; font-size: 0.85rem; }
+  .lt-fallback { border-collapse: collapse; font-size: 0.8rem; margin-top: 0.5rem; }
+  .lt-fallback th, .lt-fallback td { border: 1px solid #ddd; padding: 0.2rem 0.5rem; text-align: left; }
+  @media (max-width: 600px) {
+    .lt-canvas-wrap { height: 260px; }
+  }
+</style>

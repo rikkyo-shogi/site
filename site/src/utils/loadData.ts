@@ -129,6 +129,123 @@ export async function loadAllSeasons(): Promise<SeasonData[]> {
   return seasons;
 }
 
+// ==== 現役団体戦 昇降級推移(LeagueTrend)用の集計 ====
+
+// 級の正規化テーブル。
+// 関東学生団体戦のリーグは下から C2 < C1 < B2 < B1 < A の5段階。
+// 縦軸数値(level)は下位=小・上位=大 に割り当てる(C2=1 … A=5)。
+//
+// 【単一「C級」時代(H21〜H22)の扱い ― 実データに基づく判断】
+//   H21春・H22秋のデータは division="C級"(C1/C2 に分割される前の単一クラス)。
+//   実データ上、立教は H22秋「C級」→ H23春「C2級」へ昇降級の記録なしに連続移動しており、
+//   分割後の最下位クラス C2 と地続きである。したがって旧「C級」は C2 と同じ level=1 とみなす。
+//   表示ラベルは実態に合わせ "C" とし、生の division 値はツールチップ側で補足する。
+// 【表記ゆれ】
+//   R08春は "B級2組"(= B2級 の別表記)。"B級1組"="B1級" 等も含め表記ゆれをここで吸収する。
+const DIVISION_TABLE: Record<string, { level: number; label: string }> = {
+  'A級':    { level: 5, label: 'A' },
+  'B1級':   { level: 4, label: 'B1' },
+  'B級1組': { level: 4, label: 'B1' },
+  'B2級':   { level: 3, label: 'B2' },
+  'B級2組': { level: 3, label: 'B2' },
+  'C1級':   { level: 2, label: 'C1' },
+  'C級1組': { level: 2, label: 'C1' },
+  'C2級':   { level: 1, label: 'C2' },
+  'C級2組': { level: 1, label: 'C2' },
+  'C級':    { level: 1, label: 'C' },  // 分割前の単一C級 → C2相当(上記コメント参照)
+};
+
+/** 縦軸の数値 → リーグ名ラベル(y軸目盛りの表示に使う) */
+export const LEAGUE_AXIS_LABELS: Record<number, string> = {
+  1: 'C2', 2: 'C1', 3: 'B2', 4: 'B1', 5: 'A',
+};
+
+export interface LeagueTrendPoint {
+  season: string;                        // "H21"
+  season_half: 'spring' | 'autumn';
+  label: string;                         // "H21春"
+  division: string;                      // 生の値 "C級" "B級2組" 等
+  division_label: string;                // 正規化ラベル "C2" 等
+  level: number;                         // 縦軸数値 1..5
+  rank: number | null;
+  promotion: '昇級' | '降級' | null;
+  champion: boolean;                     // rank===1(優勝)
+}
+
+/** 時系列スロット。point===null は欠測(線で補間しない対象) */
+export interface LeagueTrendSlot {
+  season: string;
+  season_half: 'spring' | 'autumn';
+  label: string;
+  point: LeagueTrendPoint | null;
+}
+
+function seasonSortRank(s: string): number {
+  const m = s.match(/^(R|H)(\d+)$/i);
+  if (!m) return 0;
+  const era = m[1].toUpperCase() === 'R' ? 2000 : 1000;
+  return era + parseInt(m[2]);
+}
+
+const halfLabel = (h: 'spring' | 'autumn') => (h === 'spring' ? '春' : '秋');
+
+/**
+ * type:'team' かつ立教が登場するイベントから、シーズン別の所属リーグを時系列化する。
+ * 各年度の春/秋の全スロットを古い順に並べ、団体戦の結果が無い半期は point=null(欠測)にする。
+ * 両端の欠測(データ範囲外)は軸に含めない。R02(コロナ)や H21秋 等は中間の欠測として残す。
+ */
+export async function loadLeagueTrend(): Promise<LeagueTrendSlot[]> {
+  const seasons = await loadAllSeasons();
+  // 古い順(H21春 →)に並べ替える
+  const ordered = [...seasons].sort((a, b) => seasonSortRank(a.season) - seasonSortRank(b.season));
+
+  // (season, half) -> その半期の主たる団体戦の順位
+  const points = new Map<string, LeagueTrendPoint>();
+  for (const s of ordered) {
+    for (const e of s.events) {
+      if (e.type !== 'team' || !e.rikkyo_present) continue;
+      if (e.division == null || e.season_half == null) continue;
+      const rr = e.rikkyo_result;
+      if (!rr || rr.rank == null) continue;   // 順位のある本結果のみ(「N日目結果」等は除外)
+      const norm = DIVISION_TABLE[e.division];
+      if (!norm) continue;                     // 未知の級表記はテーブル追加まで集計対象外
+      const key = `${s.season}:${e.season_half}`;
+      if (points.has(key)) continue;           // 同一半期に複数該当したら先勝ち
+      points.set(key, {
+        season: s.season,
+        season_half: e.season_half,
+        label: `${s.season}${halfLabel(e.season_half)}`,
+        division: e.division,
+        division_label: norm.label,
+        level: norm.level,
+        rank: rr.rank,
+        promotion: rr.promotion,
+        champion: rr.rank === 1,
+      });
+    }
+  }
+
+  // 全年度を 春→秋 で展開(欠測の可視化のため、データの無い半期も軸に残す)
+  const allSlots: Omit<LeagueTrendSlot, 'point'>[] = [];
+  for (const s of ordered) {
+    for (const half of ['spring', 'autumn'] as const) {
+      allSlots.push({ season: s.season, season_half: half, label: `${s.season}${halfLabel(half)}` });
+    }
+  }
+
+  const hasData = (slot: { season: string; season_half: string }) =>
+    points.has(`${slot.season}:${slot.season_half}`);
+  const first = allSlots.findIndex(hasData);
+  if (first === -1) return [];
+  let last = allSlots.length - 1;
+  while (last > first && !hasData(allSlots[last])) last--;
+
+  return allSlots.slice(first, last + 1).map(slot => ({
+    ...slot,
+    point: points.get(`${slot.season}:${slot.season_half}`) ?? null,
+  }));
+}
+
 export function isHighlight(event: Event): boolean {
   if (event.type === 'team') {
     const rank = event.rikkyo_result?.rank;

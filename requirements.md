@@ -28,6 +28,7 @@
 | **掲示板データ** | 13 イベントに `bbs_detail`（対戦相手別スコア）が付与済み |
 | **公開** | **https://rikkyo-shogi.github.io/site/** で公開済み（Organization: rikkyo-shogi / repo: site）|
 | **SEO（フェーズ1・2）** | robots.txt・sitemap自動生成・BaseLayout（description/canonical/OGP/Twitter Card/GSC確認タグ）・JSON-LD・OGP画像。詳細は §11 |
+| **昇降級推移グラフ（ROADMAP §2-3）** | `loadData.ts` の `loadLeagueTrend()` で `data/confirmed` を集計。`LeagueTrend.astro`（Chart.js の stepped line）を大会結果ページ冒頭に配置。縦軸=リーグ名（C2〜A）、横軸=シーズン（H21春〜R08春）。昇級▲/降級▼/優勝★をマーカーで強調、欠測期（R02・H21秋 等）は `spanGaps:false` で補間せず表示。JS無効時は簡易テーブルにフォールバック。追加データ収集ゼロ |
 
 ### 未完了・残作業
 
