@@ -2,7 +2,7 @@
 // 現役団体戦(関東学生団体戦)の昇降級推移グラフ。
 // data/confirmed/*.json だけで完結する(追加データ収集なし)。
 // 縦軸=リーグ名(C2〜A)、横軸=シーズン(H21春〜)。Chart.js の stepped line。
-// 欠測期(R02=コロナ、H21秋 等)は補間せず線を切る(spanGaps:false + null)。
+// データが無い半期(R02=コロナ、H21秋 等)は spanGaps:true で直線で繋いで表示する。
 import { loadLeagueTrend, LEAGUE_AXIS_LABELS } from '../utils/loadData';
 
 const slots = await loadLeagueTrend();
@@ -28,11 +28,9 @@ const present = slots.filter(s => s.point).map(s => s.point!);
 <section class="league-trend" aria-labelledby="league-trend-title">
   <h3 id="league-trend-title">団体戦 昇降級の推移</h3>
   <p class="lt-lead">
-    関東大学将棋連盟 団体戦における立教のリーグ所属の変遷です(平成21年度〜)。
     <span class="lt-legend"><span class="lt-mark up">▲</span>昇級</span>
     <span class="lt-legend"><span class="lt-mark down">▼</span>降級</span>
     <span class="lt-legend"><span class="lt-mark champ">★</span>優勝</span>
-    <span class="lt-note">※ 空白の期間はデータ欠測(令和2年度=新型コロナ 等)</span>
   </p>
 
   {slots.length === 0 ? (
@@ -86,8 +84,35 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     const GREEN = '#067306';
     const RED = '#b00000';
 
+    // Chart.js の pointStyle:'star' は星型ではなくアスタリスク状になるため、
+    // 凡例の★と見た目を揃えるために5稜星をcanvasに描いて画像として渡す。
+    function starPoint(color: string, radius: number): HTMLCanvasElement {
+      const size = radius * 2 + 4;
+      const c = document.createElement('canvas');
+      c.width = size;
+      c.height = size;
+      const ctx = c.getContext('2d')!;
+      const cx = size / 2, cy = size / 2;
+      const outerR = radius, innerR = radius * 0.42;
+      let rot = -Math.PI / 2;
+      const step = Math.PI / 5;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(rot) * outerR, cy + Math.sin(rot) * outerR);
+      for (let i = 0; i < 5; i++) {
+        rot += step;
+        ctx.lineTo(cx + Math.cos(rot) * innerR, cy + Math.sin(rot) * innerR);
+        rot += step;
+        ctx.lineTo(cx + Math.cos(rot) * outerR, cy + Math.sin(rot) * outerR);
+      }
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
+      return c;
+    }
+    const starImg = starPoint(GOLD, 8);
+
     const data = points.map(p => (p ? p.level : null));
-    const pointStyle = points.map(p => (p ? (p.champion ? 'star' : (p.promotion ? 'triangle' : 'circle')) : 'circle'));
+    const pointStyle = points.map(p => (p ? (p.champion ? starImg : (p.promotion ? 'triangle' : 'circle')) : 'circle'));
     // 降級は下向き三角(180度回転)、それ以外は既定の向き
     const pointRotation = points.map(p => (p && p.promotion === '降級' ? 180 : 0));
     const pointRadius = points.map(p => (p ? (p.champion ? 8 : (p.promotion ? 7 : 4)) : 0));
@@ -107,7 +132,7 @@ const present = slots.filter(s => s.point).map(s => s.point!);
           label: '所属リーグ',
           data,
           stepped: true,
-          spanGaps: false,          // 欠測(null)を線で補間しない
+          spanGaps: true,           // データの無い半期があっても直線で繋いで表示する
           borderColor: THEME,
           borderWidth: 2,
           pointStyle,
@@ -125,8 +150,10 @@ const present = slots.filter(s => s.point).map(s => s.point!);
           y: {
             min: 0.5,
             max: 5.5,
+            afterBuildTicks: (axis) => {
+              axis.ticks = Object.keys(axisLabels).map(v => ({ value: Number(v) }));
+            },
             ticks: {
-              stepSize: 1,
               callback: (v) => axisLabels[String(v)] ?? '',
             },
             title: { display: true, text: 'リーグ' },

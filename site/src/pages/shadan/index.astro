@@ -9,13 +9,12 @@ const latest = seasons[0] ?? null;
 
 <BaseLayout
   title="社団戦(東将連) — 立教大学将棋部"
-  description="東京将棋連盟 社会人団体リーグ戦(社団戦)における立教関係チーム「立教大学紫龍会」「紫龍会」の成績。第34回(令和7年度)の所属部・順位・勝点・勝数・昇降を掲載しています。"
+  description="東京アマチュア将棋連盟 社会人団体リーグ戦(社団戦)における立教関係チーム「立教大学紫龍会」「紫龍会」の成績。第34回(令和7年度)の所属部・順位・勝点・勝数・昇降を掲載しています。"
 >
   <main>
     <h2 class="page-title">社団戦(東将連 社会人団体リーグ戦)</h2>
     <p class="lead">
-      東京将棋連盟が主催する社会人団体リーグ戦(社団戦)における、立教関係チームの成績です。
-      関東大学将棋連盟の <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/result/`}>大会結果</a> とは別の大会・別リーグです。
+      東京アマチュア将棋連盟が主催する社会人団体リーグ戦(社団戦)における、立教関係チームの成績です。
     </p>
 
     {latest === null ? (
@@ -48,9 +47,7 @@ const latest = seasons[0] ?? null;
                 </div>
               </dl>
 
-              {team.note && <p class="team-note">{team.note}</p>}
-
-              {team.league_table ? (
+              {team.league_table && (
                 <div class="league-table-wrap">
                   <table class="league-table">
                     <thead>
@@ -66,8 +63,6 @@ const latest = seasons[0] ?? null;
                     </tbody>
                   </table>
                 </div>
-              ) : (
-                <p class="no-table">※ 対戦表(リーグ表)は今後リーグ表PDFから追加予定です。</p>
               )}
 
               <p class="source-link">
@@ -89,7 +84,7 @@ const latest = seasons[0] ?? null;
             {(latest.source.league_pdf ?? []).map((u, i) => (
               <a href={u} target="_blank" rel="noopener">リーグ表{i === 0 ? '（通常版）' : '（成績順）'}（PDF）</a>
             ))}
-            <span class="src-note">（東京将棋連盟）</span>
+            <span class="src-note">（東京アマチュア将棋連盟）</span>
           </p>
         )}
       </section>
@@ -118,12 +113,10 @@ const latest = seasons[0] ?? null;
   .promo.up { background: #e0ffe0; color: #066; }
   .promo.down { background: #ffe0e0; color: #600; }
   .promo.none { color: #999; font-weight: normal; }
-  .team-note { font-size: 0.75rem; color: #a06000; background: #fff8ec; border-left: 3px solid #e0a000; padding: 0.4rem 0.6rem; margin: 0.7rem 0 0; border-radius: 0 4px 4px 0; }
   .league-table-wrap { overflow-x: auto; margin-top: 0.8rem; }
   .league-table { border-collapse: collapse; width: 100%; font-size: 0.8rem; }
   .league-table th, .league-table td { border: 1px solid #ddd; padding: 0.2rem 0.4rem; text-align: center; }
   .league-table tr.self { background: #fff8e0; font-weight: bold; }
-  .no-table { font-size: 0.75rem; color: #aaa; margin: 0.8rem 0 0; }
   .source-link { margin-top: 0.7rem; font-size: 0.75rem; }
   .source-link a { color: #888; }
   .source-link a:hover { color: #5b0000; }
