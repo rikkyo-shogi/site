@@ -83,16 +83,24 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     const GOLD = '#d4a000';
     const GREEN = '#067306';
     const RED = '#b00000';
+    const SURFACE = '#ffffff';
 
     // Chart.js の pointStyle:'star' は星型ではなくアスタリスク状になるため、
-    // 凡例の★と見た目を揃えるために5稜星をcanvasに描いて画像として渡す。
+    // 凡例の★と見た目を揃えるために5稜星をcanvasに描く。白いハロー(surface ring)を
+    // 下地に焼き込み、線や他のマーカーと重なっても視認できるようにする。
     function starPoint(color: string, radius: number): HTMLCanvasElement {
-      const size = radius * 2 + 4;
+      const size = radius * 2 + 8;
       const c = document.createElement('canvas');
       c.width = size;
       c.height = size;
       const ctx = c.getContext('2d')!;
       const cx = size / 2, cy = size / 2;
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius + 3, 0, Math.PI * 2);
+      ctx.fillStyle = SURFACE;
+      ctx.fill();
+
       const outerR = radius, innerR = radius * 0.42;
       let rot = -Math.PI / 2;
       const step = Math.PI / 5;
@@ -109,20 +117,70 @@ const present = slots.filter(s => s.point).map(s => s.point!);
       ctx.fill();
       return c;
     }
-    const starImg = starPoint(GOLD, 8);
+    const starImg = starPoint(GOLD, 9);
 
     const data = points.map(p => (p ? p.level : null));
     const pointStyle = points.map(p => (p ? (p.champion ? starImg : (p.promotion ? 'triangle' : 'circle')) : 'circle'));
     // 降級は下向き三角(180度回転)、それ以外は既定の向き
     const pointRotation = points.map(p => (p && p.promotion === '降級' ? 180 : 0));
-    const pointRadius = points.map(p => (p ? (p.champion ? 8 : (p.promotion ? 7 : 4)) : 0));
-    const pointColor = points.map(p => {
+    const pointRadius = points.map(p => (p ? (p.champion ? 9 : (p.promotion ? 6 : 3.5)) : 0));
+    // 通常点は中抜き(白地+えんじ色の輪)にして控えめに。昇降級・優勝だけ色を塗って目立たせる
+    const pointBg = points.map(p => {
+      if (!p) return THEME;
+      if (p.champion) return GOLD;
+      if (p.promotion === '昇級') return GREEN;
+      if (p.promotion === '降級') return RED;
+      return SURFACE;
+    });
+    const pointBorder = points.map(p => {
       if (!p) return THEME;
       if (p.champion) return GOLD;
       if (p.promotion === '昇級') return GREEN;
       if (p.promotion === '降級') return RED;
       return THEME;
     });
+    const pointBorderWidth = points.map(p => (p && (p.champion || p.promotion) ? 2 : 1.5));
+    const pointHoverRadius = pointRadius.map(r => (r ? r + 2 : 0));
+
+    // リーグ帯を1段おきに薄く塗り、「階段を上り下りしている」読み取りを助ける
+    const tierBands = {
+      id: 'tierBands',
+      beforeDraw(chart: any) {
+        const { ctx, chartArea, scales } = chart;
+        if (!chartArea) return;
+        const y = scales.y;
+        ctx.save();
+        for (let lvl = 1; lvl <= 5; lvl += 2) {
+          const top = y.getPixelForValue(lvl + 0.5);
+          const bottom = y.getPixelForValue(lvl - 0.5);
+          ctx.fillStyle = 'rgba(91, 0, 0, 0.035)';
+          ctx.fillRect(chartArea.left, top, chartArea.right - chartArea.left, bottom - top);
+        }
+        ctx.restore();
+      },
+    };
+
+    // ホバー中のシーズンを縦の点線(クロスヘア)で示す
+    const crosshair = {
+      id: 'crosshair',
+      afterDatasetsDraw(chart: any) {
+        const active = chart.getActiveElements();
+        if (!active.length) return;
+        const { ctx, chartArea } = chart;
+        const x = active[0].element.x;
+        ctx.save();
+        ctx.beginPath();
+        ctx.setLineDash([3, 3]);
+        ctx.moveTo(x, chartArea.top);
+        ctx.lineTo(x, chartArea.bottom);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'rgba(91, 0, 0, 0.35)';
+        ctx.stroke();
+        ctx.restore();
+      },
+    };
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     new Chart(canvas, {
       type: 'line',
@@ -134,39 +192,66 @@ const present = slots.filter(s => s.point).map(s => s.point!);
           stepped: true,
           spanGaps: true,           // データの無い半期があっても直線で繋いで表示する
           borderColor: THEME,
-          borderWidth: 2,
+          borderWidth: 2.5,
+          borderJoinStyle: 'round',
+          borderCapStyle: 'round',
+          fill: 'start',
+          backgroundColor: (context: any) => {
+            const { ctx, chartArea } = context.chart;
+            if (!chartArea) return 'transparent';
+            const g = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+            g.addColorStop(0, 'rgba(91, 0, 0, 0.16)');
+            g.addColorStop(1, 'rgba(91, 0, 0, 0)');
+            return g;
+          },
           pointStyle,
           pointRotation,
           pointRadius,
-          pointHoverRadius: pointRadius.map(r => (r ? r + 2 : 0)),
-          pointBackgroundColor: pointColor,
-          pointBorderColor: pointColor,
+          pointHoverRadius,
+          pointBackgroundColor: pointBg,
+          pointBorderColor: pointBorder,
+          pointBorderWidth,
         }],
       },
+      plugins: [tierBands, crosshair],
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        animation: reduceMotion ? false : { duration: 700, easing: 'easeOutQuart' },
         scales: {
           y: {
             min: 0.5,
             max: 5.5,
-            afterBuildTicks: (axis) => {
+            afterBuildTicks: (axis: any) => {
               axis.ticks = Object.keys(axisLabels).map(v => ({ value: Number(v) }));
             },
             ticks: {
               callback: (v) => axisLabels[String(v)] ?? '',
+              font: { size: 12, weight: 'bold' },
+              color: '#7a7a7a',
             },
-            title: { display: true, text: 'リーグ' },
-            grid: { color: '#eee' },
+            grid: { display: false },
+            border: { display: false },
           },
           x: {
-            ticks: { maxRotation: 90, minRotation: 45, autoSkip: false, font: { size: 10 } },
+            ticks: { maxRotation: 90, minRotation: 45, autoSkip: false, font: { size: 10 }, color: '#999' },
             grid: { display: false },
+            border: { color: '#ddd' },
           },
         },
         plugins: {
           legend: { display: false },
           tooltip: {
+            backgroundColor: '#2a1010',
+            titleColor: '#fff',
+            titleFont: { size: 12, weight: 'bold' },
+            bodyColor: '#f0d8d8',
+            bodyFont: { size: 12 },
+            padding: 10,
+            cornerRadius: 8,
+            displayColors: false,
+            caretSize: 6,
             callbacks: {
               title: (items) => (items[0] ? String(items[0].label) : ''),
               label: (item) => {
@@ -187,22 +272,27 @@ const present = slots.filter(s => s.point).map(s => s.point!);
 
 <style>
   .league-trend {
-    background: #fff; border: 1px solid #e0e0e0; border-radius: 6px;
+    background: #fff; border: 1px solid #e0e0e0; border-radius: 8px;
     padding: 1rem 1.2rem 1.4rem; margin-bottom: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
-  .league-trend h3 { margin: 0 0 0.4rem; font-size: 1.1rem; color: #5b0000; }
-  .lt-lead { font-size: 0.8rem; color: #777; margin: 0 0 0.8rem; display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; align-items: center; }
-  .lt-legend { display: inline-flex; align-items: center; gap: 0.2rem; }
-  .lt-mark { font-weight: bold; }
+  .league-trend h3 { margin: 0 0 0.6rem; font-size: 1.1rem; color: #5b0000; }
+  .lt-lead { font-size: 0.78rem; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+  .lt-legend {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    background: #f7f2f2; border: 1px solid #eee; border-radius: 999px;
+    padding: 0.2rem 0.65rem 0.2rem 0.55rem; color: #666; font-weight: 600;
+  }
+  .lt-mark { font-weight: bold; font-size: 0.95rem; line-height: 1; }
   .lt-mark.up { color: #067306; }
   .lt-mark.down { color: #b00000; }
   .lt-mark.champ { color: #d4a000; }
   .lt-note { color: #999; }
-  .lt-canvas-wrap { position: relative; height: 320px; width: 100%; }
+  .lt-canvas-wrap { position: relative; height: 340px; width: 100%; }
   .lt-empty { color: #aaa; font-style: italic; font-size: 0.85rem; }
   .lt-fallback { border-collapse: collapse; font-size: 0.8rem; margin-top: 0.5rem; }
   .lt-fallback th, .lt-fallback td { border: 1px solid #ddd; padding: 0.2rem 0.5rem; text-align: left; }
   @media (max-width: 600px) {
-    .lt-canvas-wrap { height: 260px; }
+    .lt-canvas-wrap { height: 280px; }
   }
 </style>
