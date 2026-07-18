@@ -1,0 +1,25 @@
+{
+  "kai": 23,
+  "season": "H24",
+  "season_label": "平成24年度",
+  "source": {
+    "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-H24.htm",
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/23/5nitimeitiran.pdf"
+  },
+  "teams": [
+    {
+      "team_id": "shiryukai",
+      "team_name": "紫龍会",
+      "kai": 23,
+      "division": "3部赤",
+      "rank": 9,
+      "points": 8,
+      "wins": 51,
+      "promotion": null,
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/23/5nitimeitiran.pdf",
+      "league_table": null,
+      "note": ""
+    }
+  ]
+}

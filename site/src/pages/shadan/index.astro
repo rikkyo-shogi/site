@@ -1,15 +1,31 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { loadShadanSeasons } from '../../utils/loadData';
+import { loadShadanSeasons, loadShadanPlayers } from '../../utils/loadData';
 
-const seasons = await loadShadanSeasons();
-// 現状は第34回(R07)のみ。最新回を主表示にする。
+const seasons = await loadShadanSeasons();  // 新しい回順
 const latest = seasons[0] ?? null;
+const players = await loadShadanPlayers();
+
+// 歴代成績表: 回ごと×チームごとの行(新しい回が上)
+const historyRows = seasons.flatMap(s =>
+  s.teams.map(team => ({ season: s, team }))
+);
+
+// レーティング推移グラフ用データ(公開同意者のみ)
+const playerCharts = players.map(p => ({
+  player_id: p.player_id,
+  name: p.name,
+  labels: p.history.map(h => `第${h.kai}回`),
+  sublabels: p.history.map(h => h.season_label),
+  ratings: p.history.map(h => h.rating),
+  games: p.history.map(h => h.games),
+  teams: p.history.map(h => h.team),
+}));
 ---
 
 <BaseLayout
   title="社団戦(東将連) — 立教大学将棋部"
-  description="東京アマチュア将棋連盟 社会人団体リーグ戦(社団戦)における立教関係チーム「立教大学紫龍会」「紫龍会」の成績。第34回(令和7年度)の所属部・順位・勝点・勝数・昇降を掲載しています。"
+  description="東京アマチュア将棋連盟 社会人団体リーグ戦(社団戦)における立教関係チーム「立教大学紫龍会」「紫龍会」の成績。第22回(平成23年度)からの歴代成績と最新回の詳細を掲載しています。"
 >
   <main>
     <h2 class="page-title">社団戦(東将連 社会人団体リーグ戦)</h2>
@@ -22,82 +38,234 @@ const latest = seasons[0] ?? null;
         <p>社団戦データはまだ登録されていません。</p>
       </div>
     ) : (
-      <section aria-labelledby="kai-title">
-        <h3 id="kai-title" class="kai-title">第{latest.kai}回（{latest.season_label}）</h3>
+      <>
+        <section aria-labelledby="kai-title">
+          <h3 id="kai-title" class="section-title">第{latest.kai}回（{latest.season_label}）</h3>
 
-        <div class="team-grid">
-          {latest.teams.map(team => (
-            <article class="team-card">
-              <header class="team-head">
-                <span class="team-name">{team.team_name}</span>
-                <span class="division-badge">{team.division}</span>
-              </header>
+          <div class="team-grid">
+            {latest.teams.map(team => (
+              <article class="team-card">
+                <header class="team-head">
+                  <span class="team-name">{team.team_name}</span>
+                  <span class="division-badge">{team.division}</span>
+                </header>
 
-              <dl class="stat">
-                <div><dt>順位</dt><dd class="rank">{team.rank != null ? `${team.rank}位` : '—'}</dd></div>
-                <div><dt>勝点</dt><dd>{team.points ?? '—'}</dd></div>
-                <div><dt>勝数</dt><dd>{team.wins ?? '—'}</dd></div>
-                <div>
-                  <dt>昇降</dt>
-                  <dd>
-                    {team.promotion === '昇級' && <span class="promo up">▲昇級</span>}
-                    {team.promotion === '降級' && <span class="promo down">▼降級</span>}
-                    {team.promotion == null && <span class="promo none">残留</span>}
-                  </dd>
+                <dl class="stat">
+                  <div><dt>順位</dt><dd class="rank">{team.rank != null ? `${team.rank}位` : '—'}</dd></div>
+                  <div><dt>勝点</dt><dd>{team.points ?? '—'}</dd></div>
+                  <div><dt>勝数</dt><dd>{team.wins ?? '—'}</dd></div>
+                  <div>
+                    <dt>昇降</dt>
+                    <dd>
+                      {team.promotion === '昇級' && <span class="promo up">▲昇級</span>}
+                      {team.promotion === '降級' && <span class="promo down">▼降級</span>}
+                      {team.promotion == null && <span class="promo none">残留</span>}
+                    </dd>
+                  </div>
+                </dl>
+
+                {team.league_table && (
+                  <div class="league-table-wrap">
+                    <table class="league-table">
+                      <thead>
+                        <tr><th>順位</th><th>チーム</th><th>勝点</th><th>勝数</th></tr>
+                      </thead>
+                      <tbody>
+                        {team.league_table.rows.map(r => (
+                          <tr class={r.team === team.team_name ? 'self' : ''}>
+                            <td>{r.rank ?? '—'}</td><td>{r.team}</td>
+                            <td>{r.points ?? '—'}</td><td>{r.wins ?? '—'}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                <p class="source-link">
+                  出典: <a href={team.source_url} target="_blank" rel="noopener">順位一覧表（PDF）</a>
+                </p>
+              </article>
+            ))}
+          </div>
+
+          {latest.source && (
+            <p class="sources">
+              出典:
+              {latest.source.hub_url && (
+                <a href={latest.source.hub_url} target="_blank" rel="noopener">大会ページ</a>
+              )}
+              {latest.source.ichiran_pdf && (
+                <a href={latest.source.ichiran_pdf} target="_blank" rel="noopener">順位一覧表（PDF）</a>
+              )}
+              {(latest.source.league_pdf ?? []).map((u, i) => (
+                <a href={u} target="_blank" rel="noopener">リーグ表{i === 0 ? '（通常版）' : '（成績順）'}（PDF）</a>
+              ))}
+              <span class="src-note">（東京アマチュア将棋連盟）</span>
+            </p>
+          )}
+        </section>
+
+        <section aria-labelledby="history-title">
+          <h3 id="history-title" class="section-title">歴代成績（第22回〜）</h3>
+          <p class="section-note">
+            令和2・3年度の団体戦はコロナ禍のため中止。第31回は令和4年度に単一リーグ制で開催。
+            昇降欄が空欄の回は出典PDFに昇降の記載がないもの（入替戦の結果等は翌回の所属部から判定して注記）。
+          </p>
+          <div class="history-wrap">
+            <table class="history-table">
+              <thead>
+                <tr><th>回</th><th>年度</th><th>チーム</th><th>部</th><th>順位</th><th>勝点</th><th>勝数</th><th>昇降</th><th>出典</th></tr>
+              </thead>
+              <tbody>
+                {historyRows.map(({ season, team }) => (
+                  <tr>
+                    <td>第{season.kai}回</td>
+                    <td>{season.season_label}</td>
+                    <td class="t-name">{team.team_name}</td>
+                    <td>{team.division}</td>
+                    <td>{team.rank != null ? `${team.rank}位` : '—'}</td>
+                    <td>{team.points ?? '—'}</td>
+                    <td>{team.wins ?? '—'}</td>
+                    <td>
+                      {team.promotion === '昇級' && <span class="promo up">▲昇級</span>}
+                      {team.promotion === '降級' && <span class="promo down">▼降級</span>}
+                    </td>
+                    <td><a href={team.source_url} target="_blank" rel="noopener">PDF</a></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {playerCharts.length > 0 && (
+          <section aria-labelledby="rating-title">
+            <h3 id="rating-title" class="section-title">個人レーティング推移</h3>
+            <p class="section-note">
+              東将連公式レーティング（新持点）の推移です。本人の同意を得た部員のみ掲載しています。
+              レーティングが公開されている回（第33回〜）のみ表示。
+            </p>
+            {playerCharts.map(pc => (
+              <article class="player-card">
+                <header class="player-head">
+                  <span class="player-name">{pc.name}</span>
+                  <span class="player-team">{pc.teams[pc.teams.length - 1]}</span>
+                  <span class="player-rating">R{pc.ratings[pc.ratings.length - 1]}</span>
+                </header>
+                <div class="rating-canvas-wrap">
+                  <canvas id={`rating-${pc.player_id}`} role="img"
+                    aria-label={`${pc.name}のレーティング推移グラフ`}></canvas>
                 </div>
-              </dl>
-
-              {team.league_table && (
-                <div class="league-table-wrap">
-                  <table class="league-table">
-                    <thead>
-                      <tr><th>順位</th><th>チーム</th><th>勝点</th><th>勝数</th></tr>
-                    </thead>
+                <noscript>
+                  <table class="rating-fallback">
+                    <thead><tr><th>回</th><th>レーティング</th><th>通算対局数</th></tr></thead>
                     <tbody>
-                      {team.league_table.rows.map(r => (
-                        <tr class={r.team === team.team_name ? 'self' : ''}>
-                          <td>{r.rank ?? '—'}</td><td>{r.team}</td>
-                          <td>{r.points ?? '—'}</td><td>{r.wins ?? '—'}</td>
-                        </tr>
+                      {pc.labels.map((l, i) => (
+                        <tr><td>{l}（{pc.sublabels[i]}）</td><td>{pc.ratings[i]}</td><td>{pc.games[i]}</td></tr>
                       ))}
                     </tbody>
                   </table>
-                </div>
-              )}
-
-              <p class="source-link">
-                出典: <a href={team.source_url} target="_blank" rel="noopener">順位一覧表（PDF）</a>
-              </p>
-            </article>
-          ))}
-        </div>
-
-        {latest.source && (
-          <p class="sources">
-            出典:
-            {latest.source.hub_url && (
-              <a href={latest.source.hub_url} target="_blank" rel="noopener">大会ページ</a>
-            )}
-            {latest.source.ichiran_pdf && (
-              <a href={latest.source.ichiran_pdf} target="_blank" rel="noopener">順位一覧表（PDF）</a>
-            )}
-            {(latest.source.league_pdf ?? []).map((u, i) => (
-              <a href={u} target="_blank" rel="noopener">リーグ表{i === 0 ? '（通常版）' : '（成績順）'}（PDF）</a>
+                </noscript>
+              </article>
             ))}
-            <span class="src-note">（東京アマチュア将棋連盟）</span>
-          </p>
+            <script type="application/json" id="rating-data" set:html={JSON.stringify(playerCharts)} />
+          </section>
         )}
-      </section>
+      </>
     )}
   </main>
 </BaseLayout>
+
+<script>
+  import {
+    Chart,
+    LineController,
+    LineElement,
+    PointElement,
+    CategoryScale,
+    LinearScale,
+    Filler,
+    Tooltip,
+  } from 'chart.js';
+
+  Chart.register(LineController, LineElement, PointElement, CategoryScale, LinearScale, Filler, Tooltip);
+
+  const el = document.getElementById('rating-data');
+  if (el) {
+    const charts = JSON.parse(el.textContent || '[]') as {
+      player_id: string; name: string; labels: string[]; sublabels: string[];
+      ratings: number[]; games: number[]; teams: string[];
+    }[];
+    const THEME = '#5b0000';
+    for (const pc of charts) {
+      const canvas = document.getElementById(`rating-${pc.player_id}`) as HTMLCanvasElement | null;
+      if (!canvas) continue;
+      new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: pc.labels,
+          datasets: [{
+            data: pc.ratings,
+            borderColor: THEME,
+            borderWidth: 2.5,
+            pointRadius: 5,
+            pointBackgroundColor: '#fff',
+            pointBorderColor: THEME,
+            pointBorderWidth: 2,
+            tension: 0,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              grace: '15%',
+              ticks: { precision: 0, color: '#7a7a7a' },
+              grid: { color: '#eee' },
+              border: { display: false },
+            },
+            x: {
+              ticks: { color: '#999' },
+              grid: { display: false },
+              border: { color: '#ddd' },
+            },
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#2a1010',
+              titleColor: '#fff',
+              bodyColor: '#f0d8d8',
+              padding: 10,
+              cornerRadius: 8,
+              displayColors: false,
+              callbacks: {
+                title: (items) => {
+                  const i = items[0]?.dataIndex ?? 0;
+                  return `${pc.labels[i]}（${pc.sublabels[i]}）`;
+                },
+                label: (item) => {
+                  const i = item.dataIndex;
+                  return `R${pc.ratings[i]} / 通算${pc.games[i]}局 / ${pc.teams[i]}`;
+                },
+              },
+            },
+          },
+        },
+      });
+    }
+  }
+</script>
 
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem; }
   .page-title { font-size: 1.3rem; color: #5b0000; margin: 0 0 0.5rem; }
   .lead { font-size: 0.85rem; color: #777; margin: 0 0 1.5rem; }
-  .kai-title { font-size: 1.1rem; color: #5b0000; border-bottom: 2px solid #5b0000; padding-bottom: 0.3rem; }
+  .section-title { font-size: 1.1rem; color: #5b0000; border-bottom: 2px solid #5b0000; padding-bottom: 0.3rem; margin-top: 2.2rem; }
+  .section-note { font-size: 0.78rem; color: #999; margin: 0.5rem 0 1rem; }
   .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 1rem 0 1.5rem; }
   .team-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; padding: 1rem 1.2rem; }
   .team-head { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.7rem; }
@@ -123,4 +291,23 @@ const latest = seasons[0] ?? null;
   .sources a { color: #5b0000; }
   .src-note { color: #aaa; }
   .empty-notice { text-align: center; padding: 3rem 1rem; color: #888; }
+
+  .history-wrap { overflow-x: auto; background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; }
+  .history-table { border-collapse: collapse; width: 100%; font-size: 0.82rem; min-width: 640px; }
+  .history-table th { background: #f7f2f2; color: #5b0000; font-size: 0.75rem; padding: 0.45rem 0.5rem; border-bottom: 2px solid #e0d0d0; text-align: left; white-space: nowrap; }
+  .history-table td { padding: 0.4rem 0.5rem; border-bottom: 1px solid #f0eaea; white-space: nowrap; }
+  .history-table tbody tr:hover { background: #fdf9f4; }
+  .history-table .t-name { font-weight: bold; }
+  .history-table a { color: #888; font-size: 0.75rem; }
+  .history-table a:hover { color: #5b0000; }
+  .history-table .promo { font-size: 0.75rem; }
+
+  .player-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; padding: 1rem 1.2rem; margin-bottom: 1rem; }
+  .player-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 0.7rem; }
+  .player-name { font-weight: bold; font-size: 1.05rem; color: #333; }
+  .player-team { font-size: 0.78rem; color: #888; }
+  .player-rating { margin-left: auto; font-weight: bold; color: #5b0000; font-size: 1.1rem; }
+  .rating-canvas-wrap { position: relative; height: 220px; width: 100%; }
+  .rating-fallback { border-collapse: collapse; font-size: 0.8rem; }
+  .rating-fallback th, .rating-fallback td { border: 1px solid #ddd; padding: 0.2rem 0.5rem; }
 </style>

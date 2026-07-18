@@ -1,0 +1,25 @@
+{
+  "kai": 31,
+  "season": "R04",
+  "season_label": "令和4年度",
+  "source": {
+    "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-R04.htm",
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/31/rankingA4.pdf"
+  },
+  "teams": [
+    {
+      "team_id": "shiryukai_univ",
+      "team_name": "立教大紫龍会",
+      "kai": 31,
+      "division": "5部",
+      "rank": 4,
+      "points": 12,
+      "wins": 71,
+      "promotion": "昇級",
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/31/rankingA4.pdf",
+      "league_table": null,
+      "note": "オンライン併用形式・単一5部リーグ(20チーム)。12勝3敗。勝点は勝利マッチ数。入替戦を経て昇級(翌回4部赤所属より判定)。"
+    }
+  ]
+}

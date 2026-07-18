@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ShadanPlayerHistory",
+  "description": "社団戦(東将連)の個人レーティング推移。本人の同意を得て公開する人の分のみコミットする(ROADMAP §2-2)。reg_no は内部キーであり公開ページには表示しない。",
+  "type": "object",
+  "required": ["player_id", "name", "reg_no", "consent", "history"],
+  "additionalProperties": false,
+  "properties": {
+    "player_id": { "type": "string", "description": "ファイル名と一致する安定ID。例: kubota-kosuke" },
+    "name": { "type": "string" },
+    "reg_no": { "type": "integer", "description": "東将連の登録番号(年をまたぐ安定キー。ページには表示しない)" },
+    "consent": { "type": "string", "description": "公開同意の経緯・日付" },
+    "history": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["kai", "season", "season_label", "team", "rating", "games", "source_url"],
+        "additionalProperties": false,
+        "properties": {
+          "kai": { "type": "integer" },
+          "season": { "type": "string" },
+          "season_label": { "type": "string" },
+          "team": { "type": "string" },
+          "division": { "type": ["string", "null"], "description": "全部門一覧PDF由来の場合のみ。部別PDF由来はチーム成績側で分かるため null 可" },
+          "rating": { "type": "integer", "description": "新持点(公式レーティング)" },
+          "games": { "type": "integer", "description": "通算対局数" },
+          "source_url": { "type": "string", "format": "uri" }
+        }
+      }
+    }
+  }
+}

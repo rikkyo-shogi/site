@@ -1,0 +1,39 @@
+{
+  "kai": 27,
+  "season": "H28",
+  "season_label": "平成28年度",
+  "source": {
+    "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-H28.htm",
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/27/5nitimeitiran1.pdf"
+  },
+  "teams": [
+    {
+      "team_id": "shiryukai",
+      "team_name": "紫龍会",
+      "kai": 27,
+      "division": "3部白",
+      "rank": 14,
+      "points": 4,
+      "wins": 41,
+      "promotion": null,
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/27/5nitimeitiran1.pdf",
+      "league_table": null,
+      "note": "この回を最後に第32回まで休会。"
+    },
+    {
+      "team_id": "shiryukai_univ",
+      "team_name": "立教大紫龍会",
+      "kai": 27,
+      "division": "3部赤",
+      "rank": 16,
+      "points": 0,
+      "wins": 16,
+      "promotion": "降級",
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/27/5nitimeitiran1.pdf",
+      "league_table": null,
+      "note": "翌回4部白所属より判定。"
+    }
+  ]
+}

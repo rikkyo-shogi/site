@@ -1,0 +1,25 @@
+{
+  "kai": 32,
+  "season": "R05",
+  "season_label": "令和5年度",
+  "source": {
+    "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-R05.htm",
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/32/32_ichiran_04.pdf"
+  },
+  "teams": [
+    {
+      "team_id": "shiryukai_univ",
+      "team_name": "立教大学紫龍会",
+      "kai": 32,
+      "division": "4部赤",
+      "rank": 5,
+      "points": 9,
+      "wins": 57,
+      "promotion": "昇級",
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/32/32_ichiran_04.pdf",
+      "league_table": null,
+      "note": "入替戦勝利により昇級(△昇)。"
+    }
+  ]
+}

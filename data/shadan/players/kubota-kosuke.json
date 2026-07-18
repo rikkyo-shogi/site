@@ -1,0 +1,28 @@
+{
+  "player_id": "kubota-kosuke",
+  "name": "久保田 耕介",
+  "reg_no": 8855,
+  "consent": "本人の依頼により公開(2026-07-18)",
+  "history": [
+    {
+      "kai": 33,
+      "season": "R06",
+      "season_label": "令和6年度",
+      "team": "紫龍会",
+      "division": "５部白",
+      "rating": 1574,
+      "games": 119,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"
+    },
+    {
+      "kai": 34,
+      "season": "R07",
+      "season_label": "令和7年度",
+      "team": "紫龍会",
+      "division": null,
+      "rating": 1635,
+      "games": 129,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_l6r.pdf"
+    }
+  ]
+}

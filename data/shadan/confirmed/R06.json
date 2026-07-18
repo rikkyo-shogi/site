@@ -1,0 +1,39 @@
+{
+  "kai": 33,
+  "season": "R06",
+  "season_label": "令和6年度",
+  "source": {
+    "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-R06.htm",
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/33/33_ichiran_04.pdf"
+  },
+  "teams": [
+    {
+      "team_id": "shiryukai_univ",
+      "team_name": "立教大学紫龍会",
+      "kai": 33,
+      "division": "3部白",
+      "rank": 10,
+      "points": 8,
+      "wins": 53,
+      "promotion": null,
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/33/33_ichiran_04.pdf",
+      "league_table": null,
+      "note": ""
+    },
+    {
+      "team_id": "shiryukai",
+      "team_name": "紫龍会",
+      "kai": 33,
+      "division": "5部白",
+      "rank": 13,
+      "points": 4,
+      "wins": 45,
+      "promotion": "降級",
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/33/33_ichiran_04.pdf",
+      "league_table": null,
+      "note": "第28回からの休会を経てこの回に5部で復帰(▼降)。"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "kai": 29,
+  "season": "H30",
+  "season_label": "平成30年度",
+  "source": {
+    "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-H30.htm",
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/29/5nitimeitiran1.pdf"
+  },
+  "teams": [
+    {
+      "team_id": "shiryukai_univ",
+      "team_name": "立教大紫龍会",
+      "kai": 29,
+      "division": "5部白",
+      "rank": 5,
+      "points": 10,
+      "wins": 62.5,
+      "promotion": null,
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/29/5nitimeitiran1.pdf",
+      "league_table": null,
+      "note": ""
+    }
+  ]
+}

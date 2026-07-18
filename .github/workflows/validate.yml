@@ -65,3 +65,26 @@ jobs:
               print('\n'.join(errors)); sys.exit(1)
           print(f'All {len(list(confirmed.glob(\"*.json\")))} shadan files valid.')
           "
+      - name: Validate shadan player files
+        run: |
+          python3 -c "
+          import json, jsonschema, sys
+          from pathlib import Path
+
+          players = Path('data/shadan/players')
+          schema_path = Path('data/shadan/player.schema.json')
+          if not players.exists():
+              print('no data/shadan/players; skip'); sys.exit(0)
+          schema = json.loads(schema_path.read_text())
+          errors = []
+          for f in sorted(players.glob('*.json')):
+              errs = list(jsonschema.Draft7Validator(schema).iter_errors(json.loads(f.read_text())))
+              if errs:
+                  errors.append(f'{f.name}: {[e.message for e in errs]}')
+                  print(f'FAIL {f.name}')
+              else:
+                  print(f'OK   {f.name}')
+          if errors:
+              print('\n'.join(errors)); sys.exit(1)
+          print(f'All {len(list(players.glob(\"*.json\")))} player files valid.')
+          "

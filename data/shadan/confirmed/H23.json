@@ -1,0 +1,25 @@
+{
+  "kai": 22,
+  "season": "H23",
+  "season_label": "平成23年度",
+  "source": {
+    "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-H23.htm",
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/22/5nitimeitiran.pdf"
+  },
+  "teams": [
+    {
+      "team_id": "shiryukai",
+      "team_name": "紫龍会",
+      "kai": 22,
+      "division": "3部青",
+      "rank": 5,
+      "points": 10,
+      "wins": 64,
+      "promotion": null,
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/22/5nitimeitiran.pdf",
+      "league_table": null,
+      "note": "この年度の3部は赤・白・青の3リーグ制。"
+    }
+  ]
+}
