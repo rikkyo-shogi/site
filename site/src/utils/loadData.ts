@@ -95,6 +95,14 @@ export interface SeasonData {
 
 const CONFIRMED_DIR = join(process.cwd(), '..', 'data', 'confirmed');
 
+/** 年度キー(H21/R08等)を比較可能な数値にする。令和>平成、数字昇順。 */
+function seasonSortRank(s: string): number {
+  const m = s.match(/^(R|H)(\d+)$/i);
+  if (!m) return 0;
+  const era = m[1].toUpperCase() === 'R' ? 2000 : 1000;
+  return era + parseInt(m[2]);
+}
+
 export async function loadAllSeasons(): Promise<SeasonData[]> {
   let files: string[] = [];
   try {
@@ -116,15 +124,7 @@ export async function loadAllSeasons(): Promise<SeasonData[]> {
   }
 
   // 年度の新しい順(和暦→令和>平成、数字の降順)
-  seasons.sort((a, b) => {
-    const rank = (s: string) => {
-      const m = s.match(/^(R|H)(\d+)$/i);
-      if (!m) return 0;
-      const era = m[1].toUpperCase() === 'R' ? 2000 : 1000;
-      return era + parseInt(m[2]);
-    };
-    return rank(b.season) - rank(a.season);
-  });
+  seasons.sort((a, b) => seasonSortRank(b.season) - seasonSortRank(a.season));
 
   return seasons;
 }
@@ -172,7 +172,11 @@ export interface LeagueTrendPoint {
   champion: boolean;                     // rank===1(優勝)
 }
 
-/** 時系列スロット。point===null は欠測(線で補間しない対象) */
+/**
+ * 時系列スロット。point===null はデータの無い半期(R02=コロナ 等)。
+ * 描画側(LeagueTrend.astro)は現在この区間を直線で繋いで表示する(spanGaps:true)。
+ * マーカーは置かれないため、null スロットは x軸ラベルとしてのみ現れる。
+ */
 export interface LeagueTrendSlot {
   season: string;
   season_half: 'spring' | 'autumn';
@@ -180,23 +184,17 @@ export interface LeagueTrendSlot {
   point: LeagueTrendPoint | null;
 }
 
-function seasonSortRank(s: string): number {
-  const m = s.match(/^(R|H)(\d+)$/i);
-  if (!m) return 0;
-  const era = m[1].toUpperCase() === 'R' ? 2000 : 1000;
-  return era + parseInt(m[2]);
-}
-
 const halfLabel = (h: 'spring' | 'autumn') => (h === 'spring' ? '春' : '秋');
 
 /**
  * type:'team' かつ立教が登場するイベントから、シーズン別の所属リーグを時系列化する。
- * 各年度の春/秋の全スロットを古い順に並べ、団体戦の結果が無い半期は point=null(欠測)にする。
- * 両端の欠測(データ範囲外)は軸に含めない。R02(コロナ)や H21秋 等は中間の欠測として残す。
+ * 各年度の春/秋の全スロットを古い順に並べ、団体戦の結果が無い半期は point=null にする。
+ * 両端のデータ無し期間(範囲外)は軸に含めない。
+ * seasons を渡せば再読み込みせずに集計する(省略時は loadAllSeasons() を呼ぶ)。
  */
-export async function loadLeagueTrend(): Promise<LeagueTrendSlot[]> {
-  const seasons = await loadAllSeasons();
-  // 古い順(H21春 →)に並べ替える
+export async function loadLeagueTrend(seasons?: SeasonData[]): Promise<LeagueTrendSlot[]> {
+  seasons ??= await loadAllSeasons();
+  // loadAllSeasons は新しい順に整列済みなので、反転して古い順(H21春 →)にする
   const ordered = [...seasons].sort((a, b) => seasonSortRank(a.season) - seasonSortRank(b.season));
 
   // (season, half) -> その半期の主たる団体戦の順位

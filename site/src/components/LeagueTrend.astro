@@ -3,9 +3,14 @@
 // data/confirmed/*.json だけで完結する(追加データ収集なし)。
 // 縦軸=リーグ名(C2〜A)、横軸=シーズン(H21春〜)。Chart.js の stepped line。
 // データが無い半期(R02=コロナ、H21秋 等)は spanGaps:true で直線で繋いで表示する。
-import { loadLeagueTrend, LEAGUE_AXIS_LABELS } from '../utils/loadData';
+import { loadLeagueTrend, LEAGUE_AXIS_LABELS, type SeasonData } from '../utils/loadData';
 
-const slots = await loadLeagueTrend();
+interface Props {
+  /** 呼び出し元が読み込み済みの年度データ。渡すと二重読み込みを避けられる */
+  seasons?: SeasonData[];
+}
+
+const slots = await loadLeagueTrend(Astro.props.seasons);
 
 // クライアント script へ渡す最小限のデータ(JSON埋め込み)
 const chartPayload = {
@@ -65,7 +70,19 @@ const present = slots.filter(s => s.point).map(s => s.point!);
 </section>
 
 <script>
-  import Chart from 'chart.js/auto';
+  // chart.js/auto は全チャート種を含み肥大するため、折れ線に必要な部品だけ登録する
+  import {
+    Chart,
+    LineController,
+    LineElement,
+    PointElement,
+    CategoryScale,
+    LinearScale,
+    Filler,
+    Tooltip,
+  } from 'chart.js';
+
+  Chart.register(LineController, LineElement, PointElement, CategoryScale, LinearScale, Filler, Tooltip);
 
   const el = document.getElementById('league-trend-data');
   const canvas = document.getElementById('league-trend-canvas') as HTMLCanvasElement | null;
@@ -124,22 +141,17 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     // 降級は下向き三角(180度回転)、それ以外は既定の向き
     const pointRotation = points.map(p => (p && p.promotion === '降級' ? 180 : 0));
     const pointRadius = points.map(p => (p ? (p.champion ? 9 : (p.promotion ? 6 : 3.5)) : 0));
-    // 通常点は中抜き(白地+えんじ色の輪)にして控えめに。昇降級・優勝だけ色を塗って目立たせる
-    const pointBg = points.map(p => {
-      if (!p) return THEME;
+    // 昇降級・優勝は強調色で塗り、通常点は中抜き(白地+えんじ色の輪)にして控えめに
+    const accentColor = (p: (typeof points)[number]) => {
+      if (!p) return null;
       if (p.champion) return GOLD;
       if (p.promotion === '昇級') return GREEN;
       if (p.promotion === '降級') return RED;
-      return SURFACE;
-    });
-    const pointBorder = points.map(p => {
-      if (!p) return THEME;
-      if (p.champion) return GOLD;
-      if (p.promotion === '昇級') return GREEN;
-      if (p.promotion === '降級') return RED;
-      return THEME;
-    });
-    const pointBorderWidth = points.map(p => (p && (p.champion || p.promotion) ? 2 : 1.5));
+      return null;
+    };
+    const pointBg = points.map(p => accentColor(p) ?? (p ? SURFACE : THEME));
+    const pointBorder = points.map(p => accentColor(p) ?? THEME);
+    const pointBorderWidth = points.map(p => (accentColor(p) ? 2 : 1.5));
     const pointHoverRadius = pointRadius.map(r => (r ? r + 2 : 0));
 
     // リーグ帯を1段おきに薄く塗り、「階段を上り下りしている」読み取りを助ける
@@ -150,10 +162,10 @@ const present = slots.filter(s => s.point).map(s => s.point!);
         if (!chartArea) return;
         const y = scales.y;
         ctx.save();
+        ctx.fillStyle = 'rgba(91, 0, 0, 0.035)';
         for (let lvl = 1; lvl <= 5; lvl += 2) {
           const top = y.getPixelForValue(lvl + 0.5);
           const bottom = y.getPixelForValue(lvl - 0.5);
-          ctx.fillStyle = 'rgba(91, 0, 0, 0.035)';
           ctx.fillRect(chartArea.left, top, chartArea.right - chartArea.left, bottom - top);
         }
         ctx.restore();
@@ -196,14 +208,24 @@ const present = slots.filter(s => s.point).map(s => s.point!);
           borderJoinStyle: 'round',
           borderCapStyle: 'round',
           fill: 'start',
-          backgroundColor: (context: any) => {
-            const { ctx, chartArea } = context.chart;
-            if (!chartArea) return 'transparent';
-            const g = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-            g.addColorStop(0, 'rgba(91, 0, 0, 0.16)');
-            g.addColorStop(1, 'rgba(91, 0, 0, 0)');
-            return g;
-          },
+          // scriptable option は描画のたびに再評価されるため、chartArea が変わらない限り
+          // 生成済みグラデーションを使い回す(ホバー中の毎フレーム再生成を避ける)
+          backgroundColor: (() => {
+            let cached: CanvasGradient | null = null;
+            let cacheKey = '';
+            return (context: any) => {
+              const { ctx, chartArea } = context.chart;
+              if (!chartArea) return 'transparent';
+              const key = `${chartArea.top}:${chartArea.bottom}`;
+              if (!cached || cacheKey !== key) {
+                cached = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                cached.addColorStop(0, 'rgba(91, 0, 0, 0.16)');
+                cached.addColorStop(1, 'rgba(91, 0, 0, 0)');
+                cacheKey = key;
+              }
+              return cached;
+            };
+          })(),
           pointStyle,
           pointRotation,
           pointRadius,

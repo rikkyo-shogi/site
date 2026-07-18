@@ -26,7 +26,7 @@
   "definitions": {
     "ShadanTeam": {
       "type": "object",
-      "required": ["team_id", "team_name", "kai", "division", "source_type", "source_url"],
+      "required": ["team_id", "team_name", "kai", "division", "rank", "points", "wins", "promotion", "source_type", "source_url", "league_table"],
       "additionalProperties": false,
       "properties": {
         "team_id": { "type": "string", "description": "名称変更に備えた安定ID。例: shiryukai_univ / shiryukai" },

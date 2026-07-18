@@ -17,7 +17,7 @@ const seasons = await loadAllSeasons();
       関東大学将棋連盟の公式成績をシーズン別にまとめています。出典リンクから原本をご確認いただけます。
     </p>
 
-    {seasons.length > 0 && <LeagueTrend />}
+    {seasons.length > 0 && <LeagueTrend seasons={seasons} />}
 
     {seasons.length === 0 ? (
       <div class="empty-notice">

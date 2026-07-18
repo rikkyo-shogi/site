@@ -28,8 +28,8 @@
 | **掲示板データ** | 13 イベントに `bbs_detail`（対戦相手別スコア）が付与済み |
 | **公開** | **https://rikkyo-shogi.github.io/site/** で公開済み（Organization: rikkyo-shogi / repo: site）|
 | **SEO（フェーズ1・2）** | robots.txt・sitemap自動生成・BaseLayout（description/canonical/OGP/Twitter Card/GSC確認タグ）・JSON-LD・OGP画像。詳細は §11 |
-| **昇降級推移グラフ（ROADMAP §2-3）** | `loadData.ts` の `loadLeagueTrend()` で `data/confirmed` を集計。`LeagueTrend.astro`（Chart.js の stepped line）を大会結果ページ冒頭に配置。縦軸=リーグ名（C2〜A）、横軸=シーズン（H21春〜R08春）。昇級▲/降級▼/優勝★をマーカーで強調、欠測期（R02・H21秋 等）は `spanGaps:false` で補間せず表示。JS無効時は簡易テーブルにフォールバック。追加データ収集ゼロ |
-| **社団戦パイプライン試作（ROADMAP §2-1/2-2）** | `scraper/fetch_shadan.py`＋`parse_shadan.py`（pdfplumber）で第34回（R07）を抽出。順位一覧PDFの2段組を座標で左右分割し立教2チームの成績を取得 → `data/shadan/confirmed/R07.json`（`teams[]`、`league_table`は現状 null）。`source_type: shadan_pdf` を新設し `data/shadan/schema.json`＋`validate.yml` で検証。`site/src/pages/shadan/index.astro` で2チーム並列表示・出典PDFリンク付き、ナビに「社団戦」追加。個人ランキング（l3w=立教大学紫龍会14名 / l6r=紫龍会13名）は `data/auto/shadan/`（gitignore）にのみ出力し非公開 |
+| **昇降級推移グラフ（ROADMAP §2-3）** | `loadData.ts` の `loadLeagueTrend()` で `data/confirmed` を集計。`LeagueTrend.astro`（Chart.js の stepped line）を大会結果ページ冒頭に配置。縦軸=リーグ名（C2〜A）、横軸=シーズン（H21春〜R08春）。昇級▲/降級▼/優勝★をマーカーで強調。データの無い半期（R02・H21秋 等）は x軸に残しつつ `spanGaps:true` で線を直線接続して表示（マーカーなし。フィードバックにより欠測を目立たせない方針に確定）。JS無効時は簡易テーブルにフォールバック。追加データ収集ゼロ |
+| **社団戦パイプライン試作（ROADMAP §2-1/2-2）** | `scraper/fetch_shadan.py`＋`parse_shadan.py`（pdfplumber）で第34回（R07）を抽出。順位一覧PDFの2段組を座標で左右分割し（赤/白はヘッダー表記から取得）立教2チームの成績を取得 → `data/shadan/confirmed/R07.json`（`teams[]`、`league_table`は現状 null）。`source_type: shadan_pdf` を新設し `data/shadan/schema.json`＋`validate.yml` で検証（保存前にもスキーマ検証）。個人ランキングPDFは所属部から自動導出（第34回: 3部白=立教大学紫龍会14名 / 6部赤=紫龍会13名）し `data/auto/shadan/`（gitignore）にのみ出力・非公開。`site/src/pages/shadan/index.astro` で2チーム並列表示・出典PDFリンク付き、ナビに「社団戦」追加 |
 
 ### 未完了・残作業
 
@@ -436,7 +436,7 @@ HTML/xlsx ファイル先頭行付近から `1日目 ○月○日 於 ○○大�
 | `events[].date` | string\|null | – | 判明範囲で。`YYYY` / `YYYY-MM` / `YYYY-MM-DD` / 期間は `開始/終了`。不明は `null` |
 | `events[].venue` | string\|null | – | 会場。不明は `null` か `""` |
 | `events[].source_url` | string | ✓ | 一次情報の URL(連盟PDF/HTMLページ/掲示板記事のいずれか) |
-| `events[].source_type` | enum | ✓ | `kanto_pdf` \| `kanto_html` \| `kanto_xlsx` \| `national_pdf` \| `national_html` \| `national_xlsx` \| `bbs` \| `manual` \| `shadan_pdf` |
+| `events[].source_type` | enum | ✓ | `kanto_pdf` \| `kanto_html` \| `kanto_xlsx` \| `national_pdf` \| `national_html` \| `national_xlsx` \| `bbs` \| `manual` |
 | `events[].rikkyo_present` | bool | ✓ | 立教が登場するか。`false` のイベントは原則保存しない(§2.4) |
 | `events[].rikkyo_result` | object\|null | 団体 | 下記参照。個人イベントでは `null` |
 | `events[].rikkyo_players` | array | 個人 | 下記参照。団体イベントでは省略可 |
@@ -449,7 +449,8 @@ HTML/xlsx ファイル先頭行付近から `1日目 ○月○日 於 ○○大�
 - `manual` は黒板写真・口頭情報など非公式ソースの手動入力（サイト上の出典ラベルは「部内記録」表示）。
   公式PDFが後から公開されたら該当の `kanto_*` に変更し `source_url` を実URLへ更新する。
   enum を増やす場合は `data/schema.json` にも追記が必要。
-- `shadan_pdf` は社団戦（東将連 社会人団体リーグ戦）PDF由来。関東学生団体戦とは名前空間を分離し、
+- `shadan_pdf` は社団戦（東将連 社会人団体リーグ戦）PDF由来の `source_type`。関東学生団体戦とは
+  名前空間を分離するため、上記の関東用 enum（`data/schema.json`）には**含めない**。
   データは `data/shadan/confirmed/RXX.json`、スキーマは `data/shadan/schema.json`（CI `validate.yml` で検証）。
   構造は `teams[]` 配列（`{ team_id, team_name, kai, division, rank, points, wins, promotion, source_type, source_url, league_table, note }`）。
   `team_id` は名称変更に備えた安定ID（例 `shiryukai_univ`＝立教大学紫龍会 / `shiryukai`＝紫龍会）。
