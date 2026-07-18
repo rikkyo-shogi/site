@@ -1,0 +1,39 @@
+{
+  "kai": 19,
+  "season": "H20",
+  "season_label": "平成20年度",
+  "source": {
+    "hub_url": "https://toushouren.world.coocan.jp/sub9-H20.htm",
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/19/19tennsu2r.htm"
+  },
+  "teams": [
+    {
+      "team_id": "shiryukai_univ",
+      "team_name": "立教大学紫龍会",
+      "kai": 19,
+      "division": "2部赤",
+      "rank": null,
+      "points": null,
+      "wins": null,
+      "promotion": null,
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/19/19tennsu2r.htm",
+      "league_table": null,
+      "note": "所属は部別レーティング一覧より。リーグ表が現存せず順位は不明。"
+    },
+    {
+      "team_id": "shiryukai",
+      "team_name": "紫龍会",
+      "kai": 19,
+      "division": "3部青",
+      "rank": null,
+      "points": null,
+      "wins": null,
+      "promotion": "降級",
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/19/19tennsu3b.htm",
+      "league_table": null,
+      "note": "所属は部別レーティング一覧より。リーグ表が現存せず順位は不明。翌回4部白所属より降級と判定。"
+    }
+  ]
+}

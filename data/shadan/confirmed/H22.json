@@ -1,0 +1,25 @@
+{
+  "kai": 21,
+  "season": "H22",
+  "season_label": "平成22年度",
+  "source": {
+    "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-H22.htm",
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/21/page2105.pdf"
+  },
+  "teams": [
+    {
+      "team_id": "shiryukai",
+      "team_name": "紫龍会",
+      "kai": 21,
+      "division": "3部青",
+      "rank": 12,
+      "points": 6,
+      "wins": 49,
+      "promotion": null,
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/21/page2105.pdf",
+      "league_table": null,
+      "note": "6勝9敗。立教大学紫龍会はこの回から休会。"
+    }
+  ]
+}

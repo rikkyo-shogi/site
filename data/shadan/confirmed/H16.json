@@ -1,0 +1,39 @@
+{
+  "kai": 15,
+  "season": "H16",
+  "season_label": "平成16年度",
+  "source": {
+    "hub_url": "https://toushouren.world.coocan.jp/sub9-H16.htm",
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/go/2r.htm"
+  },
+  "teams": [
+    {
+      "team_id": "shiryukai_univ",
+      "team_name": "立教大学紫龍会",
+      "kai": 15,
+      "division": "2部赤",
+      "rank": 10,
+      "points": 7,
+      "wins": 50.5,
+      "promotion": null,
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/go/2r.htm",
+      "league_table": null,
+      "note": "7勝8敗。"
+    },
+    {
+      "team_id": "shiryukai",
+      "team_name": "紫龍会",
+      "kai": 15,
+      "division": "3部赤",
+      "rank": 8,
+      "points": 8,
+      "wins": 58,
+      "promotion": null,
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/go/3r.htm",
+      "league_table": null,
+      "note": "8勝7敗。"
+    }
+  ]
+}

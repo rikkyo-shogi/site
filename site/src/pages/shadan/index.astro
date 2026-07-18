@@ -1,31 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { loadShadanSeasons, loadShadanPlayers } from '../../utils/loadData';
+import { loadShadanSeasons, type ShadanTeam } from '../../utils/loadData';
 
 const seasons = await loadShadanSeasons();  // 新しい回順
 const latest = seasons[0] ?? null;
-const players = await loadShadanPlayers();
 
-// 歴代成績表: 回ごと×チームごとの行(新しい回が上)
-const historyRows = seasons.flatMap(s =>
-  s.teams.map(team => ({ season: s, team }))
-);
-
-// レーティング推移グラフ用データ(公開同意者のみ)
-const playerCharts = players.map(p => ({
-  player_id: p.player_id,
-  name: p.name,
-  labels: p.history.map(h => `第${h.kai}回`),
-  sublabels: p.history.map(h => h.season_label),
-  ratings: p.history.map(h => h.rating),
-  games: p.history.map(h => h.games),
-  teams: p.history.map(h => h.team),
+// 歴代成績: 回ごとに1行、チームごとに列グループ(不参加の回は空欄)
+const TEAM_COLS = [
+  { id: 'shiryukai_univ', label: '立教大学紫龍会', foot: '第31回以前は「立教大紫龍会」表記' },
+  { id: 'shiryukai', label: '紫龍会', foot: null },
+] as const;
+const historyRows = seasons.map(s => ({
+  season: s,
+  cells: TEAM_COLS.map(c => s.teams.find(t => t.team_id === c.id) ?? null) as (ShadanTeam | null)[],
 }));
 ---
 
 <BaseLayout
   title="社団戦(東将連) — 立教大学将棋部"
-  description="東京アマチュア将棋連盟 社会人団体リーグ戦(社団戦)における立教関係チーム「立教大学紫龍会」「紫龍会」の成績。第22回(平成23年度)からの歴代成績と最新回の詳細を掲載しています。"
+  description="東京アマチュア将棋連盟 社会人団体リーグ戦(社団戦)における立教関係チーム「立教大学紫龍会」「紫龍会」の成績。第12回(平成13年度)からの歴代成績と最新回の詳細を掲載しています。"
 >
   <main>
     <h2 class="page-title">社団戦(東将連 社会人団体リーグ戦)</h2>
@@ -107,175 +100,80 @@ const playerCharts = players.map(p => ({
         </section>
 
         <section aria-labelledby="history-title">
-          <h3 id="history-title" class="section-title">歴代成績（第22回〜）</h3>
-          <p class="section-note">
-            令和2・3年度の団体戦はコロナ禍のため中止。第31回は令和4年度に単一リーグ制で開催。
-            昇降欄が空欄の回は出典PDFに昇降の記載がないもの（入替戦の結果等は翌回の所属部から判定して注記）。
-          </p>
+          <h3 id="history-title" class="section-title">歴代成績（第12回〜）</h3>
           <div class="history-wrap">
             <table class="history-table">
               <thead>
-                <tr><th>回</th><th>年度</th><th>チーム</th><th>部</th><th>順位</th><th>勝点</th><th>勝数</th><th>昇降</th><th>出典</th></tr>
+                <tr>
+                  <th class="col-kai" rowspan="2">回（年度）</th>
+                  {TEAM_COLS.map(c => <th class="team-col" colspan="3">{c.label}</th>)}
+                </tr>
+                <tr>
+                  {TEAM_COLS.map(() => (
+                    <>
+                      <th class="sub">部・順位</th>
+                      <th class="sub">勝点 / 勝数</th>
+                      <th class="sub">昇降</th>
+                    </>
+                  ))}
+                </tr>
               </thead>
               <tbody>
-                {historyRows.map(({ season, team }) => (
+                {historyRows.map(({ season, cells }) => (
                   <tr>
-                    <td>第{season.kai}回</td>
-                    <td>{season.season_label}</td>
-                    <td class="t-name">{team.team_name}</td>
-                    <td>{team.division}</td>
-                    <td>{team.rank != null ? `${team.rank}位` : '—'}</td>
-                    <td>{team.points ?? '—'}</td>
-                    <td>{team.wins ?? '—'}</td>
-                    <td>
-                      {team.promotion === '昇級' && <span class="promo up">▲昇級</span>}
-                      {team.promotion === '降級' && <span class="promo down">▼降級</span>}
+                    <td class="col-kai">
+                      第{season.kai}回 <span class="year">（{season.season_label}）</span>
                     </td>
-                    <td><a href={team.source_url} target="_blank" rel="noopener">PDF</a></td>
+                    {cells.map(team => team ? (
+                      <>
+                        <td class="c-div" title={team.note || undefined}>
+                          <span class="division">{team.division}</span>
+                          <span class={team.rank === 1 ? 'rank-1' : 'rank'}>
+                            {team.rank != null ? (team.rank === 1 ? '優勝' : `${team.rank}位`) : '順位不明'}
+                          </span>
+                          <a class="src" href={team.source_url} target="_blank" rel="noopener">出典</a>
+                        </td>
+                        <td class="c-num">{team.points != null || team.wins != null ? `${team.points ?? '—'} / ${team.wins ?? '—'}` : '—'}</td>
+                        <td class="c-promo">
+                          {team.promotion === '昇級' && <span class="promo up">▲昇級</span>}
+                          {team.promotion === '降級' && <span class="promo down">▼降級</span>}
+                        </td>
+                      </>
+                    ) : (
+                      <td class="c-absent" colspan="3">—</td>
+                    ))}
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          <p class="table-foot">
+            ※ 立教大学紫龍会は第31回以前「立教大紫龍会」表記。空欄（—）は不参加・休会の回。
+            第14回（平成15年度）はリーグ表が連盟サイトに現存しないため記録なし。
+            「順位不明」はリーグ表が現存せず所属のみ確認できた回。各行の出典リンクから原本を確認できます。
+          </p>
         </section>
-
-        {playerCharts.length > 0 && (
-          <section aria-labelledby="rating-title">
-            <h3 id="rating-title" class="section-title">個人レーティング推移</h3>
-            <p class="section-note">
-              東将連公式レーティング（新持点）の推移です。本人の同意を得た部員のみ掲載しています。
-              レーティングが公開されている回（第33回〜）のみ表示。
-            </p>
-            {playerCharts.map(pc => (
-              <article class="player-card">
-                <header class="player-head">
-                  <span class="player-name">{pc.name}</span>
-                  <span class="player-team">{pc.teams[pc.teams.length - 1]}</span>
-                  <span class="player-rating">R{pc.ratings[pc.ratings.length - 1]}</span>
-                </header>
-                <div class="rating-canvas-wrap">
-                  <canvas id={`rating-${pc.player_id}`} role="img"
-                    aria-label={`${pc.name}のレーティング推移グラフ`}></canvas>
-                </div>
-                <noscript>
-                  <table class="rating-fallback">
-                    <thead><tr><th>回</th><th>レーティング</th><th>通算対局数</th></tr></thead>
-                    <tbody>
-                      {pc.labels.map((l, i) => (
-                        <tr><td>{l}（{pc.sublabels[i]}）</td><td>{pc.ratings[i]}</td><td>{pc.games[i]}</td></tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </noscript>
-              </article>
-            ))}
-            <script type="application/json" id="rating-data" set:html={JSON.stringify(playerCharts)} />
-          </section>
-        )}
       </>
     )}
   </main>
 </BaseLayout>
 
-<script>
-  import {
-    Chart,
-    LineController,
-    LineElement,
-    PointElement,
-    CategoryScale,
-    LinearScale,
-    Filler,
-    Tooltip,
-  } from 'chart.js';
-
-  Chart.register(LineController, LineElement, PointElement, CategoryScale, LinearScale, Filler, Tooltip);
-
-  const el = document.getElementById('rating-data');
-  if (el) {
-    const charts = JSON.parse(el.textContent || '[]') as {
-      player_id: string; name: string; labels: string[]; sublabels: string[];
-      ratings: number[]; games: number[]; teams: string[];
-    }[];
-    const THEME = '#5b0000';
-    for (const pc of charts) {
-      const canvas = document.getElementById(`rating-${pc.player_id}`) as HTMLCanvasElement | null;
-      if (!canvas) continue;
-      new Chart(canvas, {
-        type: 'line',
-        data: {
-          labels: pc.labels,
-          datasets: [{
-            data: pc.ratings,
-            borderColor: THEME,
-            borderWidth: 2.5,
-            pointRadius: 5,
-            pointBackgroundColor: '#fff',
-            pointBorderColor: THEME,
-            pointBorderWidth: 2,
-            tension: 0,
-          }],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              grace: '15%',
-              ticks: { precision: 0, color: '#7a7a7a' },
-              grid: { color: '#eee' },
-              border: { display: false },
-            },
-            x: {
-              ticks: { color: '#999' },
-              grid: { display: false },
-              border: { color: '#ddd' },
-            },
-          },
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: '#2a1010',
-              titleColor: '#fff',
-              bodyColor: '#f0d8d8',
-              padding: 10,
-              cornerRadius: 8,
-              displayColors: false,
-              callbacks: {
-                title: (items) => {
-                  const i = items[0]?.dataIndex ?? 0;
-                  return `${pc.labels[i]}（${pc.sublabels[i]}）`;
-                },
-                label: (item) => {
-                  const i = item.dataIndex;
-                  return `R${pc.ratings[i]} / 通算${pc.games[i]}局 / ${pc.teams[i]}`;
-                },
-              },
-            },
-          },
-        },
-      });
-    }
-  }
-</script>
-
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem; }
-  .page-title { font-size: 1.3rem; color: #5b0000; margin: 0 0 0.5rem; }
+  .page-title { font-size: 1.3rem; color: #541a86; margin: 0 0 0.5rem; }
   .lead { font-size: 0.85rem; color: #777; margin: 0 0 1.5rem; }
-  .section-title { font-size: 1.1rem; color: #5b0000; border-bottom: 2px solid #5b0000; padding-bottom: 0.3rem; margin-top: 2.2rem; }
-  .section-note { font-size: 0.78rem; color: #999; margin: 0.5rem 0 1rem; }
+  .section-title { font-size: 1.1rem; color: #541a86; border-bottom: 2px solid #541a86; padding-bottom: 0.3rem; margin-top: 2.2rem; }
   .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 1rem 0 1.5rem; }
   .team-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; padding: 1rem 1.2rem; }
   .team-head { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.7rem; }
   .team-name { font-weight: bold; font-size: 1.05rem; color: #333; }
-  .division-badge { font-size: 0.75rem; background: #eef; color: #446; padding: 0.15rem 0.5rem; border-radius: 3px; font-weight: bold; }
+  .division-badge { font-size: 0.75rem; background: #efe9f7; color: #4a2a72; padding: 0.15rem 0.5rem; border-radius: 3px; font-weight: bold; }
   .stat { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin: 0; }
   .stat div { text-align: center; background: #f7f7f5; border-radius: 4px; padding: 0.4rem 0.2rem; }
   .stat dt { font-size: 0.7rem; color: #999; margin: 0; }
   .stat dd { margin: 0.15rem 0 0; font-size: 0.95rem; font-weight: bold; color: #333; }
-  .stat dd.rank { color: #5b0000; font-size: 1.05rem; }
+  .stat dd.rank { color: #541a86; font-size: 1.05rem; }
   .promo { font-size: 0.85rem; padding: 0.1rem 0.35rem; border-radius: 3px; }
   .promo.up { background: #e0ffe0; color: #066; }
   .promo.down { background: #ffe0e0; color: #600; }
@@ -283,31 +181,33 @@ const playerCharts = players.map(p => ({
   .league-table-wrap { overflow-x: auto; margin-top: 0.8rem; }
   .league-table { border-collapse: collapse; width: 100%; font-size: 0.8rem; }
   .league-table th, .league-table td { border: 1px solid #ddd; padding: 0.2rem 0.4rem; text-align: center; }
-  .league-table tr.self { background: #fff8e0; font-weight: bold; }
+  .league-table tr.self { background: #f4edfc; font-weight: bold; }
   .source-link { margin-top: 0.7rem; font-size: 0.75rem; }
   .source-link a { color: #888; }
-  .source-link a:hover { color: #5b0000; }
+  .source-link a:hover { color: #541a86; }
   .sources { font-size: 0.78rem; color: #888; display: flex; flex-wrap: wrap; gap: 0.2rem 0.9rem; align-items: center; }
-  .sources a { color: #5b0000; }
+  .sources a { color: #541a86; }
   .src-note { color: #aaa; }
   .empty-notice { text-align: center; padding: 3rem 1rem; color: #888; }
 
-  .history-wrap { overflow-x: auto; background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; }
-  .history-table { border-collapse: collapse; width: 100%; font-size: 0.82rem; min-width: 640px; }
-  .history-table th { background: #f7f2f2; color: #5b0000; font-size: 0.75rem; padding: 0.45rem 0.5rem; border-bottom: 2px solid #e0d0d0; text-align: left; white-space: nowrap; }
-  .history-table td { padding: 0.4rem 0.5rem; border-bottom: 1px solid #f0eaea; white-space: nowrap; }
-  .history-table tbody tr:hover { background: #fdf9f4; }
-  .history-table .t-name { font-weight: bold; }
-  .history-table a { color: #888; font-size: 0.75rem; }
-  .history-table a:hover { color: #5b0000; }
-  .history-table .promo { font-size: 0.75rem; }
-
-  .player-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; padding: 1rem 1.2rem; margin-bottom: 1rem; }
-  .player-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 0.7rem; }
-  .player-name { font-weight: bold; font-size: 1.05rem; color: #333; }
-  .player-team { font-size: 0.78rem; color: #888; }
-  .player-rating { margin-left: auto; font-weight: bold; color: #5b0000; font-size: 1.1rem; }
-  .rating-canvas-wrap { position: relative; height: 220px; width: 100%; }
-  .rating-fallback { border-collapse: collapse; font-size: 0.8rem; }
-  .rating-fallback th, .rating-fallback td { border: 1px solid #ddd; padding: 0.2rem 0.5rem; }
+  .history-wrap { overflow-x: auto; background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; margin-top: 1rem; }
+  .history-table { border-collapse: collapse; width: 100%; font-size: 0.82rem; min-width: 720px; }
+  .history-table th { background: #f5f1fa; color: #541a86; font-size: 0.75rem; padding: 0.4rem 0.5rem; border-bottom: 1px solid #e4dcf0; white-space: nowrap; }
+  .history-table th.team-col { font-size: 0.85rem; border-left: 2px solid #e4dcf0; text-align: center; }
+  .history-table th.sub { font-weight: normal; color: #8a7a9e; border-bottom: 2px solid #e4dcf0; }
+  .history-table th.col-kai { text-align: left; border-bottom: 2px solid #e4dcf0; }
+  .history-table td { padding: 0.45rem 0.5rem; border-bottom: 1px solid #f1ecf7; white-space: nowrap; vertical-align: middle; }
+  .history-table td.col-kai { font-weight: bold; color: #444; }
+  .history-table td.col-kai .year { font-weight: normal; color: #999; font-size: 0.75rem; }
+  .history-table td.c-div { border-left: 2px solid #f1ecf7; }
+  .history-table .division { display: inline-block; background: #efe9f7; color: #4a2a72; font-weight: bold; font-size: 0.75rem; border-radius: 3px; padding: 0.1rem 0.4rem; margin-right: 0.4rem; }
+  .history-table .rank { font-weight: bold; color: #333; }
+  .history-table .rank-1 { font-weight: bold; color: #b8860b; }
+  .history-table .src { margin-left: 0.5rem; font-size: 0.7rem; color: #aaa; }
+  .history-table .src:hover { color: #541a86; }
+  .history-table .c-num { color: #666; font-size: 0.78rem; }
+  .history-table .c-promo .promo { font-size: 0.72rem; }
+  .history-table .c-absent { color: #ccc; text-align: center; border-left: 2px solid #f1ecf7; }
+  .history-table tbody tr:hover { background: #fbf9fd; }
+  .table-foot { font-size: 0.72rem; color: #999; margin-top: 0.6rem; line-height: 1.7; }
 </style>

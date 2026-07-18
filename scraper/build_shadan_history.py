@@ -1,17 +1,24 @@
-"""社団戦(東将連) 過去回の確定データ生成 — 第22回(H23)〜第33回(R06)。
+"""社団戦(東将連) 過去回の確定データ生成 — 第12回(H13)〜第33回(R06)。
 
-PDFのレイアウトが回ごとに大きく異なるため(§ROADMAP 2-1「半自動＋目視」)、
-本スクリプトは「PDFを目視確認した確定値」を records に保持し、
+資料の形式が回ごとに大きく異なるため(§ROADMAP 2-1「半自動＋目視」)、
+本スクリプトは「出典を目視確認した確定値」を records に保持し、
 スキーマ検証つきで data/shadan/confirmed/*.json を生成する。
 
-各値の根拠は出典PDF(source_url)そのもの。確認方法:
-- 第22〜30回: NN/5nitimeitiran*.pdf(最終日順位表)を pdfplumber のテキスト抽出
-  + ページ画像レンダリングの目視で照合(2026-07 実施)
-- 第31回: オンライン開催。最終順位は 31/rankingA4.pdf(リーグ表A)の5部表から取得。
-  順位一覧形式のPDFは公開されていない
-- 第32〜33回: NN_ichiran_04.pdf のテキスト抽出で取得(第34回と同系式だが前年列なし)
-- 昇降で「翌回の所属部より判定」と注記したものは、当該回PDFに昇降欄の記載が無く、
-  翌回PDFの所属部の変化から確定した事実
+各値の根拠は出典(source_url)そのもの。確認方法(2026-07 実施):
+- 第12〜15回: リーグ別HTMLページ(表列: 勝/敗/勝数/大将/順位)のテーブル抽出。
+  「勝」はマッチ勝利数でこの時代の勝点に相当するため points に記録
+- 第16回: shadan/roku/1605.pdf(リーグ別一覧)
+- 第17〜20回: リーグ表が現存せず、公式結果ページ(上位3位まで)・部別レーティング
+  一覧(所属部の判定)・第21回順位表の休会欄(前回成績)から判明する範囲のみ記録。
+  順位が特定できない行は rank=null
+- 第21回: 21/page2105.pdf(順位表)。立教大学紫龍会は同PDFの休会欄に記載
+  (第20回成績を持って休会)のため第21回は不参加
+- 第22〜30回: NN/5nitimeitiran*.pdf(最終日順位表)のテキスト抽出+ページ画像の目視
+- 第31回: オンライン開催。最終順位は 31/rankingA4.pdf(リーグ表A)の5部表から取得
+- 第32〜33回: NN_ichiran_04.pdf のテキスト抽出(第34回と同系式だが前年列なし)
+- 第14回(H15)はリーグ表ページが連盟サイト上に現存しないため記録なし(ファイル自体を生成しない)
+- 昇降で「翌回の所属部より判定」と注記したものは、当該回の資料に昇降の記載が無く、
+  翌回資料の所属部の変化から確定した事実
 
 第34回(R07)は parse_shadan.py(自動抽出)が担当する。
 """
@@ -24,14 +31,65 @@ from common import logger, validate_json
 ROOT = Path(__file__).parent.parent
 OUT_DIR = ROOT / "data" / "shadan" / "confirmed"
 SCHEMA = ROOT / "data" / "shadan" / "schema.json"
-BASE = "https://toushouren.world.coocan.jp/shadan"
+SITE = "https://toushouren.world.coocan.jp"
+BASE = f"{SITE}/shadan"
 
 UNIV = "shiryukai_univ"  # 現役チーム(立教大紫龍会→立教大学紫龍会)
 OB = "shiryukai"         # 紫龍会
 
-# (kai, season, season_label, ichiran相当PDFの相対パス, teams)
-# teams: (team_id, team_name, division, rank, points, wins, promotion, note)
+# (kai, season, season_label, 出典の代表相対パス, teams)
+# teams: (team_id, team_name, division, rank, points, wins, promotion, note[, source_rel])
+# source_rel を指定した行はチーム個別の出典(リーグ別ページ等)を使う。
 RECORDS = [
+    (12, "H13", "平成13年度", "shadan/2-r.htm", [
+        (UNIV, "立教大学紫龍会", "2部赤", 14, 4, 46, "降級",
+         "列構成は勝/敗/勝数(4勝11敗)。翌回3部青所属より降級と判定。"),
+    ]),
+    (13, "H14", "平成14年度", "shadan/san/13-3b.htm", [
+        (UNIV, "立教大学紫龍会", "3部青", 1, 13, 76, "昇級",
+         "13勝2敗で優勝。第14回の資料は現存しないが第15回2部赤所属より昇級と判定。"),
+    ]),
+    # 第14回(H15)はリーグ表ページが現存しないため記録なし
+    (15, "H16", "平成16年度", "shadan/go/2r.htm", [
+        (UNIV, "立教大学紫龍会", "2部赤", 10, 7, 50.5, None, "7勝8敗。"),
+        (OB, "紫龍会", "3部赤", 8, 8, 58, None, "8勝7敗。", "shadan/go/3r.htm"),
+    ]),
+    (16, "H17", "平成17年度", "shadan/roku/1605.pdf", [
+        (UNIV, "立教大学紫龍会", "2部白", 8, 7, 53, None, "7勝8敗。"),
+        (OB, "紫龍会", "3部緑", 9, 7, 56, None, "7勝8敗。"),
+    ]),
+    (17, "H18", "平成18年度", "17shadan2.htm", [
+        (UNIV, "立教大学紫龍会", "2部赤", 2, None, None, "昇級",
+         "公式結果ページで2部赤2位。翌回1部所属より昇級と判定。勝点等の記載資料は現存しない。"),
+        (OB, "紫龍会", "3部緑", None, None, None, None,
+         "所属は部別レーティング一覧より。リーグ表が現存せず順位は不明。",
+         "shadan/nana/1/17tennsu3g.htm"),
+    ]),
+    (18, "H19", "平成19年度", "shadan/hachi/18tennsu1.htm", [
+        (UNIV, "立教大学紫龍会", "1部", None, None, None, "降級",
+         "所属は部別レーティング一覧より(チーム史上最高の1部)。リーグ表が現存せず順位は不明。"
+         "翌回2部赤所属より降級と判定。"),
+        (OB, "紫龍会", "3部赤", None, None, None, None,
+         "所属は部別レーティング一覧より。リーグ表が現存せず順位は不明。",
+         "shadan/hachi/18tennsu3r.htm"),
+    ]),
+    (19, "H20", "平成20年度", "shadan/19/19tennsu2r.htm", [
+        (UNIV, "立教大学紫龍会", "2部赤", None, None, None, None,
+         "所属は部別レーティング一覧より。リーグ表が現存せず順位は不明。"),
+        (OB, "紫龍会", "3部青", None, None, None, "降級",
+         "所属は部別レーティング一覧より。リーグ表が現存せず順位は不明。翌回4部白所属より降級と判定。",
+         "shadan/19/19tennsu3b.htm"),
+    ]),
+    (20, "H21", "平成21年度", "shadan/21/page2105.pdf", [
+        (UNIV, "立教大学紫龍会", "2部赤", 9, 8, 57, None,
+         "成績は第21回順位表PDFの休会欄(前回成績)より。この回を最後に第26回まで休会し、第27回に3部で復帰。"),
+        (OB, "紫龍会", "4部白", None, None, None, "昇級",
+         "所属は部別レーティング一覧より。リーグ表が現存せず順位は不明。翌回3部青所属より昇級と判定。",
+         "shadan/20/20tennsu4w.htm"),
+    ]),
+    (21, "H22", "平成22年度", "shadan/21/page2105.pdf", [
+        (OB, "紫龍会", "3部青", 12, 6, 49, None, "6勝9敗。立教大学紫龍会はこの回から休会。"),
+    ]),
     (22, "H23", "平成23年度", "22/5nitimeitiran.pdf", [
         (OB, "紫龍会", "3部青", 5, 10, 64, None, "この年度の3部は赤・白・青の3リーグ制。"),
     ]),
@@ -50,7 +108,8 @@ RECORDS = [
     ]),
     (27, "H28", "平成28年度", "27/5nitimeitiran1.pdf", [
         (OB, "紫龍会", "3部白", 14, 4, 41, None, "この回を最後に第32回まで休会。"),
-        (UNIV, "立教大紫龍会", "3部赤", 16, 0, 16, "降級", "翌回4部白所属より判定。"),
+        (UNIV, "立教大紫龍会", "3部赤", 16, 0, 16, "降級",
+         "第21回からの休会を経てこの回に3部で復帰。翌回4部白所属より降級と判定。"),
     ]),
     (28, "H29", "平成29年度", "28/5nitimeitiran1.pdf", [
         (UNIV, "立教大紫龍会", "4部白", 16, 2, 36, "降級", "翌回5部白所属より判定。"),
@@ -78,28 +137,42 @@ RECORDS = [
 
 
 def hub_url(season: str) -> str:
+    # 第12〜20回(H13〜H21)の年度ページはサイト直下、H22以降は /shadan/ 配下
+    era, num = season[0], int(season[1:])
+    if era == "H" and num <= 21:
+        return f"{SITE}/sub9-{season}.htm"
     return f"{BASE}/sub9-{season}.htm"
 
 
-def build_season(kai, season, season_label, pdf_rel, teams) -> dict:
-    src = f"{BASE}/{pdf_rel}"
+def _abs_url(rel: str) -> str:
+    # 旧年度のHTMLはサイト直下からの相対パス("shadan/..."や"17shadan2.htm")、
+    # 新しいPDFは /shadan/ 配下からの相対パス("34/34_ichiran_04.pdf")
+    if rel.startswith("shadan/") or rel.endswith(".htm"):
+        return f"{SITE}/{rel}"
+    return f"{BASE}/{rel}"
+
+
+def build_season(kai, season, season_label, src_rel, teams) -> dict:
+    src = _abs_url(src_rel)
+    team_objs = []
+    for row in teams:
+        tid, name, div, rank, pts, wins, promo, note = row[:8]
+        team_src = _abs_url(row[8]) if len(row) > 8 else src
+        team_objs.append({
+            "team_id": tid, "team_name": name, "kai": kai,
+            "division": div, "rank": rank, "points": pts, "wins": wins,
+            "promotion": promo,
+            "source_type": "shadan_pdf",
+            "source_url": team_src,
+            "league_table": None,
+            "note": note,
+        })
     return {
         "kai": kai,
         "season": season,
         "season_label": season_label,
         "source": {"hub_url": hub_url(season), "ichiran_pdf": src},
-        "teams": [
-            {
-                "team_id": tid, "team_name": name, "kai": kai,
-                "division": div, "rank": rank, "points": pts, "wins": wins,
-                "promotion": promo,
-                "source_type": "shadan_pdf",
-                "source_url": src,
-                "league_table": None,
-                "note": note,
-            }
-            for tid, name, div, rank, pts, wins, promo, note in teams
-        ],
+        "teams": team_objs,
     }
 
 

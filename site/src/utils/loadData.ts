@@ -310,48 +310,6 @@ export async function loadShadanSeasons(): Promise<ShadanSeason[]> {
   return seasons;
 }
 
-// 個人レーティング推移(公開同意者のみコミットされる。ROADMAP §2-2)
-export interface ShadanPlayerPoint {
-  kai: number;
-  season: string;
-  season_label: string;
-  team: string;
-  division: string | null;
-  rating: number;
-  games: number;
-  source_url: string;
-}
-
-export interface ShadanPlayer {
-  player_id: string;
-  name: string;
-  /** 内部キー。ページには表示しない */
-  reg_no: number;
-  consent: string;
-  history: ShadanPlayerPoint[];
-}
-
-const SHADAN_PLAYERS_DIR = join(process.cwd(), '..', 'data', 'shadan', 'players');
-
-/** 公開同意済みの個人レーティング推移を返す。ディレクトリが無ければ空配列。 */
-export async function loadShadanPlayers(): Promise<ShadanPlayer[]> {
-  let files: string[] = [];
-  try {
-    files = await readdir(SHADAN_PLAYERS_DIR);
-  } catch {
-    return [];
-  }
-  const players: ShadanPlayer[] = [];
-  for (const file of files.filter(f => f.endsWith('.json'))) {
-    const content = await readFile(join(SHADAN_PLAYERS_DIR, file), 'utf-8');
-    const p = JSON.parse(content) as ShadanPlayer;
-    p.history.sort((a, b) => a.kai - b.kai);
-    players.push(p);
-  }
-  players.sort((a, b) => a.player_id.localeCompare(b.player_id));
-  return players;
-}
-
 export function isHighlight(event: Event): boolean {
   if (event.type === 'team') {
     const rank = event.rikkyo_result?.rank;

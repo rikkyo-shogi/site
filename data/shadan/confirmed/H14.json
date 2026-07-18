@@ -1,0 +1,25 @@
+{
+  "kai": 13,
+  "season": "H14",
+  "season_label": "平成14年度",
+  "source": {
+    "hub_url": "https://toushouren.world.coocan.jp/sub9-H14.htm",
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/san/13-3b.htm"
+  },
+  "teams": [
+    {
+      "team_id": "shiryukai_univ",
+      "team_name": "立教大学紫龍会",
+      "kai": 13,
+      "division": "3部青",
+      "rank": 1,
+      "points": 13,
+      "wins": 76,
+      "promotion": "昇級",
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/san/13-3b.htm",
+      "league_table": null,
+      "note": "13勝2敗で優勝。第14回の資料は現存しないが第15回2部赤所属より昇級と判定。"
+    }
+  ]
+}

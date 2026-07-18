@@ -1,0 +1,25 @@
+{
+  "kai": 12,
+  "season": "H13",
+  "season_label": "平成13年度",
+  "source": {
+    "hub_url": "https://toushouren.world.coocan.jp/sub9-H13.htm",
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/2-r.htm"
+  },
+  "teams": [
+    {
+      "team_id": "shiryukai_univ",
+      "team_name": "立教大学紫龍会",
+      "kai": 12,
+      "division": "2部赤",
+      "rank": 14,
+      "points": 4,
+      "wins": 46,
+      "promotion": "降級",
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/2-r.htm",
+      "league_table": null,
+      "note": "列構成は勝/敗/勝数(4勝11敗)。翌回3部青所属より降級と判定。"
+    }
+  ]
+}
