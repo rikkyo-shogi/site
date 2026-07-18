@@ -12,19 +12,6 @@ interface Props {
 
 const slots = await loadLeagueTrend(Astro.props.seasons);
 
-// 直近の結果が昇級/降級なら、次の半期の所属リーグ(予定)を点線で示す。
-// 例: R08春に B2 で昇級 → R08秋は B1(予定)。
-const lastSlot = slots.length > 0 ? slots[slots.length - 1] : null;
-let projection: { label: string; level: number; division_label: string; reason: '昇級' | '降級' } | null = null;
-if (lastSlot?.point?.promotion) {
-  const dir = lastSlot.point.promotion === '昇級' ? 1 : -1;
-  const level = Math.min(5, Math.max(1, lastSlot.point.level + dir));
-  const label = lastSlot.season_half === 'spring'
-    ? `${lastSlot.season}秋`
-    : `${lastSlot.season[0]}${String(parseInt(lastSlot.season.slice(1)) + 1).padStart(2, '0')}春`;
-  projection = { label, level, division_label: LEAGUE_AXIS_LABELS[level], reason: lastSlot.point.promotion };
-}
-
 // クライアント script へ渡す最小限のデータ(JSON埋め込み)
 const chartPayload = {
   labels: slots.map(s => s.label),
@@ -37,7 +24,6 @@ const chartPayload = {
     champion: s.point.champion,
   }),
   axisLabels: LEAGUE_AXIS_LABELS,
-  projection,
 };
 
 // JS無効時のフォールバック用に、実結果のある半期だけ抜き出す
@@ -50,9 +36,6 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     <span class="lt-legend"><span class="lt-mark up">▲</span>昇級</span>
     <span class="lt-legend"><span class="lt-mark down">▼</span>降級</span>
     <span class="lt-legend"><span class="lt-mark champ">★</span>優勝</span>
-    {projection && (
-      <span class="lt-legend"><span class="lt-mark proj">┄</span>{projection.label} {projection.division_label}(予定)</span>
-    )}
   </p>
 
   {slots.length === 0 ? (
@@ -79,14 +62,6 @@ const present = slots.filter(s => s.point).map(s => s.point!);
                 <td>{p.champion ? '優勝' : p.promotion ?? ''}</td>
               </tr>
             ))}
-            {projection && (
-              <tr>
-                <td>{projection.label}</td>
-                <td>{projection.division_label}級（予定）</td>
-                <td>—</td>
-                <td>{projection.reason}による</td>
-              </tr>
-            )}
           </tbody>
         </table>
       </noscript>
@@ -112,17 +87,16 @@ const present = slots.filter(s => s.point).map(s => s.point!);
   const el = document.getElementById('league-trend-data');
   const canvas = document.getElementById('league-trend-canvas') as HTMLCanvasElement | null;
   if (el && canvas) {
-    const { labels, points, axisLabels, projection } = JSON.parse(el.textContent || '{}') as {
+    const { labels, points, axisLabels } = JSON.parse(el.textContent || '{}') as {
       labels: string[];
       points: (null | {
         level: number; division: string; division_label: string;
         rank: number | null; promotion: '昇級' | '降級' | null; champion: boolean;
       })[];
       axisLabels: Record<string, string>;
-      projection: { label: string; level: number; division_label: string; reason: '昇級' | '降級' } | null;
     };
 
-    const THEME = '#5b0000';
+    const THEME = '#541a86';
     const GOLD = '#d4a000';
     const GREEN = '#067306';
     const RED = '#b00000';
@@ -167,7 +141,7 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     // 降級は下向き三角(180度回転)、それ以外は既定の向き
     const pointRotation = points.map(p => (p && p.promotion === '降級' ? 180 : 0));
     const pointRadius = points.map(p => (p ? (p.champion ? 9 : (p.promotion ? 6 : 3.5)) : 0));
-    // 昇降級・優勝は強調色で塗り、通常点は中抜き(白地+えんじ色の輪)にして控えめに
+    // 昇降級・優勝は強調色で塗り、通常点は中抜き(白地+紫紺の輪)にして控えめに
     const accentColor = (p: (typeof points)[number]) => {
       if (!p) return null;
       if (p.champion) return GOLD;
@@ -180,20 +154,6 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     const pointBorderWidth = points.map(p => (accentColor(p) ? 2 : 1.5));
     const pointHoverRadius = pointRadius.map(r => (r ? r + 2 : 0));
 
-    // 次期リーグ(予定)の点線セグメント: 最終実績点 → 予定点
-    const chartLabels = [...labels];
-    let projData: (number | null)[] = [];
-    if (projection) {
-      chartLabels.push(projection.label);
-      projData = new Array(chartLabels.length).fill(null);
-      const lastIdx = labels.length - 1;
-      const lastPoint = points[lastIdx];
-      if (lastPoint) {
-        projData[lastIdx] = lastPoint.level;
-        projData[lastIdx + 1] = projection.level;
-      }
-    }
-
     // リーグ帯を1段おきに薄く塗り、「階段を上り下りしている」読み取りを助ける
     const tierBands = {
       id: 'tierBands',
@@ -202,7 +162,7 @@ const present = slots.filter(s => s.point).map(s => s.point!);
         if (!chartArea) return;
         const y = scales.y;
         ctx.save();
-        ctx.fillStyle = 'rgba(91, 0, 0, 0.035)';
+        ctx.fillStyle = 'rgba(84, 26, 134, 0.035)';
         for (let lvl = 1; lvl <= 5; lvl += 2) {
           const top = y.getPixelForValue(lvl + 0.5);
           const bottom = y.getPixelForValue(lvl - 0.5);
@@ -226,7 +186,7 @@ const present = slots.filter(s => s.point).map(s => s.point!);
         ctx.moveTo(x, chartArea.top);
         ctx.lineTo(x, chartArea.bottom);
         ctx.lineWidth = 1;
-        ctx.strokeStyle = 'rgba(91, 0, 0, 0.35)';
+        ctx.strokeStyle = 'rgba(84, 26, 134, 0.35)';
         ctx.stroke();
         ctx.restore();
       },
@@ -237,7 +197,7 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     new Chart(canvas, {
       type: 'line',
       data: {
-        labels: chartLabels,
+        labels,
         datasets: [{
           label: '所属リーグ',
           data,
@@ -259,8 +219,8 @@ const present = slots.filter(s => s.point).map(s => s.point!);
               const key = `${chartArea.top}:${chartArea.bottom}`;
               if (!cached || cacheKey !== key) {
                 cached = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                cached.addColorStop(0, 'rgba(91, 0, 0, 0.16)');
-                cached.addColorStop(1, 'rgba(91, 0, 0, 0)');
+                cached.addColorStop(0, 'rgba(84, 26, 134, 0.16)');
+                cached.addColorStop(1, 'rgba(84, 26, 134, 0)');
                 cacheKey = key;
               }
               return cached;
@@ -273,23 +233,7 @@ const present = slots.filter(s => s.point).map(s => s.point!);
           pointBackgroundColor: pointBg,
           pointBorderColor: pointBorder,
           pointBorderWidth,
-        },
-        ...(projection ? [{
-          label: '次期リーグ(予定)',
-          data: projData,
-          stepped: true as const,
-          spanGaps: false,
-          borderColor: 'rgba(91, 0, 0, 0.55)',
-          borderWidth: 2,
-          borderDash: [6, 5],
-          fill: false,
-          // 予定点のみ中抜きマーカーを置く(接続元の実績点には重ねない)
-          pointRadius: projData.map((v, i) => (v != null && i === projData.length - 1 ? 5.5 : 0)),
-          pointHoverRadius: projData.map((v, i) => (v != null && i === projData.length - 1 ? 7.5 : 0)),
-          pointBackgroundColor: SURFACE,
-          pointBorderColor: 'rgba(91, 0, 0, 0.55)',
-          pointBorderWidth: 2,
-        }] : [])],
+        }],
       },
       plugins: [tierBands, crosshair],
       options: {
@@ -321,24 +265,18 @@ const present = slots.filter(s => s.point).map(s => s.point!);
         plugins: {
           legend: { display: false },
           tooltip: {
-            backgroundColor: '#2a1010',
+            backgroundColor: '#241040',
             titleColor: '#fff',
             titleFont: { size: 12, weight: 'bold' },
-            bodyColor: '#f0d8d8',
+            bodyColor: '#e2d8f0',
             bodyFont: { size: 12 },
             padding: 10,
             cornerRadius: 8,
             displayColors: false,
             caretSize: 6,
-            // 点線データセットは予定点(終端)以外ツールチップに出さない
-            filter: (item) => item.datasetIndex === 0 || item.dataIndex >= points.length,
             callbacks: {
               title: (items) => (items[0] ? String(items[0].label) : ''),
               label: (item) => {
-                // 予定点(点線データセットの終端)は専用の文言にする
-                if (projection && item.dataIndex >= points.length) {
-                  return `${projection.division_label}級(${projection.reason}による予定)`;
-                }
                 const p = points[item.dataIndex];
                 if (!p) return '欠測';
                 const parts = [`${p.division}(${p.division_label}) ${p.rank}位`];
@@ -360,18 +298,17 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     padding: 1rem 1.2rem 1.4rem; margin-bottom: 2rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
-  .league-trend h3 { margin: 0 0 0.6rem; font-size: 1.1rem; color: #5b0000; }
+  .league-trend h3 { margin: 0 0 0.6rem; font-size: 1.1rem; color: #541a86; }
   .lt-lead { font-size: 0.78rem; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
   .lt-legend {
     display: inline-flex; align-items: center; gap: 0.3rem;
-    background: #f7f2f2; border: 1px solid #eee; border-radius: 999px;
+    background: #f5f1fa; border: 1px solid #eee; border-radius: 999px;
     padding: 0.2rem 0.65rem 0.2rem 0.55rem; color: #666; font-weight: 600;
   }
   .lt-mark { font-weight: bold; font-size: 0.95rem; line-height: 1; }
   .lt-mark.up { color: #067306; }
   .lt-mark.down { color: #b00000; }
   .lt-mark.champ { color: #d4a000; }
-  .lt-mark.proj { color: #9a6a6a; letter-spacing: 0.05em; }
   .lt-note { color: #999; }
   .lt-canvas-wrap { position: relative; height: 340px; width: 100%; }
   .lt-empty { color: #aaa; font-style: italic; font-size: 0.85rem; }
