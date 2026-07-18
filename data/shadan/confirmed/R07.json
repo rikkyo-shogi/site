@@ -1,0 +1,43 @@
+{
+  "kai": 34,
+  "season": "R07",
+  "season_label": "令和7年度",
+  "source": {
+    "hub_url": "https://toushouren.world.coocan.jp/shadan/sub9-R07.htm",
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/34/34_ichiran_04.pdf",
+    "league_pdf": [
+      "https://toushouren.world.coocan.jp/shadan/34/34_league_04_u.pdf",
+      "https://toushouren.world.coocan.jp/shadan/34/34_league_04_g.pdf"
+    ]
+  },
+  "teams": [
+    {
+      "team_id": "shiryukai_univ",
+      "team_name": "立教大学紫龍会",
+      "kai": 34,
+      "division": "3部白",
+      "rank": 16,
+      "points": 1,
+      "wins": 30.5,
+      "promotion": "降級",
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/34/34_ichiran_04.pdf",
+      "league_table": null,
+      "note": ""
+    },
+    {
+      "team_id": "shiryukai",
+      "team_name": "紫龍会",
+      "kai": 34,
+      "division": "6部赤",
+      "rank": 9,
+      "points": 8,
+      "wins": 53,
+      "promotion": null,
+      "source_type": "shadan_pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/34/34_ichiran_04.pdf",
+      "league_table": null,
+      "note": "順位一覧PDF(34_ichiran_04.pdf)では6部リーグ赤9位。前年5部白13位からの降級で、個人ランキングも l6r に掲載。課題前提の『5部赤』とは異なるためPDF実データを採用した。"
+    }
+  ]
+}

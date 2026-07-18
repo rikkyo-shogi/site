@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ShadanSeasonData",
+  "description": "社団戦(東将連 社会人団体リーグ戦)の年度別成績。関東学生団体戦(data/schema.json)とは名前空間を分離する。",
+  "type": "object",
+  "required": ["kai", "season", "season_label", "teams"],
+  "additionalProperties": false,
+  "properties": {
+    "kai": { "type": "integer", "description": "第N回。例: 34" },
+    "season": { "type": "string", "description": "年度キー。例: R07" },
+    "season_label": { "type": "string", "description": "表示用。例: 令和7年度" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hub_url": { "type": "string", "format": "uri" },
+        "ichiran_pdf": { "type": "string", "format": "uri" },
+        "league_pdf": { "type": "array", "items": { "type": "string", "format": "uri" } }
+      }
+    },
+    "teams": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/ShadanTeam" }
+    }
+  },
+  "definitions": {
+    "ShadanTeam": {
+      "type": "object",
+      "required": ["team_id", "team_name", "kai", "division", "source_type", "source_url"],
+      "additionalProperties": false,
+      "properties": {
+        "team_id": { "type": "string", "description": "名称変更に備えた安定ID。例: shiryukai_univ / shiryukai" },
+        "team_name": { "type": "string" },
+        "kai": { "type": "integer" },
+        "division": { "type": "string", "description": "所属部。例: 3部白 / 6部赤 / 1部" },
+        "rank": { "type": ["integer", "null"] },
+        "points": { "type": ["number", "null"], "description": "勝点(チームマッチ)" },
+        "wins": { "type": ["number", "null"], "description": "勝数(全体の勝利対局数合計。半星があり小数可)" },
+        "promotion": {
+          "type": ["string", "null"],
+          "enum": ["昇級", "降級", null]
+        },
+        "source_type": { "type": "string", "enum": ["shadan_pdf"] },
+        "source_url": { "type": "string", "format": "uri" },
+        "league_table": {
+          "oneOf": [
+            { "$ref": "#/definitions/ShadanLeagueTable" },
+            { "type": "null" }
+          ],
+          "description": "対戦表(リーグ表PDF由来)。順位一覧のみから作成した場合は null"
+        },
+        "note": { "type": "string" }
+      }
+    },
+    "ShadanLeagueTable": {
+      "type": "object",
+      "description": "関東の kanto_table に準じた対戦表。将来リーグ表PDFから付与する。",
+      "required": ["division", "teams", "rows"],
+      "additionalProperties": false,
+      "properties": {
+        "division": { "type": "string" },
+        "teams": { "type": "array", "items": { "type": "string" } },
+        "team_abbrevs": { "type": "array", "items": { "type": "string" } },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["seeding", "team", "scores"],
+            "additionalProperties": false,
+            "properties": {
+              "seeding": { "type": "integer" },
+              "team": { "type": "string" },
+              "scores": { "type": "array", "items": { "type": ["number", "null"] } },
+              "wins": { "type": ["number", "null"] },
+              "points": { "type": ["number", "null"] },
+              "rank": { "type": ["integer", "null"] },
+              "promotion": { "type": ["string", "null"], "enum": ["昇級", "降級", null] }
+            }
+          }
+        }
+      }
+    }
+  }
+}

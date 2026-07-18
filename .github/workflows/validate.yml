@@ -5,10 +5,12 @@ on:
     paths:
       - 'data/confirmed/**'
       - 'data/schema.json'
+      - 'data/shadan/**'
   pull_request:
     paths:
       - 'data/confirmed/**'
       - 'data/schema.json'
+      - 'data/shadan/**'
 
 jobs:
   validate:
@@ -39,4 +41,27 @@ jobs:
               print('\n'.join(errors))
               sys.exit(1)
           print(f'All {len(list(Path(\"data/confirmed\").glob(\"*.json\")))} files valid.')
+          "
+      - name: Validate shadan JSON files
+        run: |
+          python3 -c "
+          import json, jsonschema, sys
+          from pathlib import Path
+
+          confirmed = Path('data/shadan/confirmed')
+          schema_path = Path('data/shadan/schema.json')
+          if not confirmed.exists():
+              print('no data/shadan/confirmed; skip'); sys.exit(0)
+          schema = json.loads(schema_path.read_text())
+          errors = []
+          for f in sorted(confirmed.glob('*.json')):
+              errs = list(jsonschema.Draft7Validator(schema).iter_errors(json.loads(f.read_text())))
+              if errs:
+                  errors.append(f'{f.name}: {[e.message for e in errs]}')
+                  print(f'FAIL {f.name}')
+              else:
+                  print(f'OK   {f.name}')
+          if errors:
+              print('\n'.join(errors)); sys.exit(1)
+          print(f'All {len(list(confirmed.glob(\"*.json\")))} shadan files valid.')
           "

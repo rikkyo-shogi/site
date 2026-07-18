@@ -246,6 +246,72 @@ export async function loadLeagueTrend(): Promise<LeagueTrendSlot[]> {
   }));
 }
 
+// ==== 社団戦(東将連)データ ====
+// 関東学生団体戦とは名前空間を分離(data/shadan/**)。個人成績は非公開のため読み込まない。
+
+export interface ShadanLeagueTableRow {
+  seeding: number;
+  team: string;
+  scores: (number | null)[];
+  wins: number | null;
+  points: number | null;
+  rank: number | null;
+  promotion: '昇級' | '降級' | null;
+}
+
+export interface ShadanLeagueTable {
+  division: string;
+  teams: string[];
+  team_abbrevs?: string[];
+  rows: ShadanLeagueTableRow[];
+}
+
+export interface ShadanTeam {
+  team_id: string;
+  team_name: string;
+  kai: number;
+  division: string;
+  rank: number | null;
+  points: number | null;
+  wins: number | null;
+  promotion: '昇級' | '降級' | null;
+  source_type: string;
+  source_url: string;
+  league_table: ShadanLeagueTable | null;
+  note?: string;
+}
+
+export interface ShadanSeason {
+  kai: number;
+  season: string;
+  season_label: string;
+  source?: {
+    hub_url?: string;
+    ichiran_pdf?: string;
+    league_pdf?: string[];
+  };
+  teams: ShadanTeam[];
+}
+
+const SHADAN_CONFIRMED_DIR = join(process.cwd(), '..', 'data', 'shadan', 'confirmed');
+
+/** 社団戦の年度別データを新しい回(kai)順に返す。ディレクトリが無ければ空配列。 */
+export async function loadShadanSeasons(): Promise<ShadanSeason[]> {
+  let files: string[] = [];
+  try {
+    files = await readdir(SHADAN_CONFIRMED_DIR);
+  } catch {
+    return [];
+  }
+  const seasons: ShadanSeason[] = [];
+  for (const file of files.filter(f => f.endsWith('.json'))) {
+    const content = await readFile(join(SHADAN_CONFIRMED_DIR, file), 'utf-8');
+    seasons.push(JSON.parse(content) as ShadanSeason);
+  }
+  seasons.sort((a, b) => b.kai - a.kai);
+  return seasons;
+}
+
 export function isHighlight(event: Event): boolean {
   if (event.type === 'team') {
     const rank = event.rikkyo_result?.rank;
