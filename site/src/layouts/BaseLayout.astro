@@ -17,7 +17,7 @@ const {
   description,
   image = `${base}/ogp.png`,
   ogType = 'website',
-  footerText = '立教大学将棋部 ／ 出典: 関東大学将棋連盟・全日本学生将棋連盟・部内掲示板',
+  footerText = '立教大学将棋部 ／ 出典: 関東大学将棋連盟・全日本学生将棋連盟・東京アマチュア将棋連盟・部内掲示板',
 } = Astro.props;
 
 // Astro.site は astro.config.mjs の site (https://rikkyo-shogi.github.io/site)
@@ -60,8 +60,8 @@ const imageURL = new URL(image, Astro.site);
   <header>
     <h1><a href={`${base}/`}>立教大学将棋部</a></h1>
     <nav>
-      <a href={`${base}/result/`}>大会結果</a>
-      <a href={`${base}/shadan/`}>社団戦</a>
+      <a href={`${base}/result/`}>学生大会結果</a>
+      <a href={`${base}/shadan/`}>社団戦結果</a>
       <a href={`${base}/archives/`}>掲示板アーカイブ</a>
     </nav>
   </header>

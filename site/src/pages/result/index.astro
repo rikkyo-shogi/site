@@ -8,13 +8,13 @@ const seasons = await loadAllSeasons();
 ---
 
 <BaseLayout
-  title="大会結果 — 立教大学将棋部"
-  description="立教大学将棋部の大会成績一覧。関東大学将棋連盟の団体戦・個人戦の公式結果をシーズン別（平成21年度〜令和8年度）に掲載しています。"
+  title="学生大会結果 — 立教大学将棋部"
+  description="立教大学将棋部の学生大会成績一覧。関東大学将棋連盟の団体戦・個人戦の公式結果をシーズン別（平成21年度〜令和8年度）に掲載しています。"
 >
   <main>
-    <h2 style="font-size:1.1rem;color:#555;margin-bottom:0.5rem;">大会成績一覧</h2>
+    <h2 style="font-size:1.1rem;color:#555;margin-bottom:0.5rem;">学生大会結果</h2>
     <p style="font-size:0.85rem;color:#888;margin:0 0 1rem;">
-      関東大学将棋連盟の公式成績をシーズン別にまとめています。出典リンクから原本をご確認いただけます。
+      関東大学将棋連盟の公式成績をシーズン別にまとめています。
     </p>
 
     {seasons.length > 0 && <LeagueTrend seasons={seasons} />}

@@ -15,24 +15,24 @@ const jsonLd = JSON.stringify({
 
 <BaseLayout
   title="立教大学将棋部"
-  description="立教大学将棋部の公式アーカイブサイト。関東大学将棋連盟の公式大会成績（平成21年度以降）と、現役・OB会の掲示板アーカイブを公開しています。"
+  description="立教大学将棋部の公式アーカイブサイト。関東大学将棋連盟の学生大会成績（平成21年度以降）と、東京アマチュア将棋連盟 社団戦の成績を公開しています。"
 >
   <script type="application/ld+json" set:html={jsonLd} slot="head" />
 
   <main>
     <div class="hero">
       <h2>立教大学将棋部</h2>
-      <p>大会成績・掲示板アーカイブを公開しています。</p>
+      <p>学生大会・社団戦の成績を公開しています。</p>
     </div>
 
     <div class="menu">
       <a class="menu-card" href={`${base}/result/`}>
-        <h3>大会結果</h3>
+        <h3>学生大会結果</h3>
         <p>関東大学将棋連盟の公式成績をシーズン別に掲載。平成21年度以降の全記録。</p>
       </a>
-      <a class="menu-card" href={`${base}/archives/`}>
-        <h3>掲示板アーカイブ</h3>
-        <p>現役部員・OB会の過去掲示板を閲覧できます。</p>
+      <a class="menu-card" href={`${base}/shadan/`}>
+        <h3>社団戦結果</h3>
+        <p>東京アマチュア将棋連盟 社会人団体リーグ戦の成績。今年度の途中経過と歴代の記録。</p>
       </a>
     </div>
   </main>

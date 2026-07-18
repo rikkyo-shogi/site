@@ -283,6 +283,10 @@ export interface ShadanSeason {
   kai: number;
   season: string;
   season_label: string;
+  /** 'ongoing' = 開催中の途中経過。省略時は最終結果 */
+  status?: 'ongoing' | 'final';
+  /** 年度全体の補足(例: 第1節終了時点の途中経過) */
+  note?: string;
   source?: {
     hub_url?: string;
     ichiran_pdf?: string;

@@ -3,25 +3,28 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadShadanSeasons, type ShadanTeam } from '../../utils/loadData';
 
 const seasons = await loadShadanSeasons();  // 新しい回順
+// 最新回(開催中の途中経過)を単独表示し、それ以外を歴代成績に載せる
 const latest = seasons[0] ?? null;
+const pastSeasons = seasons.slice(1);
+const ongoing = latest?.status === 'ongoing';
 
 // 歴代成績: 回ごとに1行、チームごとに列グループ(不参加の回は空欄)
 const TEAM_COLS = [
-  { id: 'shiryukai_univ', label: '立教大学紫龍会', foot: '第31回以前は「立教大紫龍会」表記' },
-  { id: 'shiryukai', label: '紫龍会', foot: null },
+  { id: 'shiryukai_univ', label: '立教大学紫龍会' },
+  { id: 'shiryukai', label: '紫龍会' },
 ] as const;
-const historyRows = seasons.map(s => ({
+const historyRows = pastSeasons.map(s => ({
   season: s,
   cells: TEAM_COLS.map(c => s.teams.find(t => t.team_id === c.id) ?? null) as (ShadanTeam | null)[],
 }));
 ---
 
 <BaseLayout
-  title="社団戦(東将連) — 立教大学将棋部"
-  description="東京アマチュア将棋連盟 社会人団体リーグ戦(社団戦)における立教関係チーム「立教大学紫龍会」「紫龍会」の成績。第12回(平成13年度)からの歴代成績と最新回の詳細を掲載しています。"
+  title="社団戦結果 — 立教大学将棋部"
+  description="東京アマチュア将棋連盟 社会人団体リーグ戦(社団戦)における立教関係チーム「立教大学紫龍会」「紫龍会」の成績。今年度の途中経過と第12回(平成13年度)からの歴代成績を掲載しています。"
 >
   <main>
-    <h2 class="page-title">社団戦(東将連 社会人団体リーグ戦)</h2>
+    <h2 class="page-title">社団戦結果</h2>
     <p class="lead">
       東京アマチュア将棋連盟が主催する社会人団体リーグ戦(社団戦)における、立教関係チームの成績です。
     </p>
@@ -33,7 +36,11 @@ const historyRows = seasons.map(s => ({
     ) : (
       <>
         <section aria-labelledby="kai-title">
-          <h3 id="kai-title" class="section-title">第{latest.kai}回（{latest.season_label}）</h3>
+          <h3 id="kai-title" class="section-title">
+            第{latest.kai}回（{latest.season_label}）
+            {ongoing && <span class="ongoing-badge">開催中</span>}
+          </h3>
+          {latest.note && <p class="kai-note">{latest.note}</p>}
 
           <div class="team-grid">
             {latest.teams.map(team => (
@@ -52,51 +59,17 @@ const historyRows = seasons.map(s => ({
                     <dd>
                       {team.promotion === '昇級' && <span class="promo up">▲昇級</span>}
                       {team.promotion === '降級' && <span class="promo down">▼降級</span>}
-                      {team.promotion == null && <span class="promo none">残留</span>}
+                      {team.promotion == null && <span class="promo none">{ongoing ? '—' : '残留'}</span>}
                     </dd>
                   </div>
                 </dl>
 
-                {team.league_table && (
-                  <div class="league-table-wrap">
-                    <table class="league-table">
-                      <thead>
-                        <tr><th>順位</th><th>チーム</th><th>勝点</th><th>勝数</th></tr>
-                      </thead>
-                      <tbody>
-                        {team.league_table.rows.map(r => (
-                          <tr class={r.team === team.team_name ? 'self' : ''}>
-                            <td>{r.rank ?? '—'}</td><td>{r.team}</td>
-                            <td>{r.points ?? '—'}</td><td>{r.wins ?? '—'}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-
                 <p class="source-link">
-                  出典: <a href={team.source_url} target="_blank" rel="noopener">順位一覧表（PDF）</a>
+                  出典: <a href={team.source_url} target="_blank" rel="noopener">リーグ表（成績順）</a>
                 </p>
               </article>
             ))}
           </div>
-
-          {latest.source && (
-            <p class="sources">
-              出典:
-              {latest.source.hub_url && (
-                <a href={latest.source.hub_url} target="_blank" rel="noopener">大会ページ</a>
-              )}
-              {latest.source.ichiran_pdf && (
-                <a href={latest.source.ichiran_pdf} target="_blank" rel="noopener">順位一覧表（PDF）</a>
-              )}
-              {(latest.source.league_pdf ?? []).map((u, i) => (
-                <a href={u} target="_blank" rel="noopener">リーグ表{i === 0 ? '（通常版）' : '（成績順）'}（PDF）</a>
-              ))}
-              <span class="src-note">（東京アマチュア将棋連盟）</span>
-            </p>
-          )}
         </section>
 
         <section aria-labelledby="history-title">
@@ -147,12 +120,17 @@ const historyRows = seasons.map(s => ({
               </tbody>
             </table>
           </div>
-          <p class="table-foot">
-            ※ 立教大学紫龍会は第31回以前「立教大紫龍会」表記。空欄（—）は不参加・休会の回。
-            第14回（平成15年度）はリーグ表が連盟サイトに現存しないため記録なし。
-            「順位不明」はリーグ表が現存せず所属のみ確認できた回。各行の出典リンクから原本を確認できます。
-          </p>
         </section>
+
+        <p class="page-sources">
+          出典: 東京アマチュア将棋連盟
+          {latest.source?.hub_url && (
+            <> ／ <a href={latest.source.hub_url} target="_blank" rel="noopener">大会ページ</a></>
+          )}
+          {(latest.source?.league_pdf ?? []).slice(0, 1).map(u => (
+            <> ／ <a href={u} target="_blank" rel="noopener">最新リーグ表（PDF）</a></>
+          ))}
+        </p>
       </>
     )}
   </main>
@@ -163,7 +141,9 @@ const historyRows = seasons.map(s => ({
   main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem; }
   .page-title { font-size: 1.3rem; color: #541a86; margin: 0 0 0.5rem; }
   .lead { font-size: 0.85rem; color: #777; margin: 0 0 1.5rem; }
-  .section-title { font-size: 1.1rem; color: #541a86; border-bottom: 2px solid #541a86; padding-bottom: 0.3rem; margin-top: 2.2rem; }
+  .section-title { font-size: 1.1rem; color: #541a86; border-bottom: 2px solid #541a86; padding-bottom: 0.3rem; margin-top: 2.2rem; display: flex; align-items: center; gap: 0.6rem; }
+  .ongoing-badge { font-size: 0.7rem; background: #541a86; color: #fff; border-radius: 999px; padding: 0.15rem 0.6rem; font-weight: bold; }
+  .kai-note { font-size: 0.78rem; color: #999; margin: 0.4rem 0 0; }
   .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 1rem 0 1.5rem; }
   .team-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; padding: 1rem 1.2rem; }
   .team-head { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.7rem; }
@@ -178,16 +158,9 @@ const historyRows = seasons.map(s => ({
   .promo.up { background: #e0ffe0; color: #066; }
   .promo.down { background: #ffe0e0; color: #600; }
   .promo.none { color: #999; font-weight: normal; }
-  .league-table-wrap { overflow-x: auto; margin-top: 0.8rem; }
-  .league-table { border-collapse: collapse; width: 100%; font-size: 0.8rem; }
-  .league-table th, .league-table td { border: 1px solid #ddd; padding: 0.2rem 0.4rem; text-align: center; }
-  .league-table tr.self { background: #f4edfc; font-weight: bold; }
   .source-link { margin-top: 0.7rem; font-size: 0.75rem; }
   .source-link a { color: #888; }
   .source-link a:hover { color: #541a86; }
-  .sources { font-size: 0.78rem; color: #888; display: flex; flex-wrap: wrap; gap: 0.2rem 0.9rem; align-items: center; }
-  .sources a { color: #541a86; }
-  .src-note { color: #aaa; }
   .empty-notice { text-align: center; padding: 3rem 1rem; color: #888; }
 
   .history-wrap { overflow-x: auto; background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; margin-top: 1rem; }
@@ -209,5 +182,8 @@ const historyRows = seasons.map(s => ({
   .history-table .c-promo .promo { font-size: 0.72rem; }
   .history-table .c-absent { color: #ccc; text-align: center; border-left: 2px solid #f1ecf7; }
   .history-table tbody tr:hover { background: #fbf9fd; }
-  .table-foot { font-size: 0.72rem; color: #999; margin-top: 0.6rem; line-height: 1.7; }
+
+  .page-sources { font-size: 0.72rem; color: #aaa; margin-top: 1.2rem; text-align: right; }
+  .page-sources a { color: #aaa; }
+  .page-sources a:hover { color: #541a86; }
 </style>
