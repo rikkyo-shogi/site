@@ -4,7 +4,7 @@
   "season_label": "平成18年度",
   "source": {
     "hub_url": "https://toushouren.world.coocan.jp/sub9-H18.htm",
-    "ichiran_pdf": "https://toushouren.world.coocan.jp/17shadan2.htm"
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/nana/page4.pdf"
   },
   "teams": [
     {
@@ -13,27 +13,27 @@
       "kai": 17,
       "division": "2部赤",
       "rank": 2,
-      "points": null,
-      "wins": null,
+      "points": 13,
+      "wins": 65,
       "promotion": "昇級",
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/17shadan2.htm",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/nana/page4.pdf",
       "league_table": null,
-      "note": "公式結果ページで2部赤2位。翌回1部所属より昇級と判定。勝点等の記載資料は現存しない。"
+      "note": "13勝2敗。順位一覧の凡例(▲昇級1-2位)より確定。"
     },
     {
       "team_id": "shiryukai",
       "team_name": "紫龍会",
       "kai": 17,
       "division": "3部緑",
-      "rank": null,
-      "points": null,
-      "wins": null,
+      "rank": 6,
+      "points": 11,
+      "wins": 59,
       "promotion": null,
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/nana/1/17tennsu3g.htm",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/nana/page4.pdf",
       "league_table": null,
-      "note": "所属は部別レーティング一覧より。リーグ表が現存せず順位は不明。"
+      "note": "11勝4敗。順位一覧の凡例(□残留6-10位)より残留確定。"
     }
   ]
 }

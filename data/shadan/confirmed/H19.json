@@ -4,7 +4,7 @@
   "season_label": "平成19年度",
   "source": {
     "hub_url": "https://toushouren.world.coocan.jp/sub9-H19.htm",
-    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/hachi/18tennsu1.htm"
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/hachi/page1801.pdf"
   },
   "teams": [
     {
@@ -12,28 +12,28 @@
       "team_name": "立教大学紫龍会",
       "kai": 18,
       "division": "1部",
-      "rank": null,
-      "points": null,
-      "wins": null,
+      "rank": 14,
+      "points": 2,
+      "wins": 36,
       "promotion": "降級",
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/hachi/18tennsu1.htm",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/hachi/page1801.pdf",
       "league_table": null,
-      "note": "所属は部別レーティング一覧より(チーム史上最高の1部)。リーグ表が現存せず順位は不明。翌回2部赤所属より降級と判定。"
+      "note": "2勝13敗(チーム史上最高の1部)。順位一覧の凡例(▼降級13-16位)より確定。"
     },
     {
       "team_id": "shiryukai",
       "team_name": "紫龍会",
       "kai": 18,
       "division": "3部赤",
-      "rank": null,
-      "points": null,
-      "wins": null,
+      "rank": 8,
+      "points": 9,
+      "wins": 58,
       "promotion": null,
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/hachi/18tennsu3r.htm",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/hachi/page1801.pdf",
       "league_table": null,
-      "note": "所属は部別レーティング一覧より。リーグ表が現存せず順位は不明。"
+      "note": "9勝6敗。順位一覧の凡例(□残留5-8位)より残留確定。"
     }
   ]
 }

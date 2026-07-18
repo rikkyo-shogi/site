@@ -4,7 +4,7 @@
   "season_label": "平成21年度",
   "source": {
     "hub_url": "https://toushouren.world.coocan.jp/sub9-H21.htm",
-    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/21/page2105.pdf"
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/20/page2003.pdf"
   },
   "teams": [
     {
@@ -17,23 +17,23 @@
       "wins": 57,
       "promotion": null,
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/21/page2105.pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/20/page2003.pdf",
       "league_table": null,
-      "note": "成績は第21回順位表PDFの休会欄(前回成績)より。この回を最後に第26回まで休会し、第27回に3部で復帰。"
+      "note": "8勝7敗。この回を最後に第26回まで休会し、第27回に3部で復帰。"
     },
     {
       "team_id": "shiryukai",
       "team_name": "紫龍会",
       "kai": 20,
       "division": "4部白",
-      "rank": null,
-      "points": null,
-      "wins": null,
+      "rank": 4,
+      "points": 11,
+      "wins": 64,
       "promotion": "昇級",
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/20/20tennsu4w.htm",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/20/page2003.pdf",
       "league_table": null,
-      "note": "所属は部別レーティング一覧より。リーグ表が現存せず順位は不明。翌回3部青所属より昇級と判定。"
+      "note": "11勝4敗。この順位一覧に凡例行が無いため昇降の直接記載はなし。翌回3部青所属より昇級と判定。"
     }
   ]
 }

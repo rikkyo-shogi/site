@@ -4,7 +4,7 @@
   "season_label": "平成20年度",
   "source": {
     "hub_url": "https://toushouren.world.coocan.jp/sub9-H20.htm",
-    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/19/19tennsu2r.htm"
+    "ichiran_pdf": "https://toushouren.world.coocan.jp/shadan/19/page1901.pdf"
   },
   "teams": [
     {
@@ -12,28 +12,28 @@
       "team_name": "立教大学紫龍会",
       "kai": 19,
       "division": "2部赤",
-      "rank": null,
-      "points": null,
-      "wins": null,
+      "rank": 11,
+      "points": 6,
+      "wins": 55,
       "promotion": null,
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/19/19tennsu2r.htm",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/19/page1901.pdf",
       "league_table": null,
-      "note": "所属は部別レーティング一覧より。リーグ表が現存せず順位は不明。"
+      "note": "6勝9敗。順位一覧の凡例では▽入替11-13位(残留/降級の入替戦対象)。翌回も2部赤所属のため入替戦を制して残留したと判定。"
     },
     {
       "team_id": "shiryukai",
       "team_name": "紫龍会",
       "kai": 19,
       "division": "3部青",
-      "rank": null,
-      "points": null,
-      "wins": null,
+      "rank": 12,
+      "points": 5,
+      "wins": 45,
       "promotion": "降級",
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/19/19tennsu3b.htm",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/19/page1901.pdf",
       "league_table": null,
-      "note": "所属は部別レーティング一覧より。リーグ表が現存せず順位は不明。翌回4部白所属より降級と判定。"
+      "note": "5勝10敗。順位一覧の凡例では◇調整9-16位(自動昇降ではない調整枠)。翌回4部白所属より降級と判定。"
     }
   ]
 }
