@@ -11,7 +11,7 @@
 
 ---
 
-## 0. 実装状況サマリー（2026-07-17 更新）
+## 0. 実装状況サマリー（2026-07-19 更新）
 
 ### 完了済み
 
@@ -503,27 +503,41 @@ repo-root/
 │  ├─ integrate.py              # 連盟+掲示板のイベント統合 ✓
 │  ├─ run_kanto.py              # 関東連盟一括取得実行スクリプト ✓
 │  ├─ update_kanto_tables.py    # kanto_table / schedule を confirmed に追記 ✓
+│  ├─ fetch_shadan.py           # 社団戦(東将連): 順位一覧/ランキングPDF取得 ✓
+│  ├─ parse_shadan.py           # 社団戦PDFパーサ(pdfplumber・2段組対応) ✓
+│  ├─ build_shadan_history.py   # 社団戦 歴代成績(第12〜35回)の確定値からJSON生成 ✓
+│  ├─ build_shadan_players.py   # 個人レーティング推移生成(本人同意者のみ・現状未使用) ✓
 │  ├─ common.py                 # Shift-JIS デコード/HTTP/キャッシュ/バリデーション ✓
 │  └─ requirements.txt          # ✓
 ├─ cache/                       # 取得した生PDF/HTML/xlsx (gitignore)
 ├─ data/
-│  ├─ schema.json               # JSON Schema ✓（kanto_table・schedule・ScheduleDay 含む）
-│  ├─ auto/                     # スクレイパ出力(未確認) ✓ H21〜R08
-│  └─ confirmed/                # 人手確認済み ✓ H21〜R08(18年度・77イベント)
+│  ├─ schema.json               # JSON Schema(関東) ✓（kanto_table・schedule・ScheduleDay 含む）
+│  ├─ auto/                     # 関東 スクレイパ出力(未確認) ✓ H21〜R08
+│  │  └─ shadan/                # 社団戦 個人ランキング抽出(実名含む・gitignore・非公開)
+│  ├─ confirmed/                # 関東 人手確認済み ✓ H21〜R08(18年度・77イベント)
+│  └─ shadan/
+│     ├─ schema.json            # JSON Schema(社団戦) ✓
+│     ├─ player.schema.json     # JSON Schema(個人レーティング・現状未使用) ✓
+│     └─ confirmed/             # 社団戦 確定データ ✓ H13〜R08(第12〜35回、第35回は status:"ongoing")
 ├─ site/                        # Astro SSG ✓
 │  └─ src/
+│     ├─ layouts/
+│     │  └─ BaseLayout.astro    # head メタ・共通ヘッダー/フッター/SNSリンクの一元管理 ✓
 │     ├─ components/
 │     │  ├─ TeamEvent.astro     # 団体戦カード・kanto_table・schedule 表示 ✓
 │     │  ├─ IndividualEvent.astro
-│     │  └─ SeasonSection.astro
+│     │  ├─ SeasonSection.astro
+│     │  └─ LeagueTrend.astro   # 団体戦 昇降級推移グラフ(Chart.js) ✓
 │     ├─ pages/
-│     │  ├─ index.astro         # 大会結果ページ ✓
+│     │  ├─ index.astro         # トップページ ✓
+│     │  ├─ result/index.astro  # 学生大会結果ページ(旧index.astro) ✓
+│     │  ├─ shadan/index.astro  # 社団戦結果ページ ✓
 │     │  └─ archives/           # 掲示板アーカイブリンク ✓
 │     └─ utils/
-│        └─ loadData.ts         # confirmed/ 読み込み・型定義 ✓
+│        └─ loadData.ts         # confirmed/ 読み込み・型定義・LeagueTrend集計 ✓
 └─ .github/workflows/
    ├─ deploy.yml                # push → GitHub Pages 自動デプロイ ✓
-   ├─ validate.yml              # confirmed/ スキーマ検証 CI ✓
+   ├─ validate.yml              # confirmed/ + shadan/confirmed/ スキーマ検証 CI ✓
    └─ scrape.yml                # スクレイパ手動実行ワークフロー ✓
 ```
 
@@ -531,21 +545,25 @@ repo-root/
 
 ## 6. 機能要件
 
-### 6.1 ページ構成(初版はシンプルに)
-初版は次の2つがあれば十分。大会ごとにページを分けず、**年度ごとにまとめる**。
+### 6.1 ページ構成(実装済み・4ページ構成)
 
-1. **大会結果ページ**: 全年度の立教の成績を**年度ごとにまとめて**一覧表示。
+1. **トップページ**(`/`): サイトの入口。「学生大会結果」「社団戦結果」の2区分カードへ誘導
+   (掲示板アーカイブはトップのカードには出さず、ナビのみに残す)。
+2. **学生大会結果ページ**(`/result/`): 全年度の立教の成績を**年度ごとにまとめて**一覧表示。
    - 1年度ぶんを1セクションとし、その中に関東公式戦(個人戦・団体戦・その他)・
      全国大会・**掲示板由来の大会(非公式の交流戦・古新戦を含む)**をまとめる。
      大会ごとに別ページを作る必要はない。
+   - 冒頭に団体戦 昇降級推移グラフ(`LeagueTrend.astro`)を表示(§0)。
    - **掲示板に載っている大会はすべて掲載する**(非公式戦も省略しない)。
      公式戦と非公式戦はラベル等で区別する。
    - 全国大会の立教実績が存在する年度のみ、そのセクション内に全国の小見出しを追加する
      (実績ゼロなら全国の表示自体を出さない。§1.5.3)。
    - 年度の新しい順に並べ、ページ内リンク or 年度切替で各年度へ飛べるとよい。
-2. **掲示板アーカイブへのリンク**: 現役部員掲示板・OB会掲示板アーカイブへのリンク。
+3. **社団戦結果ページ**(`/shadan/`): 開催中シーズンを冒頭に単独表示し、歴代成績
+   (第12回〜)をチーム別列グループの表で一覧表示(§0)。
+4. **掲示板アーカイブページ**(`/archives/`): 現役部員掲示板・OB会掲示板アーカイブへのリンク。
 
-将来的な拡張(部紹介・入部案内・連絡先・大会別詳細など)は任意。初版スコープには含めない。
+将来的な拡張(部紹介・入部案内・連絡先・大会別詳細など)は `ROADMAP.md` を参照。
 
 ### 6.2 表示要件
 - 1年度のまとまりの中で、団体戦・個人戦・全国大会を見出しで区切って表示する。
@@ -742,7 +760,7 @@ Google Search Console 未登録）。検索エンジンにサイトを発見・�
 | `site/public/robots.txt` | 新規。全ページ許可 + `Sitemap:` 行 |
 | `@astrojs/sitemap` v3.7.3 | `astro.config.mjs` の `integrations` に追加。ビルドで `sitemap-index.xml` / `sitemap-0.xml` を自動生成 |
 | `site/src/layouts/BaseLayout.astro` | 新規。title/description/image/ogType/footerText を props で受け、head メタ一式と共通ヘッダー・フッターを一元管理。GSC 確認トークン設定済み |
-| 3ページの BaseLayout 化 | index / result / archives。ページ固有 description 設定。見た目・CSSは不変（ビルド差分で検証済み） |
+| 各ページの BaseLayout 化 | index / result / archives / shadan。ページ固有 description 設定。見た目・CSSは不変（ビルド差分で検証済み） |
 | JSON-LD | index に SportsOrganization を埋め込み |
 | `site/public/ogp.png` | 新規作成（1200×630、サイト配色） |
 

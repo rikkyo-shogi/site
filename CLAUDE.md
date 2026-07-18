@@ -8,13 +8,20 @@
 ```
 .
 ├── requirements.md      # 要件定義書 + データ仕様 + 実装状況（更新はこちらに）
-├── data/confirmed/      # 確定データ（*.json、schema.jsonでCI検証）
-├── scraper/             # Python製スクレイパー
-├── site/                # Astro製の公開サイト本体
+├── ROADMAP.md           # 将来構想・未確定アイデア（確定したらrequirements.mdへ反映）
+├── data/
+│   ├── confirmed/       # 関東大会 確定データ（*.json、schema.jsonでCI検証）
+│   └── shadan/
+│       ├── confirmed/   # 社団戦 確定データ（*.json、shadan/schema.jsonでCI検証）
+│       ├── schema.json
+│       └── player.schema.json   # 個人レーティング用（本人同意者のみ利用・現状未使用）
+├── scraper/              # Python製スクレイパー（fetch_kanto/fetch_shadan/build_shadan_history 等）
+├── site/                 # Astro製の公開サイト本体
 │   ├── src/layouts/BaseLayout.astro   # head メタ・共通ヘッダー/フッターの一元管理
-│   ├── src/pages/{index,result/index,archives/index}.astro
+│   ├── src/components/{TeamEvent,IndividualEvent,SeasonSection,LeagueTrend}.astro
+│   ├── src/pages/{index,result/index,archives/index,shadan/index}.astro
 │   └── public/{robots.txt,ogp.png,...}
-└── .github/workflows/deploy.yml
+└── .github/workflows/{deploy,validate,scrape}.yml
 ```
 
 ## ビルド・デプロイ
@@ -39,8 +46,11 @@
 - `schedule` が2件以上あると `TeamEvent.astro` が「1日目/2日目…」表示、1件以下は `event.date` にフォールバック。
   日付表記は「平成〇年〇月〇日」「令和〇年〇月〇日」
 - 新しい `source_type` 値を使う場合は `data/schema.json` の enum への追記と `requirements.md` §5 の更新が必要
-- ローカルでのスキーマ検証:
+- ローカルでのスキーマ検証（関東）:
   `python3 -c "import json,jsonschema,sys; from pathlib import Path; schema=json.loads(Path('data/schema.json').read_text()); [print('FAIL',f.name) or sys.exit(1) for f in sorted(Path('data/confirmed').glob('*.json')) if list(jsonschema.Draft7Validator(schema).iter_errors(json.loads(f.read_text())))]"`
+- ローカルでのスキーマ検証（社団戦）: 同様のワンライナーで `data/schema.json`→`data/shadan/schema.json`、`data/confirmed`→`data/shadan/confirmed` に置き換えて実行
+- 社団戦の歴代成績は `scraper/build_shadan_history.py` の `RECORDS`（目視確認済みの確定値）から `data/shadan/confirmed/*.json` を生成する。修正時はこのファイルを編集して再実行すること（JSONを直接手編集しない）
+- 個人（実名・レーティング）データは本人の同意がない限りリポジトリにコミットしない（`requirements.md` §5 の `shadan_pdf` 説明・ROADMAP §2-2）。gitignore済みの `data/auto/shadan/` にのみ出力する
 
 ## 既知の環境上の注意点
 
