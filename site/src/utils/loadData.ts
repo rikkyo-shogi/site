@@ -177,7 +177,7 @@ export interface LeagueTrendPoint {
  * 時系列スロット。point===null はデータの無い半期。
  * known===true(年度ファイルが存在する)なら、隣接スロットと直線で繋いで表示する
  * (例: R02=コロナで開催なし、等)。known===false(年度ファイル自体が無い、未収集期間)
- * のスロットは前後と線を繋がない(描画側 LeageTrend.astro 参照)。
+ * のスロットは前後と線を繋がない(描画側 LeagueTrend.astro 参照)。
  */
 export interface LeagueTrendSlot {
   season: string;

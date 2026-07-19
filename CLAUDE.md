@@ -11,7 +11,7 @@
 ├── ROADMAP.md           # 将来構想・未確定アイデア（確定したらrequirements.mdへ反映）
 ├── data/
 │   ├── confirmed/       # 関東大会 確定データ（*.json、schema.jsonでCI検証。H01〜H16・H21〜R08）
-│   ├── picture/         # 部内アルバム写真（H01〜H13の団体戦結果の原本、gitignore対象外だが個人情報注意）
+│   ├── picture/         # 部内アルバム写真（H01〜H13の団体戦結果の原本。個人情報のためgitignore済み・未コミット、ローカルのみ）
 │   └── shadan/
 │       ├── confirmed/   # 社団戦 確定データ（*.json、shadan/schema.jsonでCI検証）
 │       ├── schema.json
@@ -29,7 +29,7 @@
 
 - 公開URL: `https://rikkyo-shogi.github.io/site/`（Astro v6、`output:'static'`、`base:'/site'`）
 - ローカル: `cd site && npm ci && npm run build`（確認は `npm run preview`）
-- デプロイ: `main` への push で自動（`data/confirmed/**`・`site/**` の変更が対象）
+- デプロイ: `main` への push で自動（`data/confirmed/**`・`data/shadan/**`・`site/**` の変更が対象）
 - スクレイピング作業の前に `requirements.md` §1.5.1 の到達確認を必ず実施（不達なら勝手にダミーデータで進めない）
 
 ## サイトを触る際の注意

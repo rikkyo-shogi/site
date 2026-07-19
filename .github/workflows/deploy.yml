@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'data/confirmed/**'
+      - 'data/shadan/**'
       - 'site/**'
       - '.github/workflows/deploy.yml'
   workflow_dispatch:

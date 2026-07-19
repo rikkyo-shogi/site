@@ -127,11 +127,12 @@ const rikkyoRow = kt?.rows.find(r => r.team.includes('立教'));
     </div>
   )}
 
-  {event.source_type !== 'manual' && (
-    <div class="source-link">
-      <a href={event.source_url} target="_blank" rel="noopener">[{sourceLabel} 出典]</a>
-    </div>
-  )}
+  {/* manual はリンク先となる公開URLが無いため、出典ラベルのみ表示する(requirements §5) */}
+  <div class="source-link">
+    {event.source_type === 'manual'
+      ? <span class="source-plain">[出典: {sourceLabel}]</span>
+      : <a href={event.source_url} target="_blank" rel="noopener">[{sourceLabel} 出典]</a>}
+  </div>
 </div>
 
 <style>
@@ -179,4 +180,9 @@ const rikkyoRow = kt?.rows.find(r => r.team.includes('立教'));
   .bbs-comment { color: #666; font-size: 0.78rem; margin: 0.4rem 0 0; font-style: italic; }
   .bbs-source { font-size: 0.72rem; color: #aaa; margin: 0.3rem 0 0; }
   .bbs-source a { color: #aaa; }
+
+  .source-link { margin-top: 0.4rem; font-size: 0.75rem; }
+  .source-link a { color: #888; }
+  .source-link a:hover { color: #541a86; }
+  .source-plain { color: #999; }
 </style>

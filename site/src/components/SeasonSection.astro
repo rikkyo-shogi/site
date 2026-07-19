@@ -47,3 +47,12 @@ const nationalEvents = season.events.filter(e => e.level === 'national');
     <p class="no-data">このシーズンのデータはまだ登録されていません。</p>
   )}
 </section>
+
+<style>
+  /* season-note はこのコンポーネントが描画するため、スタイルもここに置く
+     (result/index.astro 側に書くとスコープ属性が一致せず適用されない) */
+  .season-note {
+    background: #f5f1fa; border: 1px solid #e3d9f2; border-radius: 6px;
+    padding: 0.5rem 0.8rem; margin-bottom: 1rem; font-size: 0.85rem; color: #5a4a70;
+  }
+</style>

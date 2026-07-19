@@ -444,7 +444,7 @@ HTML/xlsx ファイル先頭行付近から `1日目 ○月○日 於 ○○大�
 | `events[].season_half` | enum\|null | – | `spring` \| `autumn` \| `null`(名寄せ用。春秋の判別) |
 | `events[].date` | string\|null | – | 判明範囲で。`YYYY` / `YYYY-MM` / `YYYY-MM-DD` / 期間は `開始/終了`。不明は `null` |
 | `events[].venue` | string\|null | – | 会場。不明は `null` か `""` |
-| `events[].source_url` | string | ✓ | 一次情報の URL(連盟PDF/HTMLページ/掲示板記事のいずれか) |
+| `events[].source_url` | string | ✓ | 一次情報の URL(連盟PDF/HTMLページ/掲示板記事のいずれか)。`manual` で公開URLが無い場合はプレースホルダ `"#"`(サイト上ではリンクを張らない) |
 | `events[].source_type` | enum | ✓ | `kanto_pdf` \| `kanto_html` \| `kanto_xlsx` \| `national_pdf` \| `national_html` \| `national_xlsx` \| `bbs` \| `manual` \| `club_html` |
 | `events[].rikkyo_present` | bool | ✓ | 立教が登場するか。`false` のイベントは原則保存しない(§2.4) |
 | `events[].rikkyo_result` | object\|null | 団体 | 下記参照。個人イベントでは `null` |
@@ -455,12 +455,13 @@ HTML/xlsx ファイル先頭行付近から `1日目 ○月○日 於 ○○大�
 | `events[].schedule` | array\|null | – | 複数日程（`ScheduleDay[]`）。HTML/xlsx から自動抽出 |
 | `events[].confidence` | enum | ✓ | `confirmed`(人手確認済み)\| `auto`(自動抽出のみ・未確認) |
 
-- `manual` は黒板写真・口頭情報など非公式ソースの手動入力（サイト上の出典ラベルは「部内記録」表示）。
+- `manual` は黒板写真・口頭情報など非公式ソースの手動入力（サイト上の出典ラベルは「部内記録」表示。
+  リンク先となる公開URLが無いためラベルのみでリンクは張らない）。
   公式PDFが後から公開されたら該当の `kanto_*` に変更し `source_url` を実URLへ更新する。
   enum を増やす場合は `data/schema.json` にも追記が必要。
 - `club_html` は部自身が過去に公開していた大会結果まとめページ（例: `www2.rikkyo.ac.jp/web/z4000060/homepage1/`
   配下、平成12〜16年度分）由来。関東連盟・全国連盟の公式サイトではないが、`manual` と異なり実際に
-  閲覧可能なURLがある一次資料のため区別している（サイト上の出典ラベルは「部公式サイト(旧)」表示）。
+  閲覧可能なURLがある一次資料のため区別している（サイト上の出典ラベルは「(旧)部サイト」表示）。
 - `shadan_pdf` は社団戦（東将連 社会人団体リーグ戦）PDF由来の `source_type`。関東学生団体戦とは
   名前空間を分離するため、上記の関東用 enum（`data/schema.json`）には**含めない**。
   データは `data/shadan/confirmed/RXX.json`、スキーマは `data/shadan/schema.json`（CI `validate.yml` で検証）。

@@ -47,9 +47,17 @@ const sourceLabel = event.source_type.startsWith('kanto') ? '関東大学将棋�
     </ul>
   )}
 
-  {event.source_type !== 'manual' && (
-    <div class="source-link">
-      <a href={event.source_url} target="_blank" rel="noopener">[{sourceLabel} 出典]</a>
-    </div>
-  )}
+  {/* manual はリンク先となる公開URLが無いため、出典ラベルのみ表示する(requirements §5) */}
+  <div class="source-link">
+    {event.source_type === 'manual'
+      ? <span class="source-plain">[出典: {sourceLabel}]</span>
+      : <a href={event.source_url} target="_blank" rel="noopener">[{sourceLabel} 出典]</a>}
+  </div>
 </div>
+
+<style>
+  .source-link { margin-top: 0.4rem; font-size: 0.75rem; }
+  .source-link a { color: #888; }
+  .source-link a:hover { color: #541a86; }
+  .source-plain { color: #999; }
+</style>
