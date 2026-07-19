@@ -1,0 +1,82 @@
+{
+  "season": "H07",
+  "season_label": "平成7年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "C1級",
+      "season_half": "spring",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 3,
+        "wins": 25,
+        "losses": null,
+        "points": 3,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成7年5月5日",
+          "venue": "東京理科大学"
+        },
+        {
+          "day": 2,
+          "date": "平成7年5月7日",
+          "venue": "東京理科大学"
+        },
+        {
+          "day": 3,
+          "date": "平成7年5月14日",
+          "venue": "駒澤大学"
+        }
+      ]
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦",
+      "division": "C1級",
+      "season_half": "autumn",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 4,
+        "wins": 29,
+        "losses": null,
+        "points": 4,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成7年10月29日",
+          "venue": "東海大学"
+        },
+        {
+          "day": 2,
+          "date": "平成7年11月3日",
+          "venue": "東京理科大学"
+        },
+        {
+          "day": 3,
+          "date": "平成7年11月5日",
+          "venue": "東京理科大学"
+        }
+      ]
+    }
+  ]
+}

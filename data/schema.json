@@ -13,6 +13,10 @@
       "type": "string",
       "description": "表示用。例: 令和8年度, 2016年度"
     },
+    "note": {
+      "type": ["string", "null"],
+      "description": "年度全体、または一部の大会が開催されなかった事情等の注記(例: 新型コロナウイルス感染拡大による中止)"
+    },
     "events": {
       "type": "array",
       "items": { "$ref": "#/definitions/Event" }
@@ -54,7 +58,7 @@
         },
         "source_type": {
           "type": "string",
-          "enum": ["kanto_pdf", "kanto_html", "kanto_xlsx", "national_pdf", "national_html", "national_xlsx", "bbs", "manual"]
+          "enum": ["kanto_pdf", "kanto_html", "kanto_xlsx", "national_pdf", "national_html", "national_xlsx", "bbs", "manual", "club_html"]
         },
         "rikkyo_present": {
           "type": "boolean"
@@ -104,7 +108,7 @@
       "additionalProperties": false,
       "properties": {
         "rank": { "type": ["integer", "null"] },
-        "wins": { "type": ["integer", "null"] },
+        "wins": { "type": ["number", "null"] },
         "losses": { "type": ["integer", "null"] },
         "points": { "type": ["integer", "null"] },
         "promotion": {

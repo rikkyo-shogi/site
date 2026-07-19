@@ -1,0 +1,82 @@
+{
+  "season": "H06",
+  "season_label": "平成6年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "C1級",
+      "season_half": "spring",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 3,
+        "wins": 28,
+        "losses": null,
+        "points": 4,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成6年5月5日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 2,
+          "date": "平成6年5月8日",
+          "venue": "大東文化大学"
+        },
+        {
+          "day": 3,
+          "date": "平成6年5月15日",
+          "venue": "駒澤大学"
+        }
+      ]
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦",
+      "division": "C1級",
+      "season_half": "autumn",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 5,
+        "wins": 19.5,
+        "losses": null,
+        "points": 1,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成6年10月16日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 2,
+          "date": "平成6年10月23日",
+          "venue": "東京理科大学"
+        },
+        {
+          "day": 3,
+          "date": "平成6年10月30日",
+          "venue": "東京理科大学"
+        }
+      ]
+    }
+  ]
+}

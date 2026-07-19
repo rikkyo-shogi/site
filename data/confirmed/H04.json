@@ -1,0 +1,66 @@
+{
+  "season": "H04",
+  "season_label": "平成4年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "C1級",
+      "season_half": "spring",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 3,
+        "wins": 24,
+        "losses": null,
+        "points": 5,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成4年5月5日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 2,
+          "date": "平成4年5月10日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 3,
+          "date": "平成4年5月17日",
+          "venue": "駒澤大学"
+        }
+      ]
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦",
+      "division": "C1級",
+      "season_half": "autumn",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 4,
+        "wins": 35,
+        "losses": null,
+        "points": 6,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": null
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "season": "H02",
+  "season_label": "平成2年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "B2級",
+      "season_half": "spring",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 8,
+        "wins": 13,
+        "losses": null,
+        "points": 0,
+        "promotion": "降級",
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成2年5月5日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 2,
+          "date": "平成2年5月6日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 3,
+          "date": "平成2年5月13日",
+          "venue": "東京理科大学"
+        }
+      ]
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦",
+      "division": "C1級",
+      "season_half": "autumn",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 4,
+        "wins": 23,
+        "losses": null,
+        "points": 2,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成2年10月14日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 2,
+          "date": "平成2年10月21日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 3,
+          "date": "平成2年10月28日",
+          "venue": "大東文化大学"
+        }
+      ]
+    }
+  ]
+}

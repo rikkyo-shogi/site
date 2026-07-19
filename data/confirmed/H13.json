@@ -1,0 +1,66 @@
+{
+  "season": "H13",
+  "season_label": "平成13年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "B2級",
+      "season_half": "spring",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 1,
+        "wins": 36.5,
+        "losses": null,
+        "points": 7,
+        "promotion": "昇級",
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": null
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦",
+      "division": "B1級",
+      "season_half": "autumn",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 1,
+        "wins": 35.5,
+        "losses": null,
+        "points": 6,
+        "promotion": "昇級",
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成13年10月14日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 2,
+          "date": "平成13年10月21日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 3,
+          "date": "平成13年10月28日",
+          "venue": "駒澤大学"
+        }
+      ]
+    }
+  ]
+}

@@ -9,7 +9,11 @@ const bbs = event.bbs_detail;
 const kt = event.kanto_table;
 const sched = event.schedule;
 const highlight = isHighlight(event);
-const sourceLabel = event.source_type.startsWith('kanto') ? '関東大学将棋連盟' : event.source_type === 'bbs' ? '掲示板' : event.source_type === 'manual' ? '部内記録' : '全国連盟';
+const sourceLabel = event.source_type.startsWith('kanto') ? '関東大学将棋連盟'
+  : event.source_type === 'bbs' ? '掲示板'
+  : event.source_type === 'manual' ? '部内記録'
+  : event.source_type === 'club_html' ? '(旧)部サイト'
+  : '全国連盟';
 
 const rikkyoRow = kt?.rows.find(r => r.team.includes('立教'));
 ---
@@ -123,9 +127,11 @@ const rikkyoRow = kt?.rows.find(r => r.team.includes('立教'));
     </div>
   )}
 
-  <div class="source-link">
-    <a href={event.source_url} target="_blank" rel="noopener">[{sourceLabel} 出典]</a>
-  </div>
+  {event.source_type !== 'manual' && (
+    <div class="source-link">
+      <a href={event.source_url} target="_blank" rel="noopener">[{sourceLabel} 出典]</a>
+    </div>
+  )}
 </div>
 
 <style>

@@ -90,6 +90,7 @@ export interface Event {
 export interface SeasonData {
   season: string;
   season_label: string;
+  note?: string | null;
   events: Event[];
 }
 
@@ -173,15 +174,17 @@ export interface LeagueTrendPoint {
 }
 
 /**
- * 時系列スロット。point===null はデータの無い半期(R02=コロナ 等)。
- * 描画側(LeagueTrend.astro)は現在この区間を直線で繋いで表示する(spanGaps:true)。
- * マーカーは置かれないため、null スロットは x軸ラベルとしてのみ現れる。
+ * 時系列スロット。point===null はデータの無い半期。
+ * known===true(年度ファイルが存在する)なら、隣接スロットと直線で繋いで表示する
+ * (例: R02=コロナで開催なし、等)。known===false(年度ファイル自体が無い、未収集期間)
+ * のスロットは前後と線を繋がない(描画側 LeageTrend.astro 参照)。
  */
 export interface LeagueTrendSlot {
   season: string;
   season_half: 'spring' | 'autumn';
   label: string;
   point: LeagueTrendPoint | null;
+  known: boolean;
 }
 
 const halfLabel = (h: 'spring' | 'autumn') => (h === 'spring' ? '春' : '秋');
@@ -194,7 +197,8 @@ const halfLabel = (h: 'spring' | 'autumn') => (h === 'spring' ? '春' : '秋');
  */
 export async function loadLeagueTrend(seasons?: SeasonData[]): Promise<LeagueTrendSlot[]> {
   seasons ??= await loadAllSeasons();
-  // loadAllSeasons は新しい順に整列済みなので、反転して古い順(H21春 →)にする
+  // H01〜H13の「BI級」「CII級」等は B1級/C2級等と同義であることを確認済み(表記はdata側で正規化済み)。
+  // loadAllSeasons は新しい順に整列済みなので、反転して古い順(H01春 →)にする
   const ordered = [...seasons].sort((a, b) => seasonSortRank(a.season) - seasonSortRank(b.season));
 
   // (season, half) -> その半期の主たる団体戦の順位
@@ -223,11 +227,26 @@ export async function loadLeagueTrend(seasons?: SeasonData[]): Promise<LeagueTre
     }
   }
 
-  // 全年度を 春→秋 で展開(欠測の可視化のため、データの無い半期も軸に残す)
+  // 全年度を 春→秋 で展開(欠測の可視化のため、データの無い半期も軸に残す)。
+  // data/confirmed/ にファイル自体が無い年度(例: H14〜H20)も、隣接年度と同じ元号なら
+  // ダミー年度として挟み、グラフ上に空白期間として表示する(実際に何年分抜けているか分かるように)。
+  const seasonsWithGaps: { season: string; known: boolean }[] = [];
+  for (let i = 0; i < ordered.length; i++) {
+    seasonsWithGaps.push({ season: ordered[i].season, known: true });
+    if (i + 1 >= ordered.length) continue;
+    const cur = ordered[i].season.match(/^(R|H)(\d+)$/i);
+    const next = ordered[i + 1].season.match(/^(R|H)(\d+)$/i);
+    if (!cur || !next || cur[1].toUpperCase() !== next[1].toUpperCase()) continue;
+    const era = cur[1].toUpperCase();
+    for (let n = parseInt(cur[2]) + 1; n < parseInt(next[2]); n++) {
+      seasonsWithGaps.push({ season: `${era}${String(n).padStart(2, '0')}`, known: false });
+    }
+  }
+
   const allSlots: Omit<LeagueTrendSlot, 'point'>[] = [];
-  for (const s of ordered) {
+  for (const s of seasonsWithGaps) {
     for (const half of ['spring', 'autumn'] as const) {
-      allSlots.push({ season: s.season, season_half: half, label: `${s.season}${halfLabel(half)}` });
+      allSlots.push({ season: s.season, season_half: half, label: `${s.season}${halfLabel(half)}`, known: s.known });
     }
   }
 

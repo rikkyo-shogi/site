@@ -14,7 +14,7 @@ Phase 1(社団戦)・Phase 2(昇降級グラフ)は実装済み。詳細・実�
 
 | 層 | 現状 | 置き場所 |
 |---|---|---|
-| データ(関東) | 年度別JSON（H21〜R08 / 77イベント）、`kanto_table`・`rikkyo_result`・`bbs_detail`・`schedule` を構造化 | `data/confirmed/*.json` |
+| データ(関東) | 年度別JSON（H01〜H16・H21〜R08）、`kanto_table`・`rikkyo_result`・`bbs_detail`・`schedule` を構造化。H01〜H16は写真・部の旧サイト由来で対戦表(kanto_table)は未収録 | `data/confirmed/*.json` |
 | データ(社団戦) | 第12回〜35回(開催中)。`teams[]`・`league_table`・`status` を構造化 | `data/shadan/confirmed/*.json` |
 | スキーマ | Draft7 + CI検証（関東・社団戦とも） | `data/schema.json` / `data/shadan/schema.json` / `.github/workflows/validate.yml` |
 | 取り込み | Python 半自動スクレイパー（関東PDF/HTML/XLSX・掲示板・社団戦PDF） | `scraper/*.py` |

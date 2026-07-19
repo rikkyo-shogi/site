@@ -1,0 +1,50 @@
+{
+  "season": "H15",
+  "season_label": "平成15年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "A級",
+      "season_half": "spring",
+      "date": null,
+      "venue": null,
+      "source_url": "https://www2.rikkyo.ac.jp/web/z4000060/homepage1/kekka2004.html",
+      "source_type": "club_html",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 2,
+        "wins": null,
+        "losses": null,
+        "points": null,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": null
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦",
+      "division": "A級",
+      "season_half": "autumn",
+      "date": null,
+      "venue": null,
+      "source_url": "https://www2.rikkyo.ac.jp/web/z4000060/homepage1/kekka2004.html",
+      "source_type": "club_html",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 7,
+        "wins": null,
+        "losses": null,
+        "points": null,
+        "promotion": "降級",
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": null
+    }
+  ]
+}

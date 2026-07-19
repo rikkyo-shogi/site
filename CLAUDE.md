@@ -10,7 +10,8 @@
 ├── requirements.md      # 要件定義書 + データ仕様 + 実装状況（更新はこちらに）
 ├── ROADMAP.md           # 将来構想・未確定アイデア（確定したらrequirements.mdへ反映）
 ├── data/
-│   ├── confirmed/       # 関東大会 確定データ（*.json、schema.jsonでCI検証）
+│   ├── confirmed/       # 関東大会 確定データ（*.json、schema.jsonでCI検証。H01〜H16・H21〜R08）
+│   ├── picture/         # 部内アルバム写真（H01〜H13の団体戦結果の原本、gitignore対象外だが個人情報注意）
 │   └── shadan/
 │       ├── confirmed/   # 社団戦 確定データ（*.json、shadan/schema.jsonでCI検証）
 │       ├── schema.json
@@ -43,8 +44,13 @@
 - フィールドの意味・スキーマ定義は `requirements.md` §5「フィールド正式定義」が正（`kanto_table` の `wins`=勝数、`points`=勝点 など）
 - 黒板写真・口頭情報など非公式ソースの手動入力は `source_type: "manual"`（出典ラベルは「部内記録」表示）。
   公式PDFが後から公開されたら `kanto_pdf` 等に戻し `source_url` を実URLへ更新する
+- 部の旧公式サイト（`www2.rikkyo.ac.jp/web/z4000060/homepage1/` 等、実在するURLだが関東連盟の公式サイトではない）
+  由来のデータは `source_type: "club_html"`（出典ラベルは「(旧)部サイト」表示）
+- `season.note`（string|null）でその年度の注記（新型コロナ等による開催中止等）をシーズン見出し直下に表示できる
+- H01〜H13の対戦表（`kanto_table`、マス目）は写真からの読み取りを複数回試みたが精度不足（相互チェックで
+  矛盾を複数検出）と判断し見送った。安易に再試行せず、必要なら人力での確認を依頼すること
 - `schedule` が2件以上あると `TeamEvent.astro` が「1日目/2日目…」表示、1件以下は `event.date` にフォールバック。
-  日付表記は「平成〇年〇月〇日」「令和〇年〇月〇日」
+  日付表記は「平成〇年〇月〇日」「令和〇年〇月〇日」（元年は「平成元年」「令和元年」、「1年」としない）
 - 新しい `source_type` 値を使う場合は `data/schema.json` の enum への追記と `requirements.md` §5 の更新が必要
 - ローカルでのスキーマ検証（関東）:
   `python3 -c "import json,jsonschema,sys; from pathlib import Path; schema=json.loads(Path('data/schema.json').read_text()); [print('FAIL',f.name) or sys.exit(1) for f in sorted(Path('data/confirmed').glob('*.json')) if list(jsonschema.Draft7Validator(schema).iter_errors(json.loads(f.read_text())))]"`

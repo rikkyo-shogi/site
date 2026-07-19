@@ -18,17 +18,19 @@
 | 項目 | 詳細 |
 |------|------|
 | **スクレイパー** | `fetch_kanto.py`・`fetch_bbs.py`・`parse_team.py`・`parse_individual.py`・`parse_bbs.py`・`integrate.py`・`update_kanto_tables.py` |
-| **確定データ** | `data/confirmed/` に H21〜R08 の 18 年度分（77 イベント）を格納 |
-| **団体戦テーブル** | `kanto_table` フィールドを 28 イベントに埋め込み済み（PDF/HTML/XLSX 全形式対応）|
+| **確定データ** | `data/confirmed/` に H01〜H16・H21〜R08 の 34 年度分を格納。H01〜H13 は部内アルバム写真（`data/picture/`）から、H14〜H16 は部の旧公式サイト（`club_html`、後述）から起こした（いずれも団体戦の順位・勝点・勝数中心。対戦表は §5 参照） |
+| **団体戦テーブル** | `kanto_table` フィールドを 28 イベント（H21〜R08 の一部）に埋め込み済み（PDF/HTML/XLSX 全形式対応）。H01〜H16 分は対戦マス目の写真読み取り精度が実用に耐えず、当面見送り(下記「未完了」参照) |
 | **複数日程** | `schedule` フィールド（`ScheduleDay[]`）を 12 イベントに埋め込み済み |
-| **SSGサイト** | Astro によるサイト生成。全 18 年度分が表示される |
+| **SSGサイト** | Astro によるサイト生成。全 34 年度分が表示される |
 | **サイト表示** | 罫線・立教行黄色ハイライト・昇降級バッジ（順位列右）・複数日程表示 すべて実装済み |
 | **バリデーション** | `data/schema.json` + CI (`validate.yml`) でスキーマ検証 |
 | **GitHub Actions** | `deploy.yml`（push → GitHub Pages, Node.js 22）・`validate.yml`・`scrape.yml` 実働中 |
 | **掲示板データ** | 13 イベントに `bbs_detail`（対戦相手別スコア）が付与済み |
 | **公開** | **https://rikkyo-shogi.github.io/site/** で公開済み（Organization: rikkyo-shogi / repo: site）|
 | **SEO（フェーズ1・2）** | robots.txt・sitemap自動生成・BaseLayout（description/canonical/OGP/Twitter Card/GSC確認タグ）・JSON-LD・OGP画像。詳細は §11 |
-| **昇降級推移グラフ（ROADMAP §2-3）** | `loadData.ts` の `loadLeagueTrend()` で `data/confirmed` を集計。`LeagueTrend.astro`（Chart.js の stepped line）を大会結果ページ冒頭に配置。縦軸=リーグ名（C2〜A）、横軸=シーズン（H21春〜R08春）。昇級▲/降級▼/優勝★をマーカーで強調。データの無い半期（R02・H21秋 等）は x軸に残しつつ `spanGaps:true` で線を直線接続して表示（マーカーなし。フィードバックにより欠測を目立たせない方針に確定）。直近結果が昇級/降級の場合は次半期の所属リーグを点線＋中抜きマーカーで表示（グラフ内のみの表現とし、「予定」等の文字は凡例に出さない。ツールチップは「B1級(昇級による)」）。JS無効時は簡易テーブルにフォールバック。追加データ収集ゼロ |
+| **昇降級推移グラフ（ROADMAP §2-3）** | `loadData.ts` の `loadLeagueTrend()` で `data/confirmed` を集計。`LeagueTrend.astro`（Chart.js の stepped line）を大会結果ページ冒頭に配置。縦軸=リーグ名（C2〜A）、横軸=シーズン（H01春〜R08春、間にH17〜H20の未収集期間あり）。昇級▲/降級▼/優勝★をマーカーで強調。年度ファイルはあるがデータの無い半期（R02・R03秋・H21秋 等）は`known:true`として扱い`spanGaps:true`で直線接続。年度ファイル自体が無い未収集期間（H17〜H20）は`known:false`としてデータセットを分割し、線を繋がず空白区間として表示（ツールチップは「情報収集中」）。横スクロールはPC/スマホ問わず常時有効（1スロット34〜38px、初期表示は直近＝右端）で、10年分程度はスクロールなしで見える設計。直近結果が昇級/降級の場合は次半期の所属リーグを点線＋中抜きマーカーで表示。JS無効時は簡易テーブルにフォールバック |
+| **年度ノート（`note`）** | `season.note`（string\|null）を追加。年度全体・一部大会が新型コロナウイルス感染拡大等で開催されなかった事情をシーズン見出し直下に表示（例: R02は春秋とも中止、R03は秋季団体戦のみ中止）。データが無い場合の汎用メッセージより優先表示 |
+| **`club_html` ソース種別** | 部が過去に公開していた大会結果まとめページ（`www2.rikkyo.ac.jp/web/z4000060/homepage1/`、平成12〜16年度分。Shift-JIS）由来のデータ用に追加。出典ラベルは「(旧)部サイト」 |
 | **社団戦パイプライン試作（ROADMAP §2-1/2-2）** | `scraper/fetch_shadan.py`＋`parse_shadan.py`（pdfplumber）で第34回（R07）を抽出。順位一覧PDFの2段組を座標で左右分割し（赤/白はヘッダー表記から取得）立教2チームの成績を取得 → `data/shadan/confirmed/R07.json`（`teams[]`、`league_table`は現状 null）。`source_type: shadan_pdf` を新設し `data/shadan/schema.json`＋`validate.yml` で検証（保存前にもスキーマ検証）。個人ランキングPDFは所属部から自動導出（第34回: 3部白=立教大学紫龍会14名 / 6部赤=紫龍会13名）し `data/auto/shadan/`（gitignore）にのみ出力・非公開。`site/src/pages/shadan/index.astro` で2チーム並列表示・出典PDFリンク付き、ナビに「社団戦」追加 |
 | **社団戦 歴代成績（第12回〜33回）** | 資料形式が回ごとに異なるため（HTMLリーグ表→PDF・3リーグ制・3段組・オンライン開催等）、`scraper/build_shadan_history.py` に**目視確認済みの確定値**を保持しスキーマ検証つきで `data/shadan/confirmed/{H13..R06}.json` を生成（半自動＋目視方式）。判明した系譜: 立教大学紫龍会=第12回（H13）から参戦、第18回に**1部所属**（チーム史上最高）、第20回を最後に休会し第27回に3部で復帰（第31回以前は「立教大紫龍会」表記）。紫龍会=第15回から確認、第28〜32回休会、第33回に5部で復帰。第14回（H15）はリーグ表が連盟サイトに現存せず記録なし。第17〜21回は当該回の順位一覧PDF（例: `shadan/nana/page4.pdf`・`shadan/hachi/page1801.pdf`・`shadan/19/page1901.pdf`・`shadan/20/page2003.pdf`・`shadan/21/page2107.pdf`）を目視確認し全行の順位・勝点・勝数を確定（一部ファイルは名前列がテキスト抽出不可のため、対戦表内の略称参照から自チームの行を特定）。R02・R03の団体戦はコロナ禍で中止、第31回はR04にオンライン併用で開催（`31/rankingA4.pdf` から取得）。昇降欄の無い回の昇級/降級は翌回の所属部から判定し note に根拠を記録。shadanページの歴代成績はチーム別の列グループ（回×2チーム）で表示。出典リンクは各回の**リーグ表（成績順）**（第22回〜: `5nitimeseisekijun*.pdf` / `NN_league_04_g.pdf`。全ファイルの存在とチーム行の掲載を確認済み）。開催中の年度（第35回=R08、`status: "ongoing"`）は各節のリーグ表から途中経過を取り込み、ページ冒頭に単独表示（歴代テーブルには最終結果のみ）。ナビ・トップページの区分は「学生大会結果」「社団戦結果」に統一（掲示板アーカイブはナビのみ） |
 | **社団戦 個人レーティング推移（保留中）** | 紫龍会・立教大学紫龍会の**出場者の個人レーティング（東将連公式・新持点）の推移を表示する**機能。一度実装したが「もう少し工夫できそう」とのフィードバックにより表示・データとも撤回（2026-07-18）。基盤（`scraper/build_shadan_players.py`・`data/shadan/player.schema.json`・CI検証枠）は将来の再実装用に維持。掲載は本人の同意を得た部員のみ・登録番号非表示の方針（§5）も維持。判明済みのデータ源: 第33回=全部門一覧PDF・第34回=部別PDF・第17〜20回（H18〜H21）=部別レーティング一覧HTML |
@@ -40,9 +42,11 @@
 | 項目 | 状態 |
 |------|------|
 | **全国連盟スクレイパー** | `fetch_national.py` 未実装。立教の全国出場実績は未確認 |
-| **R02 データ** | 0件（コロナ禍による開催なし。要確認） |
 | **一部年度の kanto_table 欠損** | H28秋・H22秋・H22春・H25春 等（PDF解析失敗または立教不在） |
 | **個人戦データ** | R06 など一部年度で個人戦イベントなし（公式PDF取得済みだが未抽出） |
+| **H01〜H13の対戦表(kanto_table)** | 写真からのマス目読み取りは複数回試行したが精度不足（相互チェックで矛盾を複数検出）のため見送り。手入力用シートを都度作成して依頼中（`/tmp` 配下、リポジトリ非管理） |
+| **H17〜H20 (平成17〜20年度)** | データ未収集。`loadLeagueTrend()` はこの期間を「未収集」として線を繋がず表示（データが見つかり次第 `data/confirmed/H17.json`〜`H20.json` を追加すれば自動的に繋がる） |
+| **H01〜H13の一部フィールド** | 写真の判読限界により未確定の項目が残る（日程の一部・一部順位等）。埋まり次第 `data/confirmed/*.json` を直接更新 |
 
 ---
 
@@ -426,12 +430,13 @@ HTML/xlsx ファイル先頭行付近から `1日目 ○月○日 於 ○○大�
 ### フィールド正式定義(必ずこの定義に従う)
 
 ファイル単位: **1年度 = 1 JSON ファイル**(例 `data/confirmed/R08.json`)。
-ルートは `{ "season", "season_label", "events": [...] }`。`events` は0件でも可(空配列)。
+ルートは `{ "season", "season_label", "note", "events": [...] }`。`events` は0件でも可(空配列)。
 
 | フィールド | 型 | 必須 | 説明・許容値 |
 | --- | --- | --- | --- |
-| `season` | string | ✓ | 年度キー。関東は `R08`〜`H21`、全国は西暦 `2016` 等。ファイル名と一致させる |
-| `season_label` | string | ✓ | 表示用。`令和8年度` / `2016年度` |
+| `season` | string | ✓ | 年度キー。関東は `R08`〜`H01`、全国は西暦 `2016` 等。ファイル名と一致させる。元年は `01`(表示は「元年」、詳細は下記) |
+| `season_label` | string | ✓ | 表示用。`令和8年度` / `2016年度`。元年は `令和元年度`(`令和1年度` としない) |
+| `note` | string\|null | – | 年度全体・一部大会が開催されなかった事情の注記(例: 新型コロナウイルス感染拡大による中止)。設定するとシーズン見出し直下に表示される |
 | `events[].level` | enum | ✓ | `regional` \| `national` |
 | `events[].type` | enum | ✓ | `team`(団体)\| `individual`(個人) |
 | `events[].name` | string | ✓ | 大会名。`春季団体戦` `秋季個人戦` `学生王座戦` 等 |
@@ -440,7 +445,7 @@ HTML/xlsx ファイル先頭行付近から `1日目 ○月○日 於 ○○大�
 | `events[].date` | string\|null | – | 判明範囲で。`YYYY` / `YYYY-MM` / `YYYY-MM-DD` / 期間は `開始/終了`。不明は `null` |
 | `events[].venue` | string\|null | – | 会場。不明は `null` か `""` |
 | `events[].source_url` | string | ✓ | 一次情報の URL(連盟PDF/HTMLページ/掲示板記事のいずれか) |
-| `events[].source_type` | enum | ✓ | `kanto_pdf` \| `kanto_html` \| `kanto_xlsx` \| `national_pdf` \| `national_html` \| `national_xlsx` \| `bbs` \| `manual` |
+| `events[].source_type` | enum | ✓ | `kanto_pdf` \| `kanto_html` \| `kanto_xlsx` \| `national_pdf` \| `national_html` \| `national_xlsx` \| `bbs` \| `manual` \| `club_html` |
 | `events[].rikkyo_present` | bool | ✓ | 立教が登場するか。`false` のイベントは原則保存しない(§2.4) |
 | `events[].rikkyo_result` | object\|null | 団体 | 下記参照。個人イベントでは `null` |
 | `events[].rikkyo_players` | array | 個人 | 下記参照。団体イベントでは省略可 |
@@ -453,6 +458,9 @@ HTML/xlsx ファイル先頭行付近から `1日目 ○月○日 於 ○○大�
 - `manual` は黒板写真・口頭情報など非公式ソースの手動入力（サイト上の出典ラベルは「部内記録」表示）。
   公式PDFが後から公開されたら該当の `kanto_*` に変更し `source_url` を実URLへ更新する。
   enum を増やす場合は `data/schema.json` にも追記が必要。
+- `club_html` は部自身が過去に公開していた大会結果まとめページ（例: `www2.rikkyo.ac.jp/web/z4000060/homepage1/`
+  配下、平成12〜16年度分）由来。関東連盟・全国連盟の公式サイトではないが、`manual` と異なり実際に
+  閲覧可能なURLがある一次資料のため区別している（サイト上の出典ラベルは「部公式サイト(旧)」表示）。
 - `shadan_pdf` は社団戦（東将連 社会人団体リーグ戦）PDF由来の `source_type`。関東学生団体戦とは
   名前空間を分離するため、上記の関東用 enum（`data/schema.json`）には**含めない**。
   データは `data/shadan/confirmed/RXX.json`、スキーマは `data/shadan/schema.json`（CI `validate.yml` で検証）。
@@ -465,8 +473,8 @@ HTML/xlsx ファイル先頭行付近から `1日目 ○月○日 於 ○○大�
   （スキーマ `data/shadan/player.schema.json`、生成は `scraper/build_shadan_players.py`）にコミットし、
   shadan ページにレーティング推移を表示する。登録番号（reg_no）は内部キーでありページには表示しない。
 
-`rikkyo_result`(団体): `{ "rank": int|null, "wins": int|null, "losses": int|null, "points": int|null, "promotion": "昇級"|"降級"|null, "note": string }`
-- `wins`/`losses` は**チームマッチ単位**の勝敗数（「5勝2敗」表示用）。
+`rikkyo_result`(団体): `{ "rank": int|null, "wins": number|null, "losses": int|null, "points": int|null, "promotion": "昇級"|"降級"|null, "note": string }`
+- `wins`/`losses` は**チームマッチ単位**の勝敗数（「5勝2敗」表示用）。`wins` は持将棋(引分)を0.5勝として合算した古い年度の資料があるため小数を許容する。
 
 `rikkyo_players[]`(個人): `{ "name": string, "grade": int|null, "best_result": string|null, "rank": int|null }`
 - `best_result` は表示用の自由文字列だが、可能な範囲で次の語彙に寄せる:
@@ -514,7 +522,7 @@ repo-root/
 │  ├─ schema.json               # JSON Schema(関東) ✓（kanto_table・schedule・ScheduleDay 含む）
 │  ├─ auto/                     # 関東 スクレイパ出力(未確認) ✓ H21〜R08
 │  │  └─ shadan/                # 社団戦 個人ランキング抽出(実名含む・gitignore・非公開)
-│  ├─ confirmed/                # 関東 人手確認済み ✓ H21〜R08(18年度・77イベント)
+│  ├─ confirmed/                # 関東 人手確認済み ✓ H01〜H16・H21〜R08(34年度)
 │  └─ shadan/
 │     ├─ schema.json            # JSON Schema(社団戦) ✓
 │     ├─ player.schema.json     # JSON Schema(個人レーティング・現状未使用) ✓
@@ -717,13 +725,14 @@ repo-root/
 5. SSG で大会結果ページ(年度ごとにまとめ)+ 掲示板リンクを生成。データ0件でも落ちないこと。 ✓
 6. 掲示板クローラ + パーサ(対戦相手別スコア・個人勝敗の候補抽出)→ 団体戦に統合表示。 ✓
 7. ここまでで関東+掲示板の実データを人手確認 → `confirmed` 化 → ユーザー承認 → 初回公開。 **← 現在地**
-   - `data/confirmed/` に H21〜R08 の 18 年度分・77 イベントが格納済み
+   - `data/confirmed/` に H01〜H16・H21〜R08 の 34 年度分が格納済み
    - ユーザーが内容を確認・承認してから公開する
 8. GitHub Actions 自動デプロイ → `https://rikkyo-shogi.github.io/site/`。 ✓
    - Organization: rikkyo-shogi / repo: site / Node.js 22 / `deploy.yml` 実働中
 9. (任意)全国連盟: サイト走査で立教実績を確認 → あればパーサ実装し全国成績を追加。 **未実装**
 10. (任意)地区→全国の関連付け表示。 **未実装**
-11. 古い年度(関東=平成期 / 全国=2011年度〜 / 掲示板=遡及分)の形式差に順次対応。 ✓ 対応済み(H21〜)
+11. 古い年度(関東=平成期 / 全国=2011年度〜 / 掲示板=遡及分)の形式差に順次対応。 ✓ 対応済み(H21〜)。
+    H01〜H16 は部内アルバム写真・部の旧公式サイトから別途収集(§0 参照)
 
 ---
 

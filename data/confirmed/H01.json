@@ -1,0 +1,82 @@
+{
+  "season": "H01",
+  "season_label": "平成元年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "A級",
+      "season_half": "spring",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 7,
+        "wins": 16,
+        "losses": null,
+        "points": 2,
+        "promotion": "降級",
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成元年5月5日",
+          "venue": "大東文化大学"
+        },
+        {
+          "day": 2,
+          "date": "平成元年5月7日",
+          "venue": "大東文化大学"
+        },
+        {
+          "day": 3,
+          "date": "平成元年5月14日",
+          "venue": "東京電機大学"
+        }
+      ]
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦",
+      "division": "B1級",
+      "season_half": "autumn",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 7,
+        "wins": 19,
+        "losses": null,
+        "points": 1,
+        "promotion": "降級",
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成元年10月22日",
+          "venue": "大東文化大学"
+        },
+        {
+          "day": 2,
+          "date": "平成元年10月29日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 3,
+          "date": "平成元年11月3日",
+          "venue": "東京理科大学"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "season": "H11",
+  "season_label": "平成11年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "B2級",
+      "season_half": "spring",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 4,
+        "wins": 25,
+        "losses": null,
+        "points": 4,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成11年5月3日",
+          "venue": "東京理科大学"
+        },
+        {
+          "day": 2,
+          "date": "平成11年5月9日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 3,
+          "date": "平成11年5月16日",
+          "venue": "東京理科大学"
+        }
+      ]
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦",
+      "division": "B2級",
+      "season_half": "autumn",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 2,
+        "wins": 21,
+        "losses": null,
+        "points": 4,
+        "promotion": "昇級",
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成11年10月11日",
+          "venue": "東京理科大学"
+        },
+        {
+          "day": 2,
+          "date": "平成11年10月17日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 3,
+          "date": "平成11年10月24日",
+          "venue": "駒澤大学"
+        }
+      ]
+    }
+  ]
+}

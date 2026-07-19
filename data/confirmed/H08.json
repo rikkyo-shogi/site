@@ -1,0 +1,82 @@
+{
+  "season": "H08",
+  "season_label": "平成8年度",
+  "events": [
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "春季団体戦",
+      "division": "C1級",
+      "season_half": "spring",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 3,
+        "wins": 29,
+        "losses": null,
+        "points": 6,
+        "promotion": null,
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成8年5月5日",
+          "venue": "東京理科大学"
+        },
+        {
+          "day": 2,
+          "date": "平成8年5月12日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 3,
+          "date": "平成8年5月19日",
+          "venue": "東京理科大学"
+        }
+      ]
+    },
+    {
+      "level": "regional",
+      "type": "team",
+      "name": "秋季団体戦",
+      "division": "C1級",
+      "season_half": "autumn",
+      "date": null,
+      "venue": null,
+      "source_url": "#",
+      "source_type": "manual",
+      "rikkyo_present": true,
+      "rikkyo_result": {
+        "rank": 1,
+        "wins": 22,
+        "losses": null,
+        "points": 3,
+        "promotion": "昇級",
+        "note": ""
+      },
+      "confidence": "confirmed",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "平成8年10月13日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 2,
+          "date": "平成8年10月20日",
+          "venue": "駒澤大学"
+        },
+        {
+          "day": 3,
+          "date": "平成8年10月27日",
+          "venue": "東京理科大学"
+        }
+      ]
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 .claude/
 cache/
 data/auto/
+data/picture/
 node_modules/
 site/dist/
 site/.astro/

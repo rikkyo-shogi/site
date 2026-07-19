@@ -2,7 +2,8 @@
 // 現役団体戦(関東学生団体戦)の昇降級推移グラフ。
 // data/confirmed/*.json だけで完結する(追加データ収集なし)。
 // 縦軸=リーグ名(C2〜A)、横軸=シーズン(H21春〜)。Chart.js の stepped line。
-// データが無い半期(R02=コロナ、H21秋 等)は spanGaps:true で直線で繋いで表示する。
+// 年度ファイルはあるがデータが無い半期(R02=コロナ、H21秋 等)は spanGaps:true で直線で繋ぐ。
+// 年度ファイル自体が無い未収集期間(例: H17〜H20)は線を繋がず、空白区間として表示する。
 import { loadLeagueTrend, LEAGUE_AXIS_LABELS, type SeasonData } from '../utils/loadData';
 
 interface Props {
@@ -36,6 +37,8 @@ const chartPayload = {
     promotion: s.point.promotion,
     champion: s.point.champion,
   }),
+  // 年度ファイル自体が存在するか(false=未収集期間。前後と線を繋がない)
+  known: slots.map(s => s.known),
   axisLabels: LEAGUE_AXIS_LABELS,
   projection,
 };
@@ -104,12 +107,13 @@ const present = slots.filter(s => s.point).map(s => s.point!);
   const el = document.getElementById('league-trend-data');
   const canvas = document.getElementById('league-trend-canvas') as HTMLCanvasElement | null;
   if (el && canvas) {
-    const { labels, points, axisLabels, projection } = JSON.parse(el.textContent || '{}') as {
+    const { labels, points, known, axisLabels, projection } = JSON.parse(el.textContent || '{}') as {
       labels: string[];
       points: (null | {
         level: number; division: string; division_label: string;
         rank: number | null; promotion: '昇級' | '降級' | null; champion: boolean;
       })[];
+      known: boolean[];
       axisLabels: Record<string, string>;
       projection: { label: string; level: number; division_label: string; reason: '昇級' | '降級' } | null;
     };
@@ -224,53 +228,73 @@ const present = slots.filter(s => s.point).map(s => s.point!);
       },
     };
 
+    // known=false(年度ファイル自体が無い未収集期間)の区間は前後と線を繋がないよう、
+    // known=true が連続する「島」ごとに別データセットへ分割する(データセットをまたいで
+    // 線は引かれないため、島と島の間は自然に空白になる)。
+    const islands: { start: number; end: number }[] = [];
+    {
+      let curStart: number | null = null;
+      for (let i = 0; i < known.length; i++) {
+        if (known[i]) {
+          if (curStart === null) curStart = i;
+        } else if (curStart !== null) {
+          islands.push({ start: curStart, end: i - 1 });
+          curStart = null;
+        }
+      }
+      if (curStart !== null) islands.push({ start: curStart, end: known.length - 1 });
+    }
+
+    const makeGradient = () => {
+      let cached: CanvasGradient | null = null;
+      let cacheKey = '';
+      return (context: any) => {
+        const { ctx, chartArea } = context.chart;
+        if (!chartArea) return 'transparent';
+        const key = `${chartArea.top}:${chartArea.bottom}`;
+        if (!cached || cacheKey !== key) {
+          cached = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+          cached.addColorStop(0, 'rgba(84, 26, 134, 0.16)');
+          cached.addColorStop(1, 'rgba(84, 26, 134, 0)');
+          cacheKey = key;
+        }
+        return cached;
+      };
+    };
+
+    const islandDatasets = islands.map(({ start, end }) => ({
+      label: '所属リーグ',
+      data: data.map((v, i) => (i >= start && i <= end ? v : null)),
+      stepped: true as const,
+      spanGaps: true,           // 島の内側では、データの無い半期があっても直線で繋いで表示する
+      borderColor: THEME,
+      borderWidth: 2.5,
+      borderJoinStyle: 'round' as const,
+      borderCapStyle: 'round' as const,
+      fill: 'start' as const,
+      backgroundColor: makeGradient(),
+      pointStyle,
+      pointRotation,
+      pointRadius,
+      pointHoverRadius,
+      pointBackgroundColor: pointBg,
+      pointBorderColor: pointBorder,
+      pointBorderWidth,
+    }));
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // 狭幅画面ではラベル(35+シーズン分)が詰まって判読できないため、
-    // 1ラベルあたりの最低幅を確保した横スクロールに切り替える(CSS側は600px以下でのみ有効化)。
+    // シーズン数が増えるとラベルが詰まって判読できなくなるため、1ラベルあたりの最低幅を
+    // 確保した横スクロールにする(PC/モバイル問わず有効。1スロットの幅はCSS側でブレークポイントごとに
+    // 切り替え、ここではスロット数だけ渡す)。既定表示は直近(右端)にする。
     const wrap = canvas.parentElement as HTMLElement | null;
-    wrap?.style.setProperty('--lt-min-width', `${chartLabels.length * 34}px`);
+    wrap?.style.setProperty('--lt-slot-count', String(chartLabels.length));
 
     new Chart(canvas, {
       type: 'line',
       data: {
         labels: chartLabels,
-        datasets: [{
-          label: '所属リーグ',
-          data,
-          stepped: true,
-          spanGaps: true,           // データの無い半期があっても直線で繋いで表示する
-          borderColor: THEME,
-          borderWidth: 2.5,
-          borderJoinStyle: 'round',
-          borderCapStyle: 'round',
-          fill: 'start',
-          // scriptable option は描画のたびに再評価されるため、chartArea が変わらない限り
-          // 生成済みグラデーションを使い回す(ホバー中の毎フレーム再生成を避ける)
-          backgroundColor: (() => {
-            let cached: CanvasGradient | null = null;
-            let cacheKey = '';
-            return (context: any) => {
-              const { ctx, chartArea } = context.chart;
-              if (!chartArea) return 'transparent';
-              const key = `${chartArea.top}:${chartArea.bottom}`;
-              if (!cached || cacheKey !== key) {
-                cached = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                cached.addColorStop(0, 'rgba(84, 26, 134, 0.16)');
-                cached.addColorStop(1, 'rgba(84, 26, 134, 0)');
-                cacheKey = key;
-              }
-              return cached;
-            };
-          })(),
-          pointStyle,
-          pointRotation,
-          pointRadius,
-          pointHoverRadius,
-          pointBackgroundColor: pointBg,
-          pointBorderColor: pointBorder,
-          pointBorderWidth,
-        },
+        datasets: [...islandDatasets,
         ...(projection ? [{
           label: '次期リーグ',
           data: projData,
@@ -328,8 +352,14 @@ const present = slots.filter(s => s.point).map(s => s.point!);
             cornerRadius: 8,
             displayColors: false,
             caretSize: 6,
-            // 点線データセットは終端(次期の点)以外ツールチップに出さない
-            filter: (item) => item.datasetIndex === 0 || item.dataIndex >= points.length,
+            // 複数の「島」データセットに分割しているため、その点を実際に受け持つ
+            // データセットからのみツールチップを出す(重複表示を防ぐ)。次期リーグの
+            // 終端点のみ例外的に許可する。
+            filter: (item) => {
+              if (item.dataIndex >= points.length) return true;
+              const island = islands[item.datasetIndex];
+              return !!island && item.dataIndex >= island.start && item.dataIndex <= island.end;
+            },
             callbacks: {
               title: (items) => (items[0] ? String(items[0].label) : ''),
               label: (item) => {
@@ -337,7 +367,7 @@ const present = slots.filter(s => s.point).map(s => s.point!);
                   return `${projection.division_label}級(${projection.reason}による)`;
                 }
                 const p = points[item.dataIndex];
-                if (!p) return '欠測';
+                if (!p) return known[item.dataIndex] ? '欠測' : '情報収集中';
                 const parts = [`${p.division}(${p.division_label}) ${p.rank}位`];
                 if (p.champion) parts.push('★優勝');
                 else if (p.promotion) parts.push(p.promotion === '昇級' ? '▲昇級' : '▼降級');
@@ -347,6 +377,19 @@ const present = slots.filter(s => s.point).map(s => s.point!);
           },
         },
       },
+    });
+
+    // 横スクロール時、初期表示を最新(右端)にする(古い方=左端から始まると直近の
+    // 昇降級が見えないため)。スクロール幅が確定してから実行する。実際にスクロールが
+    // 必要な場合だけヒント文言を表示する。
+    requestAnimationFrame(() => {
+      const scrollWrap = wrap?.parentElement as HTMLElement | null;
+      if (!scrollWrap) return;
+      scrollWrap.scrollLeft = scrollWrap.scrollWidth;
+      const hint = document.querySelector('.lt-scroll-hint');
+      if (hint && scrollWrap.scrollWidth > scrollWrap.clientWidth + 1) {
+        hint.classList.add('visible');
+      }
     });
   }
 </script>
@@ -370,17 +413,18 @@ const present = slots.filter(s => s.point).map(s => s.point!);
   .lt-mark.champ { color: #d4a000; }
   .lt-note { color: #999; }
   .lt-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -0.2rem; padding: 0 0.2rem; }
-  .lt-canvas-wrap { position: relative; height: 340px; width: 100%; }
+  /* 1スロット(半期)あたり38px確保。PCの標準的なカード幅(~730〜830px)でも約20スロット=10年分は
+     スクロールなしで収まり、それを超える分だけ横スクロールになる。 */
+  .lt-canvas-wrap { position: relative; height: 340px; width: max(100%, calc(var(--lt-slot-count, 0) * 38px)); }
   .lt-empty { color: #aaa; font-style: italic; font-size: 0.85rem; }
   .lt-fallback { border-collapse: collapse; font-size: 0.8rem; margin-top: 0.5rem; }
   .lt-fallback th, .lt-fallback td { border: 1px solid #ddd; padding: 0.2rem 0.5rem; text-align: left; }
-  .lt-scroll-hint { display: none; }
+  .lt-scroll-hint {
+    display: none; text-align: center; font-size: 0.68rem; color: #aaa; margin: 0.4rem 0 0;
+  }
+  .lt-scroll-hint.visible { display: block; }
   @media (max-width: 600px) {
     .league-trend { padding: 1rem 0.9rem 1.3rem; }
-    .lt-canvas-wrap { height: 280px; width: max(100%, var(--lt-min-width, 100%)); }
-    .lt-scroll-hint {
-      display: block; text-align: center; font-size: 0.68rem; color: #aaa;
-      margin: 0.4rem 0 0;
-    }
+    .lt-canvas-wrap { height: 280px; width: max(100%, calc(var(--lt-slot-count, 0) * 34px)); }
   }
 </style>

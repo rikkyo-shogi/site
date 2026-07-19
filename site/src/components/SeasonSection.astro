@@ -16,6 +16,8 @@ const nationalEvents = season.events.filter(e => e.level === 'national');
     <a href={`#${season.season}`}>{season.season_label}</a>
   </h2>
 
+  {season.note && <p class="season-note">{season.note}</p>}
+
   {teamEvents.length > 0 && (
     <div class="event-group">
       <h3>団体戦</h3>
@@ -41,7 +43,7 @@ const nationalEvents = season.events.filter(e => e.level === 'national');
     </div>
   )}
 
-  {teamEvents.length === 0 && individualEvents.length === 0 && nationalEvents.length === 0 && (
+  {teamEvents.length === 0 && individualEvents.length === 0 && nationalEvents.length === 0 && !season.note && (
     <p class="no-data">このシーズンのデータはまだ登録されていません。</p>
   )}
 </section>
