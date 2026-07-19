@@ -1,0 +1,138 @@
+{
+  "player_id": "kubota-kosuke",
+  "name": "久保田 耕介",
+  "reg_no": 8855,
+  "consent": "本人の依頼により公開(2026-07-18)",
+  "history": [
+    {
+      "kai": 20,
+      "season": "H21",
+      "season_label": "平成21年度",
+      "team": "紫龍会",
+      "division": "４部（白）",
+      "rating": 1503,
+      "games": 18,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/20/20junni2.htm"
+    },
+    {
+      "kai": 21,
+      "season": "H22",
+      "season_label": "平成22年度",
+      "team": "紫龍会",
+      "division": "３部（青）",
+      "rating": 1492,
+      "games": 22,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/21/21junni2.htm"
+    },
+    {
+      "kai": 22,
+      "season": "H23",
+      "season_label": "平成23年度",
+      "team": "紫龍会",
+      "division": "３部（青）",
+      "rating": 1519,
+      "games": 30,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/22/22juni5_2_2.htm"
+    },
+    {
+      "kai": 23,
+      "season": "H24",
+      "season_label": "平成24年度",
+      "team": "紫龍会",
+      "division": "３部（赤）",
+      "rating": 1495,
+      "games": 40,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/23/23juni5_2_2.htm"
+    },
+    {
+      "kai": 24,
+      "season": "H25",
+      "season_label": "平成25年度",
+      "team": "紫龍会",
+      "division": "３部（白）",
+      "rating": 1538,
+      "games": 50,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/24/24juni55_2_2.htm"
+    },
+    {
+      "kai": 25,
+      "season": "H26",
+      "season_label": "平成26年度",
+      "team": "紫龍会",
+      "division": "３部（白）",
+      "rating": 1528,
+      "games": 61,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/25/25juni5_2_2.htm"
+    },
+    {
+      "kai": 26,
+      "season": "H27",
+      "season_label": "平成27年度",
+      "team": "紫龍会",
+      "division": "２部（白）",
+      "rating": 1464,
+      "games": 68,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/26/26juni5_3_3.htm"
+    },
+    {
+      "kai": 27,
+      "season": "H28",
+      "season_label": "平成28年度",
+      "team": "立教大紫龍会",
+      "division": "３部（赤）",
+      "rating": 1470,
+      "games": 82,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/27/1611091540_3_1540.htm"
+    },
+    {
+      "kai": 28,
+      "season": "H29",
+      "season_label": "平成29年度",
+      "team": "立教大紫龍会",
+      "division": "４部（白）",
+      "rating": 1457,
+      "games": 94,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/28/1802071815_2_770.htm"
+    },
+    {
+      "kai": 29,
+      "season": "H30",
+      "season_label": "平成30年度",
+      "team": "立教大紫龍会",
+      "division": "５部（赤）",
+      "rating": 1497,
+      "games": 101,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/29/1812061710_2_772.htm"
+    },
+    {
+      "kai": 30,
+      "season": "R01",
+      "season_label": "令和1年度",
+      "team": "立教大紫龍会",
+      "division": "５部（白）",
+      "rating": 1544,
+      "games": 112,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/30/2009251507_2_776.htm"
+    },
+    {
+      "kai": 33,
+      "season": "R06",
+      "season_label": "令和6年度",
+      "team": "紫龍会",
+      "division": "５部白",
+      "rating": 1574,
+      "games": 119,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"
+    },
+    {
+      "kai": 34,
+      "season": "R07",
+      "season_label": "令和7年度",
+      "team": "紫龍会",
+      "division": null,
+      "rating": 1635,
+      "games": 129,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_l6r.pdf"
+    }
+  ]
+}

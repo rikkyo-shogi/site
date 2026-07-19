@@ -1,0 +1,190 @@
+---
+// 社団戦(東将連) 個人レーティング推移。本人の同意を得た部員のみ表示する(ROADMAP §2-2)。
+// データ点は年1回・欠測回ありのため、Chart.js ではなくビルド時に座標を計算した
+// 静的SVGで描く。JSに依存しないぶん軽く、noscript対応も不要になる。
+// x軸は回数(kai)に比例させ、連続しない回の間は線を引かない(欠測を線で埋めない)。
+import type { ShadanPlayer } from '../utils/loadData';
+
+interface Props {
+  players: ShadanPlayer[];
+}
+
+const { players } = Astro.props;
+
+const PAD_L = 40;
+const PAD_R = 24;
+const PAD_T = 30;
+const PAD_B = 40;
+const H = 190;
+const plotH = H - PAD_T - PAD_B;
+const PX_PER_KAI = 44;
+
+function buildChart(history: ShadanPlayer['history']) {
+  const ratings = history.map(h => h.rating);
+  const min = Math.min(...ratings);
+  const max = Math.max(...ratings);
+  const grace = Math.max(30, (max - min) * 0.3);
+  const yMin = min - grace;
+  const yMax = max + grace;
+
+  const kais = history.map(h => h.kai);
+  const kaiMin = Math.min(...kais);
+  const kaiMax = Math.max(...kais);
+  const W = PAD_L + PAD_R + Math.max(1, kaiMax - kaiMin) * PX_PER_KAI;
+
+  const x = (kai: number) => (kaiMax === kaiMin ? PAD_L + (W - PAD_L - PAD_R) / 2 : PAD_L + (kai - kaiMin) * PX_PER_KAI);
+  const y = (r: number) => PAD_T + plotH - ((r - yMin) / (yMax - yMin)) * plotH;
+
+  const points = history.map((h, i) => ({
+    ...h,
+    cx: x(h.kai),
+    cy: y(h.rating),
+    // 隣接点とラベルが重なりにくいよう、2段で高さをずらす
+    labelDy: i % 2 === 0 ? -12 : -22,
+  }));
+
+  // 回数が連続する区間ごとに線を分割する(欠測区間はつながない)
+  const segments: (typeof points)[] = [];
+  for (const p of points) {
+    const last = segments[segments.length - 1];
+    if (last && p.kai === last[last.length - 1].kai + 1) {
+      last.push(p);
+    } else {
+      segments.push([p]);
+    }
+  }
+  const baseline = PAD_T + plotH;
+  const segmentPaths = segments
+    .filter(seg => seg.length > 1)
+    .map(seg => {
+      const linePath = seg.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.cx.toFixed(1)},${p.cy.toFixed(1)}`).join(' ');
+      const areaPath = `${linePath} L${seg[seg.length - 1].cx.toFixed(1)},${baseline} L${seg[0].cx.toFixed(1)},${baseline} Z`;
+      return { linePath, areaPath };
+    });
+
+  const delta = ratings[ratings.length - 1] - ratings[0];
+
+  return { W, baseline, points, segmentPaths, delta };
+}
+
+const cards = players.map(p => ({ player: p, chart: buildChart(p.history) }));
+---
+
+{cards.length > 0 && (
+  <section class="spr" aria-labelledby="spr-title">
+    <h3 id="spr-title" class="section-title">個人レーティング推移</h3>
+    <p class="spr-note">
+      東将連公式レーティング(新持点)の推移です。本人の同意を得た部員のみ掲載しています。
+    </p>
+
+    {cards.map(({ player, chart }) => {
+      const latest = player.history[player.history.length - 1];
+      const deltaLabel = chart.delta > 0 ? `+${chart.delta}` : `${chart.delta}`;
+      const deltaClass = chart.delta > 0 ? 'up' : chart.delta < 0 ? 'down' : 'flat';
+      return (
+        <article class="spr-card">
+          <header class="spr-head">
+            <span class="spr-name">{player.name}</span>
+            <span class="spr-rating">
+              R{latest.rating}
+              {player.history.length > 1 && (
+                <span class={`spr-delta ${deltaClass}`}>{deltaLabel}</span>
+              )}
+            </span>
+          </header>
+
+          <div class="spr-scroll">
+            <div class="spr-svg-wrap" style={`width:${chart.W}px`}>
+              <svg viewBox={`0 0 ${chart.W} ${H}`} role="img"
+                aria-label={`${player.name}のレーティング推移: ${player.history.map(h => `第${h.kai}回R${h.rating}`).join('、')}`}>
+                <defs>
+                  <linearGradient id={`spr-grad-${player.player_id}`} x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#541a86" stop-opacity="0.18" />
+                    <stop offset="100%" stop-color="#541a86" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <line x1={PAD_L} y1={chart.baseline} x2={chart.W - PAD_R} y2={chart.baseline} class="spr-axis" />
+                {chart.segmentPaths.map(seg => (
+                  <>
+                    <path d={seg.areaPath} fill={`url(#spr-grad-${player.player_id})`} />
+                    <path d={seg.linePath} class="spr-line" />
+                  </>
+                ))}
+                {chart.points.map(p => (
+                  <g>
+                    <circle cx={p.cx} cy={p.cy} r="4.5" class="spr-point" />
+                    <text x={p.cx} y={p.cy + p.labelDy} class="spr-value">R{p.rating}</text>
+                    <text x={p.cx} y={chart.baseline + 16} class="spr-label">第{p.kai}回</text>
+                    <text x={p.cx} y={chart.baseline + 28} class="spr-sublabel">{p.season}</text>
+                  </g>
+                ))}
+              </svg>
+            </div>
+          </div>
+          <p class="spr-scroll-hint">← 横にスクロールできます →</p>
+
+          <div class="spr-table-wrap">
+            <table class="spr-table">
+              <thead><tr><th>回</th><th>年度</th><th>レーティング</th><th>通算対局数</th><th>出典</th></tr></thead>
+              <tbody>
+                {player.history.map(h => (
+                  <tr>
+                    <td>第{h.kai}回</td>
+                    <td>{h.season_label}</td>
+                    <td>R{h.rating}</td>
+                    <td>{h.games}局</td>
+                    <td><a href={h.source_url} target="_blank" rel="noopener">出典</a></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </article>
+      );
+    })}
+  </section>
+)}
+
+<style>
+  .spr { margin-top: 2.2rem; }
+  .section-title { font-size: 1.1rem; color: #541a86; border-bottom: 2px solid #541a86; padding-bottom: 0.3rem; }
+  .spr-note { font-size: 0.78rem; color: #999; margin: 0.5rem 0 1rem; }
+
+  .spr-card {
+    background: #fff; border: 1px solid #e0e0e0; border-radius: 8px;
+    padding: 1rem 1.2rem 1.2rem; margin-bottom: 1.2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+  .spr-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 0.4rem; }
+  .spr-name { font-weight: bold; font-size: 1.05rem; color: #333; }
+  .spr-rating { margin-left: auto; font-weight: bold; color: #541a86; font-size: 1.15rem; display: inline-flex; align-items: baseline; gap: 0.4rem; }
+  .spr-delta { font-size: 0.72rem; font-weight: bold; border-radius: 999px; padding: 0.1rem 0.5rem; }
+  .spr-delta.up { background: #e0ffe0; color: #066; }
+  .spr-delta.down { background: #ffe0e0; color: #600; }
+  .spr-delta.flat { background: #f0f0f0; color: #888; }
+
+  .spr-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0.4rem -0.2rem 0; padding: 0 0.2rem; }
+  .spr-svg-wrap svg { display: block; height: 190px; }
+  .spr-scroll-hint { display: none; }
+  .spr-axis { stroke: #ddd; stroke-width: 1; }
+  .spr-line { fill: none; stroke: #541a86; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .spr-point { fill: #fff; stroke: #541a86; stroke-width: 2; }
+  .spr-value { font-size: 10.5px; font-weight: bold; fill: #541a86; text-anchor: middle; }
+  .spr-label { font-size: 9.5px; fill: #666; text-anchor: middle; }
+  .spr-sublabel { font-size: 8px; fill: #aaa; text-anchor: middle; }
+
+  .spr-table-wrap { overflow-x: auto; margin-top: 0.8rem; }
+  .spr-table { border-collapse: collapse; width: 100%; min-width: 420px; font-size: 0.75rem; }
+  .spr-table th { background: #f5f1fa; color: #541a86; font-weight: normal; padding: 0.3rem 0.5rem; border-bottom: 1px solid #e4dcf0; text-align: left; }
+  .spr-table td { padding: 0.3rem 0.5rem; border-bottom: 1px solid #f1ecf7; color: #555; }
+  .spr-table a { color: #aaa; }
+  .spr-table a:hover { color: #541a86; }
+
+  @media (max-width: 600px) {
+    .spr-card { padding: 0.9rem 0.9rem 1.1rem; }
+    .spr-scroll-hint {
+      display: block; text-align: center; font-size: 0.68rem; color: #aaa;
+      margin: 0.3rem 0 0;
+    }
+  }
+</style>

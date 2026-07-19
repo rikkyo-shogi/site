@@ -264,7 +264,7 @@ export async function loadLeagueTrend(seasons?: SeasonData[]): Promise<LeagueTre
 }
 
 // ==== 社団戦(東将連)データ ====
-// 関東学生団体戦とは名前空間を分離(data/shadan/**)。個人成績は非公開のため読み込まない。
+// 関東学生団体戦とは名前空間を分離(data/shadan/**)。
 
 export interface ShadanLeagueTableRow {
   seeding: number;
@@ -331,6 +331,45 @@ export async function loadShadanSeasons(): Promise<ShadanSeason[]> {
   }
   seasons.sort((a, b) => b.kai - a.kai);
   return seasons;
+}
+
+// 個人レーティング推移(本人の同意を得た部員のみ。ROADMAP §2-2)
+
+export interface ShadanPlayerHistoryPoint {
+  kai: number;
+  season: string;
+  season_label: string;
+  team: string;
+  division: string | null;
+  rating: number;
+  games: number;
+  source_url: string;
+}
+
+export interface ShadanPlayer {
+  player_id: string;
+  name: string;
+  consent: string;
+  history: ShadanPlayerHistoryPoint[];
+}
+
+const SHADAN_PLAYERS_DIR = join(process.cwd(), '..', 'data', 'shadan', 'players');
+
+/** 公開同意者の個人レーティング推移を返す。ディレクトリが無ければ空配列。reg_no は公開ページに出さない。 */
+export async function loadShadanPlayers(): Promise<ShadanPlayer[]> {
+  let files: string[] = [];
+  try {
+    files = await readdir(SHADAN_PLAYERS_DIR);
+  } catch {
+    return [];
+  }
+  const players: ShadanPlayer[] = [];
+  for (const file of files.filter(f => f.endsWith('.json'))) {
+    const content = await readFile(join(SHADAN_PLAYERS_DIR, file), 'utf-8');
+    const { reg_no, ...player } = JSON.parse(content) as ShadanPlayer & { reg_no: number };
+    players.push(player);
+  }
+  return players;
 }
 
 export function isHighlight(event: Event): boolean {

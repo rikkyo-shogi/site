@@ -6,27 +6,29 @@
 登録番号(reg_no)は年をまたぐ安定キーとしてデータには保持するが、
 公開ページには表示しない。
 
-レーティング(新持点)の公開PDFは第33回(全部門一覧)・第34回(部別)のみ確認。
-それ以前(第22〜30回)の順位表PDFに個人レーティングは掲載されておらず、
-第31回のA/B表・第32回一覧、コロナ期個人戦(K1/K2)にも対象者の記載なし。
+レーティング(新持点)は2種類の資料形式で公開されている(2026-07 調査):
+  - PDF「全部門一覧」「部別ランキング」(第32〜34回): 表形式のテキスト抽出
+  - HTML「参加者全員のランキング」(第20〜30回): <PRE>タグの固定幅テキスト
+    (第17〜19回・第31回・第32回一覧には対象者の記載なし。
+     コロナ期個人戦(K1/K2)は社団戦本戦ではないため対象外)
 """
 
 import io
 import json
+import re
 from pathlib import Path
 
 import pdfplumber
 
-from common import logger, validate_json
+from common import fetch_html, logger, validate_json
 import fetch_shadan
 
 ROOT = Path(__file__).parent.parent
 OUT_DIR = ROOT / "data" / "shadan" / "players"
 SCHEMA = ROOT / "data" / "shadan" / "player.schema.json"
-BASE = "https://toushouren.world.coocan.jp/shadan"
 
-# 公開同意者。reg_no で各回のランキングPDFを検索する。
-# sources: (kai, season, season_label, PDF相対パス)
+# 公開同意者。reg_no で各回のランキング資料(PDF/HTML)を検索する。
+# sources: (kai, season, season_label, 資料の絶対URL)
 CONSENTED = [
     {
         "player_id": "kubota-kosuke",
@@ -34,14 +36,25 @@ CONSENTED = [
         "reg_no": 8855,
         "consent": "本人の依頼により公開(2026-07-18)",
         "sources": [
-            (33, "R06", "令和6年度", "33/33_ranking_04_all.pdf"),
-            (34, "R07", "令和7年度", "34/34_ranking_04_l6r.pdf"),
+            (20, "H21", "平成21年度", "https://toushouren.world.coocan.jp/shadan/20/20junni2.htm"),
+            (21, "H22", "平成22年度", "https://toushouren.world.coocan.jp/shadan/21/21junni2.htm"),
+            (22, "H23", "平成23年度", "https://toushouren.world.coocan.jp/shadan/22/22juni5_2_2.htm"),
+            (23, "H24", "平成24年度", "https://toushouren.world.coocan.jp/shadan/23/23juni5_2_2.htm"),
+            (24, "H25", "平成25年度", "https://toushouren.world.coocan.jp/shadan/24/24juni55_2_2.htm"),
+            (25, "H26", "平成26年度", "https://toushouren.world.coocan.jp/shadan/25/25juni5_2_2.htm"),
+            (26, "H27", "平成27年度", "https://toushouren.world.coocan.jp/shadan/26/26juni5_3_3.htm"),
+            (27, "H28", "平成28年度", "https://toushouren.world.coocan.jp/shadan/27/1611091540_3_1540.htm"),
+            (28, "H29", "平成29年度", "https://toushouren.world.coocan.jp/shadan/28/1802071815_2_770.htm"),
+            (29, "H30", "平成30年度", "https://toushouren.world.coocan.jp/shadan/29/1812061710_2_772.htm"),
+            (30, "R01", "令和1年度", "https://toushouren.world.coocan.jp/shadan/30/2009251507_2_776.htm"),
+            (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
+            (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_l6r.pdf"),
         ],
     },
 ]
 
 
-def find_in_ranking(pdf_bytes: bytes, reg_no: int) -> dict | None:
+def find_in_pdf_ranking(pdf_bytes: bytes, reg_no: int) -> dict | None:
     """ランキングPDFから登録番号一致の行を探し {rating, games, team, division} を返す。
 
     列構成(確認済み):
@@ -69,17 +82,49 @@ def find_in_ranking(pdf_bytes: bytes, reg_no: int) -> dict | None:
     return None
 
 
+# HTML版「参加者全員のランキング」(<PRE>固定幅テキスト)の列構成:
+# 順位 会員番号 氏名(姓+全角スペース+名) 点数 全局数 リーグ 所属チーム名
+HTML_ROW_RE = re.compile(
+    r"(?P<reg>\d+)\s+(?P<name>\S+(?:\s\S+)?)\s{2,}"
+    r"(?P<rating>\d+)\s+(?P<games>\d+)\s+(?P<division>\S+)\s+(?P<team>\S.*)"
+)
+
+
+def find_in_html_ranking(html_text: str, reg_no: int) -> dict | None:
+    """<PRE>形式のランキングHTMLから登録番号一致の行を探す。"""
+    for ln in html_text.splitlines():
+        if str(reg_no) not in ln:
+            continue
+        m = HTML_ROW_RE.search(ln)
+        if m and int(m.group("reg")) == reg_no:
+            return {
+                "rating": int(m.group("rating")),
+                "games": int(m.group("games")),
+                "division": m.group("division"),
+                "team": m.group("team").strip(),
+            }
+    return None
+
+
+def find_in_ranking(url: str, reg_no: int) -> dict | None:
+    if url.endswith(".pdf"):
+        return find_in_pdf_ranking(fetch_shadan.fetch_pdf(url), reg_no)
+    text = fetch_html(url, subdir="shadan")
+    if text is None:
+        raise SystemExit(f"取得失敗: {url}")
+    return find_in_html_ranking(text, reg_no)
+
+
 if __name__ == "__main__":
     fetch_shadan.ensure_reachable()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for spec in CONSENTED:
         history = []
-        for kai, season, season_label, rel in spec["sources"]:
-            url = f"{BASE}/{rel}"
-            row = find_in_ranking(fetch_shadan.fetch_pdf(url), spec["reg_no"])
+        for kai, season, season_label, url in spec["sources"]:
+            row = find_in_ranking(url, spec["reg_no"])
             if row is None:
                 raise SystemExit(
-                    f"{spec['name']} (reg {spec['reg_no']}) が {rel} に見つかりません。"
+                    f"{spec['name']} (reg {spec['reg_no']}) が {url} に見つかりません。"
                     " 掲載形式の変更の可能性があるため停止。"
                 )
             history.append({
