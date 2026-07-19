@@ -50,9 +50,9 @@ const present = slots.filter(s => s.point).map(s => s.point!);
 <section class="league-trend" aria-labelledby="league-trend-title">
   <h3 id="league-trend-title">団体戦 昇降級の推移</h3>
   <p class="lt-lead">
-    <span class="lt-legend"><span class="lt-mark up">▲</span>昇級</span>
-    <span class="lt-legend"><span class="lt-mark down">▼</span>降級</span>
     <span class="lt-legend"><span class="lt-mark champ">★</span>優勝</span>
+    <span class="lt-legend"><span class="lt-mark runner-up">◆</span>準優勝</span>
+    <span class="lt-legend"><span class="lt-mark down">▼</span>降級</span>
   </p>
 
   {slots.length === 0 ? (
@@ -79,7 +79,7 @@ const present = slots.filter(s => s.point).map(s => s.point!);
                 <td>{p.label}</td>
                 <td>{p.division}</td>
                 <td>{p.rank}位</td>
-                <td>{p.champion ? '優勝' : p.promotion ?? ''}</td>
+                <td>{p.champion ? '優勝' : (p.rank === 2 ? '準優勝' : (p.promotion === '降級' ? '降級' : ''))}</td>
               </tr>
             ))}
           </tbody>
@@ -120,8 +120,8 @@ const present = slots.filter(s => s.point).map(s => s.point!);
 
     const THEME = '#541a86';
     const GOLD = '#d4a000';
-    const GREEN = '#067306';
-    const RED = '#b00000';
+    const DEMOTE = '#1565c0';
+    const RUNNER_UP = '#b00000';
     const SURFACE = '#ffffff';
 
     // Chart.js の pointStyle:'star' は星型ではなくアスタリスク状になるため、
@@ -158,17 +158,22 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     }
     const starImg = starPoint(GOLD, 9);
 
+    // 各級とも1位=優勝・2位=準優勝で、どちらも昇級を伴う(実データで確認済み: 昇級の記録は
+    // すべて1位か2位)。「昇級」を別マーカーにすると優勝・準優勝と意味が重複するため、
+    // 昇級は独立表示せず優勝・準優勝で表す。降級のみ他の順位でも起こりうるため別マーカーで残す。
+    const isRunnerUp = (p: (typeof points)[number]) => !!p && p.rank === 2 && !p.champion;
     const data = points.map(p => (p ? p.level : null));
-    const pointStyle = points.map(p => (p ? (p.champion ? starImg : (p.promotion ? 'triangle' : 'circle')) : 'circle'));
+    // 準優勝は降級の▼と紛らわしくないよう、三角ではなく菱形(rectRot)で区別する
+    const pointStyle = points.map(p => (p ? (p.champion ? starImg : (isRunnerUp(p) ? 'rectRot' : (p.promotion === '降級' ? 'triangle' : 'circle'))) : 'circle'));
     // 降級は下向き三角(180度回転)、それ以外は既定の向き
     const pointRotation = points.map(p => (p && p.promotion === '降級' ? 180 : 0));
-    const pointRadius = points.map(p => (p ? (p.champion ? 9 : (p.promotion ? 6 : 3.5)) : 0));
-    // 昇降級・優勝は強調色で塗り、通常点は中抜き(白地+紫紺の輪)にして控えめに
+    const pointRadius = points.map(p => (p ? (p.champion ? 9 : (isRunnerUp(p) || p.promotion === '降級' ? 6.5 : 3.5)) : 0));
+    // 優勝・準優勝・降級は強調色で塗り、通常点は中抜き(白地+紫紺の輪)にして控えめに
     const accentColor = (p: (typeof points)[number]) => {
       if (!p) return null;
       if (p.champion) return GOLD;
-      if (p.promotion === '昇級') return GREEN;
-      if (p.promotion === '降級') return RED;
+      if (isRunnerUp(p)) return RUNNER_UP;
+      if (p.promotion === '降級') return DEMOTE;
       return null;
     };
     const pointBg = points.map(p => accentColor(p) ?? (p ? SURFACE : THEME));
@@ -245,6 +250,53 @@ const present = slots.filter(s => s.point).map(s => s.point!);
       if (curStart !== null) islands.push({ start: curStart, end: known.length - 1 });
     }
 
+    // A級在籍は快挙のため、その半期は毎回「何位だったか」を点の真上に常時表示する
+    // (ホバーしないと分からないツールチップだけでは埋もれてしまうため)。
+    // 優勝は★マーカーで表現済みなので文字は「優勝」、準優勝(2位)はバッジ+太字で特に強調する。
+    const rankLabels = {
+      id: 'rankLabels',
+      afterDatasetsDraw(chart: any) {
+        const { ctx } = chart;
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        islands.forEach((island, dsIndex) => {
+          const meta = chart.getDatasetMeta(dsIndex);
+          for (let i = island.start; i <= island.end; i++) {
+            const p = points[i];
+            if (!p || p.level !== 5 || p.rank == null) continue; // A級の半期のみ
+            const el = meta.data[i];
+            if (!el) continue;
+            const runnerUp = isRunnerUp(p);
+            const text = p.champion ? '優勝' : (runnerUp ? '準優勝' : `${p.rank}位`);
+            const y = el.y - pointRadius[i] - (runnerUp ? 12 : 8);
+            if (runnerUp) {
+              ctx.font = 'bold 12px sans-serif';
+              const w = ctx.measureText(text).width + 12;
+              const h = 18;
+              const x0 = el.x - w / 2, y0 = y - h / 2, r = 4;
+              ctx.beginPath();
+              ctx.moveTo(x0 + r, y0);
+              ctx.arcTo(x0 + w, y0, x0 + w, y0 + h, r);
+              ctx.arcTo(x0 + w, y0 + h, x0, y0 + h, r);
+              ctx.arcTo(x0, y0 + h, x0, y0, r);
+              ctx.arcTo(x0, y0, x0 + w, y0, r);
+              ctx.closePath();
+              ctx.fillStyle = RUNNER_UP;
+              ctx.fill();
+              ctx.fillStyle = '#fff';
+              ctx.fillText(text, el.x, y);
+            } else {
+              ctx.font = p.champion ? 'bold 11px sans-serif' : '10px sans-serif';
+              ctx.fillStyle = p.champion ? GOLD : THEME;
+              ctx.fillText(text, el.x, y);
+            }
+          }
+        });
+        ctx.restore();
+      },
+    };
+
     const makeGradient = () => {
       let cached: CanvasGradient | null = null;
       let cacheKey = '';
@@ -312,11 +364,12 @@ const present = slots.filter(s => s.point).map(s => s.point!);
           pointBorderWidth: 2,
         }] : [])],
       },
-      plugins: [tierBands, crosshair],
+      plugins: [tierBands, crosshair, rankLabels],
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        layout: { padding: { left: 4, right: 10, top: 6, bottom: 0 } },
+        // top はA級点の上に順位ラベルを描くための余白(通常は6で足りるが、ラベル分を確保する)
+        layout: { padding: { left: 4, right: 10, top: 26, bottom: 0 } },
         interaction: { mode: 'index', intersect: false },
         animation: reduceMotion ? false : { duration: 700, easing: 'easeOutQuart' },
         scales: {
@@ -370,7 +423,8 @@ const present = slots.filter(s => s.point).map(s => s.point!);
                 if (!p) return known[item.dataIndex] ? '欠測' : '情報収集中';
                 const parts = [`${p.division}(${p.division_label}) ${p.rank}位`];
                 if (p.champion) parts.push('★優勝');
-                else if (p.promotion) parts.push(p.promotion === '昇級' ? '▲昇級' : '▼降級');
+                else if (isRunnerUp(p)) parts.push('◆準優勝');
+                else if (p.promotion === '降級') parts.push('▼降級');
                 return parts.join(' / ');
               },
             },
@@ -408,9 +462,9 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     padding: 0.2rem 0.65rem 0.2rem 0.55rem; color: #666; font-weight: 600;
   }
   .lt-mark { font-weight: bold; font-size: 0.95rem; line-height: 1; }
-  .lt-mark.up { color: #067306; }
-  .lt-mark.down { color: #b00000; }
+  .lt-mark.down { color: #1565c0; }
   .lt-mark.champ { color: #d4a000; }
+  .lt-mark.runner-up { color: #b00000; }
   .lt-note { color: #999; }
   .lt-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -0.2rem; padding: 0 0.2rem; }
   /* 1スロット(半期)あたり38px確保。PCの標準的なカード幅(~730〜830px)でも約20スロット=10年分は
