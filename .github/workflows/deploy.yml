@@ -3,6 +3,9 @@ name: Build and Deploy
 on:
   push:
     branches: [main]
+    # 注意: mainをforce-pushで巻き戻した場合、pathsの差分評価が行われず
+    # このワークフローが起動しないことがある。その場合はActionsのUIから
+    # workflow_dispatch(Run workflow)で手動デプロイして本番を追従させること。
     paths:
       - 'data/confirmed/**'
       - 'data/shadan/**'
