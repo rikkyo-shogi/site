@@ -47,6 +47,7 @@
 | **H01〜H13の対戦表(kanto_table)** | 写真からのマス目読み取りは複数回試行したが精度不足（相互チェックで矛盾を複数検出）のため見送り。手入力用シートを都度作成して依頼中（`/tmp` 配下、リポジトリ非管理） |
 | **H17〜H20 (平成17〜20年度)** | データ未収集。`loadLeagueTrend()` はこの期間を「未収集」として線を繋がず表示（データが見つかり次第 `data/confirmed/H17.json`〜`H20.json` を追加すれば自動的に繋がる） |
 | **H01〜H13の一部フィールド** | 写真の判読限界により未確定の項目が残る（日程の一部・一部順位等）。埋まり次第 `data/confirmed/*.json` を直接更新 |
+| **result ページのスコープ付きCSSが子コンポーネントに未適用** | `site/src/pages/result/index.astro` のスコープ付き `<style>` にある `.event-card`・`.event-header`・`.result-row`・`.player-list`・`.season-section`・`.season-title`・`.no-data` 等は、描画元が SeasonSection / TeamEvent / IndividualEvent 側のためスコープ属性（`data-astro-cid-*`）が一致せず**本番でも適用されていない**（2026-07-19 に公開中のCSS/HTMLで確認。イベントカードの枠線・ホバー・黄色ハイライト等が素のまま）。現状の見た目で運用できているため据え置き。修正する場合は該当セレクタを各コンポーネント自身の `<style>` へ移設する（`.season-note`・`.source-link` は移設済みでこのパターンの前例）。適用すると見た目が「本来の意図どおりに」変わるため、ビルド出力の差分とスクリーンショットで確認のうえ実施すること |
 
 ---
 
