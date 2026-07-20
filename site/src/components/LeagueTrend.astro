@@ -45,6 +45,16 @@ const chartPayload = {
 
 // JS無効時のフォールバック用に、実結果のある半期だけ抜き出す
 const present = slots.filter(s => s.point).map(s => s.point!);
+
+// 級ごとの在籍回数(半期単位。春・秋それぞれ1回とカウント)。グラフ下の集計表示に使う。
+// 縦軸と同じ並び(A→C2)にするため level の降順にする。
+const levelCounts = new Map<number, number>();
+for (const p of present) {
+  levelCounts.set(p.level, (levelCounts.get(p.level) ?? 0) + 1);
+}
+const levelSummary = Object.entries(LEAGUE_AXIS_LABELS)
+  .map(([level, label]) => ({ level: Number(level), label, count: levelCounts.get(Number(level)) ?? 0 }))
+  .sort((a, b) => b.level - a.level);
 ---
 
 <section class="league-trend" aria-labelledby="league-trend-title">
@@ -66,6 +76,13 @@ const present = slots.filter(s => s.point).map(s => s.point!);
         </div>
       </div>
       <p class="lt-scroll-hint">← 横にスクロールできます →</p>
+
+      <p class="lt-summary">
+        {levelSummary.map(({ label, count }) => (
+          <span class="lt-summary-item">{label}級 <strong>{count}</strong>回</span>
+        ))}
+      </p>
+
       <script type="application/json" id="league-trend-data" set:html={JSON.stringify(chartPayload)} />
 
       {/* JavaScript無効環境向けフォールバック。他コンテンツを壊さない簡易テーブル */}
@@ -387,6 +404,22 @@ const present = slots.filter(s => s.point).map(s => s.point!);
             grid: { display: false },
             border: { display: false },
           },
+          // 横スクロールで右端(直近)を見ているときも級名がすぐ分かるよう、右側にも同じ軸ラベルを出す
+          y2: {
+            position: 'right',
+            min: 0.5,
+            max: 5.5,
+            afterBuildTicks: (axis: any) => {
+              axis.ticks = Object.keys(axisLabels).map(v => ({ value: Number(v) }));
+            },
+            ticks: {
+              callback: (v) => axisLabels[String(v)] ?? '',
+              font: { size: 12, weight: 'bold' },
+              color: '#7a7a7a',
+            },
+            grid: { display: false },
+            border: { display: false },
+          },
           x: {
             ticks: { maxRotation: 90, minRotation: 45, autoSkip: false, font: { size: 10 }, color: '#999' },
             grid: { display: false },
@@ -477,6 +510,12 @@ const present = slots.filter(s => s.point).map(s => s.point!);
     display: none; text-align: center; font-size: 0.68rem; color: #aaa; margin: 0.4rem 0 0;
   }
   .lt-scroll-hint.visible { display: block; }
+  .lt-summary {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; justify-content: center;
+    margin: 0.8rem 0 0; padding-top: 0.7rem; border-top: 1px solid #eee;
+    font-size: 0.8rem; color: #666;
+  }
+  .lt-summary-item strong { color: #541a86; font-size: 0.95rem; }
   @media (max-width: 600px) {
     .league-trend { padding: 1rem 0.9rem 1.3rem; }
     .lt-canvas-wrap { height: 280px; width: max(100%, calc(var(--lt-slot-count, 0) * 34px)); }
