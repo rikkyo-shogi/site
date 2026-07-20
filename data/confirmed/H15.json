@@ -10,19 +10,38 @@
       "season_half": "spring",
       "date": null,
       "venue": null,
-      "source_url": "https://www2.rikkyo.ac.jp/web/z4000060/homepage1/kekka2004.html",
+      "source_url": "https://www2.rikkyo.ac.jp/web/z4000060/homepage1/kekka/shunkidantai.html",
       "source_type": "club_html",
       "rikkyo_present": true,
       "rikkyo_result": {
         "rank": 2,
-        "wins": null,
+        "wins": 27,
         "losses": null,
-        "points": null,
+        "points": 6,
         "promotion": null,
         "note": ""
       },
       "confidence": "confirmed",
-      "schedule": null
+      "schedule": [
+        { "day": 1, "date": "平成15年5月3日", "venue": "東京理科大学" },
+        { "day": 2, "date": "平成15年5月4日", "venue": "東京理科大学" },
+        { "day": 3, "date": "平成15年5月11日", "venue": "駒澤大学" }
+      ],
+      "kanto_table": {
+        "division": "A級",
+        "teams": ["明治大学", "東京大学", "慶應義塾大学", "立教大学", "早稲田大学", "東京工業大学", "日本大学", "中央大学"],
+        "team_abbrevs": ["明治", "東京", "慶應", "立教", "早大", "東工", "日本", "中央"],
+        "rows": [
+          { "seeding": 1, "team": "明治大学", "scores": [null, 3, 3, 4, 6, 3, 5, 6], "wins": 30, "points": 4, "rank": 3, "promotion": null },
+          { "seeding": 2, "team": "東京大学", "scores": [4, null, 5, 3, 5, 7, 7, 7], "wins": 38, "points": 6, "rank": 1, "promotion": null },
+          { "seeding": 3, "team": "慶應義塾大学", "scores": [4, 2, null, 3, 3, 4, 4, 5.5], "wins": 25.5, "points": 4, "rank": 4, "promotion": null },
+          { "seeding": 4, "team": "立教大学", "scores": [3, 4, 4, null, 4, 4, 4, 4], "wins": 27, "points": 6, "rank": 2, "promotion": null },
+          { "seeding": 5, "team": "早稲田大学", "scores": [1, 2, 4, 3, null, 4, 6, 5], "wins": 25, "points": 4, "rank": 5, "promotion": null },
+          { "seeding": 6, "team": "東京工業大学", "scores": [4, 0, 3, 3, 3, null, 3, 3], "wins": 19, "points": 1, "rank": 7, "promotion": "降級" },
+          { "seeding": 7, "team": "日本大学", "scores": [2, 0, 3, 3, 1, 4, null, 3], "wins": 16, "points": 1, "rank": 8, "promotion": "降級" },
+          { "seeding": 8, "team": "中央大学", "scores": [1, 0, 1.5, 3, 2, 4, 4, null], "wins": 15.5, "points": 2, "rank": 6, "promotion": null }
+        ]
+      }
     },
     {
       "level": "regional",

@@ -38,7 +38,176 @@
           "date": "平成2年5月13日",
           "venue": "東京理科大学"
         }
-      ]
+      ],
+      "kanto_table": {
+        "division": "B2級",
+        "teams": [
+          "立教大学",
+          "法政大学",
+          "東京都立大学",
+          "青山学院大学",
+          "神奈川大学",
+          "筑波大学",
+          "横浜市立大学",
+          "学習院大学"
+        ],
+        "team_abbrevs": [
+          "立",
+          "法",
+          "都",
+          "青",
+          "神",
+          "筑",
+          "横",
+          "学"
+        ],
+        "rows": [
+          {
+            "seeding": 1,
+            "team": "立教大学",
+            "scores": [
+              null,
+              3,
+              2,
+              0,
+              2,
+              3,
+              1,
+              2
+            ],
+            "wins": 13,
+            "points": 0,
+            "rank": 8,
+            "promotion": "降級"
+          },
+          {
+            "seeding": 2,
+            "team": "法政大学",
+            "scores": [
+              4,
+              null,
+              3,
+              4,
+              3,
+              2,
+              4,
+              2
+            ],
+            "wins": 22,
+            "points": 3,
+            "rank": 5,
+            "promotion": null
+          },
+          {
+            "seeding": 3,
+            "team": "東京都立大学",
+            "scores": [
+              5,
+              4,
+              null,
+              2,
+              2,
+              4,
+              1,
+              1
+            ],
+            "wins": 19,
+            "points": 3,
+            "rank": 6,
+            "promotion": null
+          },
+          {
+            "seeding": 4,
+            "team": "青山学院大学",
+            "scores": [
+              7,
+              3,
+              5,
+              null,
+              3,
+              5,
+              6,
+              2
+            ],
+            "wins": 31,
+            "points": 4,
+            "rank": 3,
+            "promotion": null
+          },
+          {
+            "seeding": 5,
+            "team": "神奈川大学",
+            "scores": [
+              5,
+              4,
+              5,
+              4,
+              null,
+              5,
+              4,
+              4
+            ],
+            "wins": 31,
+            "points": 7,
+            "rank": 1,
+            "promotion": null
+          },
+          {
+            "seeding": 6,
+            "team": "筑波大学",
+            "scores": [
+              4,
+              5,
+              3,
+              2,
+              2,
+              null,
+              6,
+              2
+            ],
+            "wins": 24,
+            "points": 3,
+            "rank": 4,
+            "promotion": null
+          },
+          {
+            "seeding": 7,
+            "team": "横浜市立大学",
+            "scores": [
+              6,
+              3,
+              6,
+              1,
+              3,
+              1,
+              null,
+              2
+            ],
+            "wins": 22,
+            "points": 2,
+            "rank": 7,
+            "promotion": null
+          },
+          {
+            "seeding": 8,
+            "team": "学習院大学",
+            "scores": [
+              5,
+              5,
+              6,
+              5,
+              3,
+              5,
+              5,
+              null
+            ],
+            "wins": 34,
+            "points": 6,
+            "rank": 2,
+            "promotion": null
+          }
+        ]
+      }
     },
     {
       "level": "regional",
@@ -76,7 +245,176 @@
           "date": "平成2年10月28日",
           "venue": "大東文化大学"
         }
-      ]
+      ],
+      "kanto_table": {
+        "division": "C1級",
+        "teams": [
+          "横浜市立大学",
+          "立教大学",
+          "成城大学",
+          "電気通信大学",
+          "東洋大学",
+          "和光大学",
+          "國學院大學",
+          "明治学院大学"
+        ],
+        "team_abbrevs": [
+          "横",
+          "立",
+          "成",
+          "電",
+          "東",
+          "和",
+          "国",
+          "明"
+        ],
+        "rows": [
+          {
+            "seeding": 1,
+            "team": "横浜市立大学",
+            "scores": [
+              null,
+              5,
+              4,
+              2,
+              5,
+              4,
+              3,
+              4
+            ],
+            "wins": 27,
+            "points": 5,
+            "rank": 3,
+            "promotion": null
+          },
+          {
+            "seeding": 2,
+            "team": "立教大学",
+            "scores": [
+              2,
+              null,
+              5,
+              2,
+              6,
+              5,
+              2,
+              3
+            ],
+            "wins": 25,
+            "points": 3,
+            "rank": 4,
+            "promotion": null
+          },
+          {
+            "seeding": 3,
+            "team": "成城大学",
+            "scores": [
+              3,
+              2,
+              null,
+              2,
+              7,
+              3,
+              2,
+              4
+            ],
+            "wins": 23,
+            "points": 2,
+            "rank": 6,
+            "promotion": null
+          },
+          {
+            "seeding": 4,
+            "team": "電気通信大学",
+            "scores": [
+              5,
+              5,
+              5,
+              null,
+              5,
+              7,
+              3,
+              5
+            ],
+            "wins": 35,
+            "points": 6,
+            "rank": 2,
+            "promotion": null
+          },
+          {
+            "seeding": 5,
+            "team": "東洋大学",
+            "scores": [
+              2,
+              1,
+              0,
+              2,
+              null,
+              5,
+              2,
+              3
+            ],
+            "wins": 15,
+            "points": 1,
+            "rank": 8,
+            "promotion": "降級"
+          },
+          {
+            "seeding": 6,
+            "team": "和光大学",
+            "scores": [
+              3,
+              2,
+              4,
+              0,
+              2,
+              null,
+              3,
+              2
+            ],
+            "wins": 16,
+            "points": 1,
+            "rank": 7,
+            "promotion": "昇級"
+          },
+          {
+            "seeding": 7,
+            "team": "國學院大學",
+            "scores": [
+              4,
+              5,
+              5,
+              4,
+              5,
+              4,
+              null,
+              6
+            ],
+            "wins": 33,
+            "points": 7,
+            "rank": 1,
+            "promotion": "昇級"
+          },
+          {
+            "seeding": 8,
+            "team": "明治学院大学",
+            "scores": [
+              4,
+              4,
+              2,
+              3,
+              2,
+              3,
+              4,
+              null
+            ],
+            "wins": 22,
+            "points": 3,
+            "rank": 5,
+            "promotion": null
+          }
+        ]
+      }
     }
   ]
 }
