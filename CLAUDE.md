@@ -37,6 +37,7 @@
 - ページのメタ情報（title/description/OGP等）は `BaseLayout.astro` の props で渡す。各ページに直接 meta を書かない
 - `base: '/site'` があるため、URL生成は `import.meta.env.BASE_URL` / `Astro.site` 経由で行う（ハードコード禁止）
 - Google Search Console の確認トークンは `BaseLayout.astro` に**設定済み**。プレースホルダに戻さない
+- Google Analytics 4 の `GA_MEASUREMENT_ID`（`BaseLayout.astro`）は**未設定**（プレースホルダ `G-XXXXXXXXXX` のまま）。詳細は requirements.md §11.5
 - 見た目に関わる変更をしたら、ビルド出力の差分（body DOM / CSS）で意図しない変化がないか確認する
 
 ## データを触る際の注意

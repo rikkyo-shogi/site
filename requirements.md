@@ -790,3 +790,22 @@ Google Search Console 未登録）。検索エンジンにサイトを発見・�
   Google の再クロール待ち + URL検査からの個別インデックス登録リクエストで対応中
 - 確認方法: サイトマップのステータスが「成功」/ URL検査で「登録されています」/
   `site:rikkyo-shogi.github.io` 検索でのヒット
+
+### 11.5 アクセス解析（Google Analytics 4）（2026-07-18 追加）
+
+**要件**: 検索エンジンからの発見・インデックス状況（Search Console）とは別に、
+実際のサイト訪問者数・流入経路・閲覧ページ等を可視化したい。
+
+**採用ツール**: Google Analytics 4（GA4）。理由: Search Console と同じ Google アカウントで
+一元管理でき、Search Console とのプロパティ連携も可能。無料。
+
+**実装内容**:
+- `site/src/layouts/BaseLayout.astro` に gtag.js を追加。`GA_MEASUREMENT_ID` 定数
+  （現在は `G-XXXXXXXXXX` のプレースホルダ）を `<head>` 冒頭付近（Google推奨位置）に設置し、
+  全ページ（index / result / archives / shadan）に自動で適用される
+- GA4 プロパティ作成後、発行される測定ID（`G-`で始まる文字列）に `GA_MEASUREMENT_ID` を
+  差し替える必要がある（**未設定**。GSC の `google-site-verification` と同様の運用）
+
+**注意点**:
+- 非商用の部活動サイトのため必須ではないが、Cookie を使用するため一般的な配慮として
+  プライバシーポリシー等への記載は将来的に検討の余地あり（未対応・優先度低）
