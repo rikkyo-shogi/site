@@ -222,9 +222,9 @@
       "rikkyo_present": true,
       "rikkyo_result": {
         "rank": 4,
-        "wins": 23,
+        "wins": 25,
         "losses": null,
-        "points": 2,
+        "points": 3,
         "promotion": null,
         "note": ""
       },
@@ -334,9 +334,9 @@
               5,
               7,
               3,
-              5
+              4
             ],
-            "wins": 35,
+            "wins": 34,
             "points": 6,
             "rank": 2,
             "promotion": null
@@ -399,16 +399,16 @@
             "seeding": 8,
             "team": "明治学院大学",
             "scores": [
-              4,
-              4,
-              2,
-              3,
-              2,
               3,
               4,
+              3,
+              3,
+              4,
+              5,
+              1,
               null
             ],
-            "wins": 22,
+            "wins": 23,
             "points": 3,
             "rank": 5,
             "promotion": null
