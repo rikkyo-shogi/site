@@ -38,6 +38,14 @@
           "date": "平成3年5月12日",
           "venue": "東京理科大学"
         }
+      ],
+      "rikkyo_players": [
+        {
+          "name": "森克文",
+          "grade": 4,
+          "best_result": "個人戦ベスト64",
+          "rank": null
+        }
       ]
     },
     {
@@ -75,6 +83,14 @@
           "day": 3,
           "date": "平成3年10月27日",
           "venue": "東京理科大学"
+        }
+      ],
+      "rikkyo_players": [
+        {
+          "name": "森克文",
+          "grade": 4,
+          "best_result": "個人戦ベスト64",
+          "rank": null
         }
       ]
     }

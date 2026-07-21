@@ -191,7 +191,27 @@
             "promotion": null
           }
         ]
-      }
+      },
+      "rikkyo_players": [
+        {
+          "name": "後藤聡",
+          "grade": 5,
+          "best_result": "個人戦ベスト8、学生名人戦(1回戦)",
+          "rank": null
+        },
+        {
+          "name": "小木曽正訓",
+          "grade": 1,
+          "best_result": "個人戦ベスト64、東日本大会出場(ベスト8)、団体戦全勝",
+          "rank": null
+        },
+        {
+          "name": "渡辺諒",
+          "grade": 1,
+          "best_result": "団体戦全勝",
+          "rank": null
+        }
+      ]
     },
     {
       "level": "regional",
@@ -398,7 +418,33 @@
             "promotion": "昇級"
           }
         ]
-      }
+      },
+      "rikkyo_players": [
+        {
+          "name": "後藤聡",
+          "grade": 5,
+          "best_result": "個人戦ベスト32",
+          "rank": null
+        },
+        {
+          "name": "藤井淳",
+          "grade": 3,
+          "best_result": "個人戦ベスト64",
+          "rank": null
+        },
+        {
+          "name": "渡辺諒",
+          "grade": 1,
+          "best_result": "個人戦ベスト64",
+          "rank": null
+        },
+        {
+          "name": "小木曽正訓",
+          "grade": 1,
+          "best_result": "団体戦全勝",
+          "rank": null
+        }
+      ]
     }
   ]
 }

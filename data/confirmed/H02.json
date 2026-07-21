@@ -414,7 +414,21 @@
             "promotion": null
           }
         ]
-      }
+      },
+      "rikkyo_players": [
+        {
+          "name": "赤星利和",
+          "grade": 4,
+          "best_result": "団体戦全勝",
+          "rank": null
+        },
+        {
+          "name": "森克文",
+          "grade": 3,
+          "best_result": "個人戦ベスト64",
+          "rank": null
+        }
+      ]
     }
   ]
 }

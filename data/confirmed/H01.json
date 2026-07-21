@@ -207,7 +207,15 @@
             "promotion": null
           }
         ]
-      }
+      },
+      "rikkyo_players": [
+        {
+          "name": "重田真人",
+          "grade": 4,
+          "best_result": "個人戦ベスト8、学生名人戦出場(1回戦)",
+          "rank": null
+        }
+      ]
     },
     {
       "level": "regional",
@@ -414,7 +422,15 @@
             "promotion": null
           }
         ]
-      }
+      },
+      "rikkyo_players": [
+        {
+          "name": "重田真人",
+          "grade": 4,
+          "best_result": "個人戦準優勝、学生王将戦出場(準優勝)、団体戦全勝",
+          "rank": null
+        }
+      ]
     }
   ]
 }
