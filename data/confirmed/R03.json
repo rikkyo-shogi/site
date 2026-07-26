@@ -6,10 +6,10 @@
     {
       "level": "regional",
       "type": "team",
-      "name": "春季団体戦(2022年2月5日内容再訂正）",
+      "name": "春季団体戦",
       "division": "C2級",
       "season_half": "spring",
-      "date": "2021年8月9日(月)",
+      "date": "2021年8月31日(火)",
       "venue": "板橋区立グリーンホール1階ホール",
       "source_url": "http://kantoshogi.web.fc2.com/kekka/R03/R3harudantaisenkekka3.pdf",
       "source_type": "kanto_pdf",
@@ -26,7 +26,7 @@
       "kanto_table": {
         "division": "C2級",
         "teams": [
-          "（不明）",
+          "専修大学",
           "上智大学",
           "駒澤大学",
           "立教大学",
@@ -41,7 +41,7 @@
         ],
         "rows": [
           {
-            "team": "（不明）",
+            "team": "専修大学",
             "seeding": 1,
             "scores": [
               null,
