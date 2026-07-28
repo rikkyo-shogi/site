@@ -5,7 +5,7 @@
   "source": {
     "hub_url": "https://toushouren.world.coocan.jp",
     "league_pdf": [
-      "https://toushouren.world.coocan.jp/shadan/35/35_league_01_g.pdf"
+      "https://toushouren.world.coocan.jp/shadan/35/35_league_02_u.pdf"
     ]
   },
   "teams": [
@@ -14,30 +14,30 @@
       "team_name": "立教大学紫龍会",
       "kai": 35,
       "division": "4部白",
-      "rank": 8,
-      "points": 3,
-      "wins": 15,
+      "rank": 4,
+      "points": 6,
+      "wins": 32,
       "promotion": null,
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/35/35_league_01_g.pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/35/35_league_02_u.pdf",
       "league_table": null,
-      "note": "第1節終了時点で3勝1敗。"
+      "note": "第2節終了時点で6勝2敗(前節8位から4つ上昇)。"
     },
     {
       "team_id": "shiryukai",
       "team_name": "紫龍会",
       "kai": 35,
       "division": "6部白",
-      "rank": 15,
-      "points": 1,
-      "wins": 7,
+      "rank": 13,
+      "points": 3,
+      "wins": 16,
       "promotion": null,
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/35/35_league_01_g.pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/35/35_league_02_u.pdf",
       "league_table": null,
-      "note": "第1節終了時点で1勝3敗。"
+      "note": "第2節終了時点で3勝5敗(前節15位から2つ上昇)。"
     }
   ],
   "status": "ongoing",
-  "note": "第1節終了時点の途中経過"
+  "note": "第2節終了時点の途中経過"
 }

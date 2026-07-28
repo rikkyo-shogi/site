@@ -65,7 +65,9 @@ const historyRows = pastSeasons.map(s => ({
                 </dl>
 
                 <p class="source-link">
-                  出典: <a href={team.source_url} target="_blank" rel="noopener">リーグ表（成績順）</a>
+                  出典: <a href={team.source_url} target="_blank" rel="noopener">
+                    {team.source_url?.endsWith('_u.pdf') ? 'リーグ表' : 'リーグ表（成績順）'}
+                  </a>
                 </p>
               </article>
             ))}
