@@ -1,10 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ShadanPlayerRating from '../../components/ShadanPlayerRating.astro';
-import { loadShadanSeasons, loadShadanPlayers, type ShadanTeam } from '../../utils/loadData';
+import { loadShadanSeasons, type ShadanTeam } from '../../utils/loadData';
 
 const seasons = await loadShadanSeasons();  // 新しい回順
-const players = await loadShadanPlayers();  // 公開同意者のみ
 // 最新回(開催中の途中経過)を単独表示し、それ以外を歴代成績に載せる
 const latest = seasons[0] ?? null;
 const pastSeasons = seasons.slice(1);
@@ -125,8 +123,6 @@ const historyRows = pastSeasons.map(s => ({
             </table>
           </div>
         </section>
-
-        <ShadanPlayerRating players={players} />
 
         <p class="page-sources">
           出典: 東京アマチュア将棋連盟

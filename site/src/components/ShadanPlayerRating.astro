@@ -2,7 +2,9 @@
 // 社団戦(東将連) 個人レーティング推移。本人の同意を得た部員のみ表示する(ROADMAP §2-2)。
 // データ点は年1回・欠測回ありのため、Chart.js ではなくビルド時に座標を計算した
 // 静的SVGで描く。JSに依存しないぶん軽く、noscript対応も不要になる。
-// x軸は回数(kai)に比例させ、連続しない回の間は線を引かない(欠測を線で埋めない)。
+// x軸は回数(kai)に比例させる。回の間が空く場合の線の扱いは2種類:
+//   - ハード欠測(HARD_GAP_KAI): その回は個人レーティング資料自体が存在しない(誰にとっても欠測)。線を引かない
+//   - ソフト欠測: 資料はあるがその人だけ掲載がない(欠場 or 対局数不足等)。点線でつなぎ、参考程度の推移として示す
 import type { ShadanPlayer } from '../utils/loadData';
 
 interface Props {
@@ -11,11 +13,16 @@ interface Props {
 
 const { players } = Astro.props;
 
+// 個人レーティング資料そのものが存在しない回(2026-07時点で確認済み: 第31回=R04はチーム成績表のみで
+// 持点・通算対局数の列がなく、誰の個人レーティングも掲載されない)。他の欠測回は資料自体はあるが
+// その人が掲載されていないだけ(ソフト欠測)なので、ここには含めない。
+const HARD_GAP_KAI = new Set([31]);
+
 const PAD_L = 40;
 const PAD_R = 24;
 const PAD_T = 30;
-const PAD_B = 40;
-const H = 190;
+const PAD_B = 54;
+const H = 204;
 const plotH = H - PAD_T - PAD_B;
 const PX_PER_KAI = 44;
 
@@ -43,28 +50,25 @@ function buildChart(history: ShadanPlayer['history']) {
     labelDy: i % 2 === 0 ? -12 : -22,
   }));
 
-  // 回数が連続する区間ごとに線を分割する(欠測区間はつながない)
-  const segments: (typeof points)[] = [];
-  for (const p of points) {
-    const last = segments[segments.length - 1];
-    if (last && p.kai === last[last.length - 1].kai + 1) {
-      last.push(p);
-    } else {
-      segments.push([p]);
-    }
-  }
+  // 隣り合う点の間を「実線(回が連続)」「点線(間に回はあるがハード欠測ではない)」
+  // 「接続なし(間の回がすべてハード欠測)」に分類する
   const baseline = PAD_T + plotH;
-  const segmentPaths = segments
-    .filter(seg => seg.length > 1)
-    .map(seg => {
-      const linePath = seg.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.cx.toFixed(1)},${p.cy.toFixed(1)}`).join(' ');
-      const areaPath = `${linePath} L${seg[seg.length - 1].cx.toFixed(1)},${baseline} L${seg[0].cx.toFixed(1)},${baseline} Z`;
-      return { linePath, areaPath };
-    });
+  const connections: { linePath: string; areaPath: string; dashed: boolean }[] = [];
+  for (let i = 0; i + 1 < points.length; i++) {
+    const a = points[i];
+    const b = points[i + 1];
+    const between: number[] = [];
+    for (let kai = a.kai + 1; kai < b.kai; kai++) between.push(kai);
+    if (between.length > 0 && between.every(kai => HARD_GAP_KAI.has(kai))) continue; // 接続なし
+
+    const linePath = `M${a.cx.toFixed(1)},${a.cy.toFixed(1)} L${b.cx.toFixed(1)},${b.cy.toFixed(1)}`;
+    const areaPath = `${linePath} L${b.cx.toFixed(1)},${baseline} L${a.cx.toFixed(1)},${baseline} Z`;
+    connections.push({ linePath, areaPath, dashed: between.length > 0 });
+  }
 
   const delta = ratings[ratings.length - 1] - ratings[0];
 
-  return { W, baseline, points, segmentPaths, delta };
+  return { W, baseline, points, connections, delta };
 }
 
 const cards = players.map(p => ({ player: p, chart: buildChart(p.history) }));
@@ -96,7 +100,7 @@ const cards = players.map(p => ({ player: p, chart: buildChart(p.history) }));
           <div class="spr-scroll">
             <div class="spr-svg-wrap" style={`width:${chart.W}px`}>
               <svg viewBox={`0 0 ${chart.W} ${H}`} role="img"
-                aria-label={`${player.name}のレーティング推移: ${player.history.map(h => `第${h.kai}回R${h.rating}`).join('、')}`}>
+                aria-label={`${player.name}のレーティング推移: ${player.history.map(h => `第${h.kai}回${h.division ?? ''}R${h.rating}`).join('、')}`}>
                 <defs>
                   <linearGradient id={`spr-grad-${player.player_id}`} x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stop-color="#541a86" stop-opacity="0.18" />
@@ -104,10 +108,10 @@ const cards = players.map(p => ({ player: p, chart: buildChart(p.history) }));
                   </linearGradient>
                 </defs>
                 <line x1={PAD_L} y1={chart.baseline} x2={chart.W - PAD_R} y2={chart.baseline} class="spr-axis" />
-                {chart.segmentPaths.map(seg => (
+                {chart.connections.map(c => (
                   <>
-                    <path d={seg.areaPath} fill={`url(#spr-grad-${player.player_id})`} />
-                    <path d={seg.linePath} class="spr-line" />
+                    {!c.dashed && <path d={c.areaPath} fill={`url(#spr-grad-${player.player_id})`} />}
+                    <path d={c.linePath} class={c.dashed ? 'spr-line spr-line-dashed' : 'spr-line'} />
                   </>
                 ))}
                 {chart.points.map(p => (
@@ -116,6 +120,7 @@ const cards = players.map(p => ({ player: p, chart: buildChart(p.history) }));
                     <text x={p.cx} y={p.cy + p.labelDy} class="spr-value">R{p.rating}</text>
                     <text x={p.cx} y={chart.baseline + 16} class="spr-label">第{p.kai}回</text>
                     <text x={p.cx} y={chart.baseline + 28} class="spr-sublabel">{p.season}</text>
+                    {p.division && <text x={p.cx} y={chart.baseline + 40} class="spr-division">{p.division}</text>}
                   </g>
                 ))}
               </svg>
@@ -125,12 +130,13 @@ const cards = players.map(p => ({ player: p, chart: buildChart(p.history) }));
 
           <div class="spr-table-wrap">
             <table class="spr-table">
-              <thead><tr><th>回</th><th>年度</th><th>レーティング</th><th>通算対局数</th><th>出典</th></tr></thead>
+              <thead><tr><th>回</th><th>年度</th><th>所属リーグ</th><th>レーティング</th><th>通算対局数</th><th>出典</th></tr></thead>
               <tbody>
                 {player.history.map(h => (
                   <tr>
                     <td>第{h.kai}回</td>
                     <td>{h.season_label}</td>
+                    <td>{h.division ?? '—'}</td>
                     <td>R{h.rating}</td>
                     <td>{h.games}局</td>
                     <td><a href={h.source_url} target="_blank" rel="noopener">出典</a></td>
@@ -168,10 +174,12 @@ const cards = players.map(p => ({ player: p, chart: buildChart(p.history) }));
   .spr-scroll-hint { display: none; }
   .spr-axis { stroke: #ddd; stroke-width: 1; }
   .spr-line { fill: none; stroke: #541a86; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .spr-line-dashed { stroke-width: 1.8; stroke-dasharray: 4 3; opacity: 0.55; }
   .spr-point { fill: #fff; stroke: #541a86; stroke-width: 2; }
   .spr-value { font-size: 10.5px; font-weight: bold; fill: #541a86; text-anchor: middle; }
   .spr-label { font-size: 9.5px; fill: #666; text-anchor: middle; }
   .spr-sublabel { font-size: 8px; fill: #aaa; text-anchor: middle; }
+  .spr-division { font-size: 8px; fill: #8a6bab; text-anchor: middle; }
 
   .spr-table-wrap { overflow-x: auto; margin-top: 0.8rem; }
   .spr-table { border-collapse: collapse; width: 100%; min-width: 420px; font-size: 0.75rem; }

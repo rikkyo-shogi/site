@@ -22,7 +22,7 @@
           "season": { "type": "string" },
           "season_label": { "type": "string" },
           "team": { "type": "string" },
-          "division": { "type": ["string", "null"], "description": "全部門一覧PDF由来の場合のみ。部別PDF由来はチーム成績側で分かるため null 可" },
+          "division": { "type": ["string", "null"], "description": "所属リーグ(例: 4部白)。一覧PDF/HTMLはリーグ列から、部別PDFはファイル名の l{部}{r|w} から復元する。判別できない場合は null" },
           "rating": { "type": "integer", "description": "新持点(公式レーティング)" },
           "games": { "type": "integer", "description": "通算対局数" },
           "source_url": { "type": "string", "format": "uri" }

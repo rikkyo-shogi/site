@@ -33,7 +33,7 @@
 | **`club_html` ソース種別** | 部が過去に公開していた大会結果まとめページ（`www2.rikkyo.ac.jp/web/z4000060/homepage1/`、平成12〜16年度分。Shift-JIS）由来のデータ用に追加。出典ラベルは「(旧)部サイト」 |
 | **社団戦パイプライン試作（ROADMAP §2-1/2-2）** | `scraper/fetch_shadan.py`＋`parse_shadan.py`（pdfplumber）で第34回（R07）を抽出。順位一覧PDFの2段組を座標で左右分割し（赤/白はヘッダー表記から取得）立教2チームの成績を取得 → `data/shadan/confirmed/R07.json`（`teams[]`、`league_table`は現状 null）。`source_type: shadan_pdf` を新設し `data/shadan/schema.json`＋`validate.yml` で検証（保存前にもスキーマ検証）。個人ランキングPDFは所属部から自動導出（第34回: 3部白=立教大学紫龍会14名 / 6部赤=紫龍会13名）し `data/auto/shadan/`（gitignore）にのみ出力・非公開。`site/src/pages/shadan/index.astro` で2チーム並列表示・出典PDFリンク付き、ナビに「社団戦」追加 |
 | **社団戦 歴代成績（第12回〜33回）** | 資料形式が回ごとに異なるため（HTMLリーグ表→PDF・3リーグ制・3段組・オンライン開催等）、`scraper/build_shadan_history.py` に**目視確認済みの確定値**を保持しスキーマ検証つきで `data/shadan/confirmed/{H13..R06}.json` を生成（半自動＋目視方式）。判明した系譜: 立教大学紫龍会=第12回（H13）から参戦、第18回に**1部所属**（チーム史上最高）、第20回を最後に休会し第27回に3部で復帰（第31回以前は「立教大紫龍会」表記）。紫龍会=第15回から確認、第28〜32回休会、第33回に5部で復帰。第14回（H15）はリーグ表が連盟サイトに現存せず記録なし。第17〜21回は当該回の順位一覧PDF（例: `shadan/nana/page4.pdf`・`shadan/hachi/page1801.pdf`・`shadan/19/page1901.pdf`・`shadan/20/page2003.pdf`・`shadan/21/page2107.pdf`）を目視確認し全行の順位・勝点・勝数を確定（一部ファイルは名前列がテキスト抽出不可のため、対戦表内の略称参照から自チームの行を特定）。R02・R03の団体戦はコロナ禍で中止、第31回はR04にオンライン併用で開催（`31/rankingA4.pdf` から取得）。昇降欄の無い回の昇級/降級は翌回の所属部から判定し note に根拠を記録。shadanページの歴代成績はチーム別の列グループ（回×2チーム）で表示。出典リンクは各回の**リーグ表（成績順）**（第22回〜: `5nitimeseisekijun*.pdf` / `NN_league_04_g.pdf`。全ファイルの存在とチーム行の掲載を確認済み）。開催中の年度（第35回=R08、`status: "ongoing"`）は各節のリーグ表から途中経過を取り込み、ページ冒頭に単独表示（歴代テーブルには最終結果のみ）。ナビ・トップページの区分は「学生大会結果」「社団戦結果」に統一（掲示板アーカイブはナビのみ） |
-| **社団戦 個人レーティング推移（保留中）** | 紫龍会・立教大学紫龍会の**出場者の個人レーティング（東将連公式・新持点）の推移を表示する**機能。一度実装したが「もう少し工夫できそう」とのフィードバックにより表示・データとも撤回（2026-07-18）。基盤（`scraper/build_shadan_players.py`・`data/shadan/player.schema.json`・CI検証枠）は将来の再実装用に維持。掲載は本人の同意を得た部員のみ・登録番号非表示の方針（§5）も維持。判明済みのデータ源: 第33回=全部門一覧PDF・第34回=部別PDF・第17〜20回（H18〜H21）=部別レーティング一覧HTML |
+| **社団戦 個人レーティング推移（検証中・専用ページ）** | 紫龍会・立教大学紫龍会の**出場者の個人レーティング（東将連公式・新持点）の推移を表示する**機能。初回実装は「もう少し工夫できそう」とのフィードバックで撤回（2026-07-18）ののち、構成・データ範囲を見直して再実装（2026-07-29、本人同意分＝久保田耕介のみ）。データは `scraper/build_shadan_players.py` が第20〜30回（H21〜R01、東将連サイトのHTML版「参加者全員のランキング」）・第33回（R06、全部門一覧ランキングPDF）・第34回（R07、部別ランキングPDF）から登録番号で抽出し `data/shadan/players/*.json` に生成（`player.schema.json`＋CI検証）。第31・32回（R04・R05）は欠測で、内訳は2種類。第31回は個人ランキング資料自体が見当たらず（`31/rankingA4.pdf`・`31/rankingB4.pdf`・`31/league2022_00.pdf` はいずれもチーム成績表で登録番号・持点・通算対局数の列を持たない）＝誰にとっても欠測の**ハード欠測**。第32回は一覧PDF（`32/32_ranking_1022.pdf`）自体は存在し立教の各チームの部員も掲載されているが本人の行がない＝**ソフト欠測**。第35回（R08、開催中）は公開済みの個人ランキングが第1節時点の `35/35_ranking_01_all.pdf` のみ（本人も掲載されているが年度の確定値ではない）ため未収録・掲載は最新の確定回（第34回）まで。表示は `ShadanPlayerRating.astro`：データ点が年1回・欠測ありのため Chart.js ではなくビルド時計算の静的SVG（x軸=回数に比例配置）。隣り合う点の接続は欠測の種類で3通り: 回が連続＝実線＋面塗り、間の回がすべてハード欠測＝接続しない、ソフト欠測を含む＝点線（面塗りなし・参考扱い）。現データでは第30→33回の間に第31回（ハード）と第32回（ソフト）が混在するため点線でつなぐ。各点に回・年度に加え**所属リーグ（部）**をラベル表示。掲載は本人の同意を得た部員のみ・登録番号（`reg_no`）非表示の方針（§5）を維持。**社団戦結果ページ（`shadan/index.astro`）やナビからはリンクしない独立ページ** `site/src/pages/shadan/player-rating.astro`（`noindex`・サイトマップ除外）として検証段階の間は非公開運用 |
 | **SNSリンク** | X / Instagram / note（いずれも rikkyoshogi）への公式ロゴアイコン（インラインSVG）を `BaseLayout.astro` のフッターに全ページ共通で表示 |
 | **サイトカラー** | 立教大学のスクールカラー「紫紺」（公式VIガイドの指定は DIC 226。ガイドPDF実測の `#541a86` を採用）にヘッダー・見出し・リンク等を統一。出典: 立教学院デザインガイド（rec.rikkyo.ac.jp/designguide） |
 
@@ -516,7 +516,7 @@ repo-root/
 │  ├─ fetch_shadan.py           # 社団戦(東将連): 順位一覧/ランキングPDF取得 ✓
 │  ├─ parse_shadan.py           # 社団戦PDFパーサ(pdfplumber・2段組対応) ✓
 │  ├─ build_shadan_history.py   # 社団戦 歴代成績(第12〜35回)の確定値からJSON生成 ✓
-│  ├─ build_shadan_players.py   # 個人レーティング推移生成(本人同意者のみ・現状未使用) ✓
+│  ├─ build_shadan_players.py   # 個人レーティング推移生成(本人同意者のみ・検証中の専用ページで使用) ✓
 │  ├─ common.py                 # Shift-JIS デコード/HTTP/キャッシュ/バリデーション ✓
 │  └─ requirements.txt          # ✓
 ├─ cache/                       # 取得した生PDF/HTML/xlsx (gitignore)
@@ -527,7 +527,8 @@ repo-root/
 │  ├─ confirmed/                # 関東 人手確認済み ✓ H01〜H16・H21〜R08(34年度)
 │  └─ shadan/
 │     ├─ schema.json            # JSON Schema(社団戦) ✓
-│     ├─ player.schema.json     # JSON Schema(個人レーティング・現状未使用) ✓
+│     ├─ player.schema.json     # JSON Schema(個人レーティング) ✓ CI検証対象
+│     ├─ players/               # 個人レーティング推移(本人同意者のみ) ✓ 第20〜34回(第31・32回は欠測)
 │     └─ confirmed/             # 社団戦 確定データ ✓ H13〜R08(第12〜35回、第35回は status:"ongoing")
 ├─ site/                        # Astro SSG ✓
 │  └─ src/
@@ -537,17 +538,19 @@ repo-root/
 │     │  ├─ TeamEvent.astro     # 団体戦カード・kanto_table・schedule 表示 ✓
 │     │  ├─ IndividualEvent.astro
 │     │  ├─ SeasonSection.astro
-│     │  └─ LeagueTrend.astro   # 団体戦 昇降級推移グラフ(Chart.js) ✓
+│     │  ├─ LeagueTrend.astro   # 団体戦 昇降級推移グラフ(Chart.js) ✓
+│     │  └─ ShadanPlayerRating.astro  # 社団戦 個人レーティング推移(静的SVG・検証中) ✓
 │     ├─ pages/
 │     │  ├─ index.astro         # トップページ ✓
 │     │  ├─ result/index.astro  # 学生大会結果ページ(旧index.astro) ✓
 │     │  ├─ shadan/index.astro  # 社団戦結果ページ ✓
+│     │  ├─ shadan/player-rating.astro  # 個人レーティング推移(検証用・未リンク・noindex) ✓
 │     │  └─ archives/           # 掲示板アーカイブリンク ✓
 │     └─ utils/
 │        └─ loadData.ts         # confirmed/ 読み込み・型定義・LeagueTrend集計 ✓
 └─ .github/workflows/
    ├─ deploy.yml                # push → GitHub Pages 自動デプロイ ✓
-   ├─ validate.yml              # confirmed/ + shadan/confirmed/ スキーマ検証 CI ✓
+   ├─ validate.yml              # confirmed/ + shadan/confirmed/ + shadan/players/ スキーマ検証 CI ✓
    └─ scrape.yml                # スクレイパ手動実行ワークフロー ✓
 ```
 
@@ -800,11 +803,11 @@ Google Search Console 未登録）。検索エンジンにサイトを発見・�
 一元管理でき、Search Console とのプロパティ連携も可能。無料。
 
 **実装内容**:
-- `site/src/layouts/BaseLayout.astro` に gtag.js を追加。`GA_MEASUREMENT_ID` 定数
-  （現在は `G-XXXXXXXXXX` のプレースホルダ）を `<head>` 冒頭付近（Google推奨位置）に設置し、
-  全ページ（index / result / archives / shadan）に自動で適用される
-- GA4 プロパティ作成後、発行される測定ID（`G-`で始まる文字列）に `GA_MEASUREMENT_ID` を
-  差し替える必要がある（**未設定**。GSC の `google-site-verification` と同様の運用）
+- `site/src/layouts/BaseLayout.astro` に gtag.js を追加。`GA_MEASUREMENT_ID` 定数を
+  `<head>` 冒頭付近（Google推奨位置）に設置し、全ページ
+  （index / result / archives / shadan / shadan/player-rating）に自動で適用される
+- 測定ID は**設定済み**（`G-Z5GSX75264`。GSC の `google-site-verification` と同様の運用）。
+  プレースホルダ `G-XXXXXXXXXX` に戻さないこと
 
 **注意点**:
 - 非商用の部活動サイトのため必須ではないが、Cookie を使用するため一般的な配慮として

@@ -14,13 +14,15 @@
 │   ├── picture/         # 部内アルバム写真（H01〜H13の団体戦結果の原本。個人情報のためgitignore済み・未コミット、ローカルのみ）
 │   └── shadan/
 │       ├── confirmed/   # 社団戦 確定データ（*.json、shadan/schema.jsonでCI検証）
+│       ├── players/     # 個人レーティング推移（本人同意者のみ、player.schema.jsonでCI検証）
 │       ├── schema.json
-│       └── player.schema.json   # 個人レーティング用（本人同意者のみ利用・現状未使用）
-├── scraper/              # Python製スクレイパー（fetch_kanto/fetch_shadan/build_shadan_history 等）
+│       └── player.schema.json   # 個人レーティング用スキーマ
+├── scraper/              # Python製スクレイパー（fetch_kanto/fetch_shadan/build_shadan_history/build_shadan_players 等）
 ├── site/                 # Astro製の公開サイト本体
 │   ├── src/layouts/BaseLayout.astro   # head メタ・共通ヘッダー/フッターの一元管理
-│   ├── src/components/{TeamEvent,IndividualEvent,SeasonSection,LeagueTrend}.astro
-│   ├── src/pages/{index,result/index,archives/index,shadan/index}.astro
+│   ├── src/components/{TeamEvent,IndividualEvent,SeasonSection,LeagueTrend,ShadanPlayerRating}.astro
+│   ├── src/pages/{index,result/index,archives/index,shadan/index,shadan/player-rating}.astro
+│   │   # shadan/player-rating.astro は検証用の独立ページ（ナビ・shadan/index からリンクしない、noindex）
 │   └── public/{robots.txt,ogp.png,...}
 └── .github/workflows/{deploy,validate,scrape}.yml
 ```
@@ -37,8 +39,10 @@
 - ページのメタ情報（title/description/OGP等）は `BaseLayout.astro` の props で渡す。各ページに直接 meta を書かない
 - `base: '/site'` があるため、URL生成は `import.meta.env.BASE_URL` / `Astro.site` 経由で行う（ハードコード禁止）
 - Google Search Console の確認トークンは `BaseLayout.astro` に**設定済み**。プレースホルダに戻さない
-- Google Analytics 4 の `GA_MEASUREMENT_ID`（`BaseLayout.astro`）は**未設定**（プレースホルダ `G-XXXXXXXXXX` のまま）。詳細は requirements.md §11.5
+- Google Analytics 4 の `GA_MEASUREMENT_ID`（`BaseLayout.astro`）は**設定済み**。プレースホルダに戻さない
 - 見た目に関わる変更をしたら、ビルド出力の差分（body DOM / CSS）で意図しない変化がないか確認する
+- 検証中で検索エンジンに出したくないページは `BaseLayout` に `noindex` を渡し、`astro.config.mjs` の
+  `sitemap({ filter })` にもパスを追加してサイトマップから除外する（`shadan/player-rating.astro` が前例）
 
 ## データを触る際の注意
 
@@ -57,7 +61,9 @@
   `python3 -c "import json,jsonschema,sys; from pathlib import Path; schema=json.loads(Path('data/schema.json').read_text()); [print('FAIL',f.name) or sys.exit(1) for f in sorted(Path('data/confirmed').glob('*.json')) if list(jsonschema.Draft7Validator(schema).iter_errors(json.loads(f.read_text())))]"`
 - ローカルでのスキーマ検証（社団戦）: 同様のワンライナーで `data/schema.json`→`data/shadan/schema.json`、`data/confirmed`→`data/shadan/confirmed` に置き換えて実行
 - 社団戦の歴代成績は `scraper/build_shadan_history.py` の `RECORDS`（目視確認済みの確定値）から `data/shadan/confirmed/*.json` を生成する。修正時はこのファイルを編集して再実行すること（JSONを直接手編集しない）
-- 個人（実名・レーティング）データは本人の同意がない限りリポジトリにコミットしない（`requirements.md` §5 の `shadan_pdf` 説明・ROADMAP §2-2）。gitignore済みの `data/auto/shadan/` にのみ出力する
+- 個人（実名・レーティング）データは本人の同意がない限りリポジトリにコミットしない（`requirements.md` §5 の `shadan_pdf` 説明・ROADMAP §2-2）。
+  同意者の分のみ `scraper/build_shadan_players.py` で `data/shadan/players/*.json` に生成・コミットする（登録番号 `reg_no` はページに表示しない）。
+  非同意者を含む一括データは gitignore済みの `data/auto/shadan/` にのみ出力する
 
 ## 既知の環境上の注意点
 

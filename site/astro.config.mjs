@@ -8,5 +8,10 @@ export default defineConfig({
   site: 'https://rikkyo-shogi.github.io/site',
   base: '/site',
   output: 'static',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // 検証中で検索エンジンにインデックスさせたくないページを除外
+      filter: (page) => !page.includes('/shadan/player-rating'),
+    }),
+  ],
 });

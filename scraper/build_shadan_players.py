@@ -115,6 +115,31 @@ def find_in_ranking(url: str, reg_no: int) -> dict | None:
     return find_in_html_ranking(text, reg_no)
 
 
+# 部別ランキングPDFのファイル名サフィックス(例: ..._l6r.pdf → 6部赤)。
+# parse_shadan.py の division→suffix 変換(l{部}{r|w})の逆変換。
+DIVISION_SUFFIX_RE = re.compile(r"_l(\d+)([rw])?\.pdf$")
+ZEN2HAN_DIGITS = str.maketrans("０１２３４５６７８９", "0123456789")
+
+
+def division_from_url(url: str) -> str | None:
+    """部別ランキングPDF(全部門一覧のような division 列を持たない形式)のURLから所属部を復元する。"""
+    m = DIVISION_SUFFIX_RE.search(url)
+    if not m:
+        return None
+    bu, color = m.groups()
+    return f"{bu}部" + {"r": "赤", "w": "白"}.get(color, "")
+
+
+def normalize_division(division: str | None) -> str | None:
+    """全角数字・全角/半角括弧の表記ゆれを吸収し、サイト他所と同じ「4部白」形式に揃える。"""
+    if division is None:
+        return None
+    d = division.translate(ZEN2HAN_DIGITS)
+    for ch in "（）()":
+        d = d.replace(ch, "")
+    return d
+
+
 if __name__ == "__main__":
     fetch_shadan.ensure_reachable()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -127,9 +152,10 @@ if __name__ == "__main__":
                     f"{spec['name']} (reg {spec['reg_no']}) が {url} に見つかりません。"
                     " 掲載形式の変更の可能性があるため停止。"
                 )
+            division = normalize_division(row["division"] or division_from_url(url))
             history.append({
                 "kai": kai, "season": season, "season_label": season_label,
-                "team": row["team"], "division": row["division"],
+                "team": row["team"], "division": division,
                 "rating": row["rating"], "games": row["games"],
                 "source_url": url,
             })
