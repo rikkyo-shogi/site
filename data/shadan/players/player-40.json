@@ -1,0 +1,198 @@
+{
+  "player_id": "player-40",
+  "name": "金子 靖史",
+  "reg_no": 40,
+  "consent": "本人の同意により公開(2026-07-30)",
+  "history": [
+    {
+      "kai": 15,
+      "season": "H16",
+      "season_label": "平成16年度",
+      "team": "立教大学紫龍会",
+      "division": "2部赤",
+      "rating": 1619,
+      "games": 670,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/go/junni1.htm"
+    },
+    {
+      "kai": 16,
+      "season": "H17",
+      "season_label": "平成17年度",
+      "team": "立教大学紫龍会",
+      "division": "2部白",
+      "rating": 1538,
+      "games": 689,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/roku/16junni1.htm"
+    },
+    {
+      "kai": 17,
+      "season": "H18",
+      "season_label": "平成18年度",
+      "team": "立教大学紫龍会",
+      "division": "2部赤",
+      "rating": 1566,
+      "games": 708,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/nana/1/17junni1.htm"
+    },
+    {
+      "kai": 18,
+      "season": "H19",
+      "season_label": "平成19年度",
+      "team": "立教大学紫龍会",
+      "division": "1部",
+      "rating": 1592,
+      "games": 727,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/hachi/18junni1.htm"
+    },
+    {
+      "kai": 19,
+      "season": "H20",
+      "season_label": "平成20年度",
+      "team": "立教大学紫龍会",
+      "division": "2部赤",
+      "rating": 1612,
+      "games": 747,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/19/19junni1.htm"
+    },
+    {
+      "kai": 20,
+      "season": "H21",
+      "season_label": "平成21年度",
+      "team": "立教大学紫龍会",
+      "division": "2部赤",
+      "rating": 1557,
+      "games": 758,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/20/20junni1.htm"
+    },
+    {
+      "kai": 21,
+      "season": "H22",
+      "season_label": "平成22年度",
+      "team": "紫龍会",
+      "division": "3部青",
+      "rating": 1557,
+      "games": 758,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/21/21junni1.htm"
+    },
+    {
+      "kai": 22,
+      "season": "H23",
+      "season_label": "平成23年度",
+      "team": "紫龍会",
+      "division": "3部青",
+      "rating": 1557,
+      "games": 758,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/22/22juni5_1_1.htm"
+    },
+    {
+      "kai": 23,
+      "season": "H24",
+      "season_label": "平成24年度",
+      "team": "紫龍会",
+      "division": "3部赤",
+      "rating": 1590,
+      "games": 773,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/23/23juni5_1_1.htm"
+    },
+    {
+      "kai": 24,
+      "season": "H25",
+      "season_label": "平成25年度",
+      "team": "紫龍会",
+      "division": "3部白",
+      "rating": 1543,
+      "games": 788,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/24/24juni55_2_2.htm"
+    },
+    {
+      "kai": 25,
+      "season": "H26",
+      "season_label": "平成26年度",
+      "team": "紫龍会",
+      "division": "3部白",
+      "rating": 1612,
+      "games": 800,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/25/25juni5_1_1.htm"
+    },
+    {
+      "kai": 26,
+      "season": "H27",
+      "season_label": "平成27年度",
+      "team": "紫龍会",
+      "division": "2部白",
+      "rating": 1553,
+      "games": 811,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/26/26juni5_2_2.htm"
+    },
+    {
+      "kai": 27,
+      "season": "H28",
+      "season_label": "平成28年度",
+      "team": "紫龍会",
+      "division": "3部白",
+      "rating": 1566,
+      "games": 825,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/27/1611091540_2_775.htm"
+    },
+    {
+      "kai": 28,
+      "season": "H29",
+      "season_label": "平成29年度",
+      "team": "立教大紫龍会",
+      "division": "4部白",
+      "rating": 1612,
+      "games": 839,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/28/1802071815_1_1.htm"
+    },
+    {
+      "kai": 29,
+      "season": "H30",
+      "season_label": "平成30年度",
+      "team": "立教大紫龍会",
+      "division": "5部赤",
+      "rating": 1603,
+      "games": 854,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/29/1812061710_1_1.htm"
+    },
+    {
+      "kai": 30,
+      "season": "R01",
+      "season_label": "令和元年度",
+      "team": "立教大紫龍会",
+      "division": "5部白",
+      "rating": 1642,
+      "games": 869,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/30/2009251507_1_1.htm"
+    },
+    {
+      "kai": 32,
+      "season": "R05",
+      "season_label": "令和5年度",
+      "team": "立教大学紫龍会",
+      "division": "3部白",
+      "rating": 1695,
+      "games": 879,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/32/32_ranking_1022.pdf"
+    },
+    {
+      "kai": 33,
+      "season": "R06",
+      "season_label": "令和6年度",
+      "team": "立教大学紫龍会",
+      "division": "3部白",
+      "rating": 1621,
+      "games": 893,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"
+    },
+    {
+      "kai": 34,
+      "season": "R07",
+      "season_label": "令和7年度",
+      "team": "立教大学紫龍会",
+      "division": "3部白",
+      "rating": 1550,
+      "games": 907,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_all.pdf"
+    }
+  ]
+}

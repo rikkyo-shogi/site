@@ -8,9 +8,12 @@
 
 レーティング(新持点)は2種類の資料形式で公開されている(2026-07 調査):
   - PDF「全部門一覧」「部別ランキング」(第32〜34回): 表形式のテキスト抽出
-  - HTML「参加者全員のランキング」(第20〜30回): <PRE>タグの固定幅テキスト
-    (第17〜19回・第31回・第32回一覧には対象者の記載なし。
-     コロナ期個人戦(K1/K2)は社団戦本戦ではないため対象外)
+  - HTML「参加者全員のランキング」(第15〜30回): <PRE>タグの固定幅テキスト。
+    第21回以降は最終節の順位表が複数ファイルに分割されている回があるため、
+    人により掲載パートが異なる(sourcesの資料URLは対象者ごとに実際に見つかった
+    パートを指す。同じ回でも別のURLになりうる)
+  - 第31回は個人レーティング資料自体が存在しない(誰にとっても欠測・ハード欠測)。
+    コロナ期個人戦(K1/K2)は社団戦本戦ではないため対象外
 """
 
 import io
@@ -49,6 +52,45 @@ CONSENTED = [
             (30, "R01", "令和元年度", "https://toushouren.world.coocan.jp/shadan/30/2009251507_2_776.htm"),
             (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
             (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_l6r.pdf"),
+        ],
+    },
+    {
+        # player_id はファイル名として残るため、実名が推測できない形にする(reg_no由来)
+        "player_id": "player-40",
+        "name": "金子 靖史",
+        "reg_no": 40,
+        "consent": "本人の同意により公開(2026-07-30)",
+        "sources": [
+            (15, "H16", "平成16年度", "https://toushouren.world.coocan.jp/shadan/go/junni1.htm"),
+            (16, "H17", "平成17年度", "https://toushouren.world.coocan.jp/shadan/roku/16junni1.htm"),
+            (17, "H18", "平成18年度", "https://toushouren.world.coocan.jp/shadan/nana/1/17junni1.htm"),
+            (18, "H19", "平成19年度", "https://toushouren.world.coocan.jp/shadan/hachi/18junni1.htm"),
+            (19, "H20", "平成20年度", "https://toushouren.world.coocan.jp/shadan/19/19junni1.htm"),
+            (20, "H21", "平成21年度", "https://toushouren.world.coocan.jp/shadan/20/20junni1.htm"),
+            (21, "H22", "平成22年度", "https://toushouren.world.coocan.jp/shadan/21/21junni1.htm"),
+            (22, "H23", "平成23年度", "https://toushouren.world.coocan.jp/shadan/22/22juni5_1_1.htm"),
+            (23, "H24", "平成24年度", "https://toushouren.world.coocan.jp/shadan/23/23juni5_1_1.htm"),
+            (24, "H25", "平成25年度", "https://toushouren.world.coocan.jp/shadan/24/24juni55_2_2.htm"),
+            (25, "H26", "平成26年度", "https://toushouren.world.coocan.jp/shadan/25/25juni5_1_1.htm"),
+            (26, "H27", "平成27年度", "https://toushouren.world.coocan.jp/shadan/26/26juni5_2_2.htm"),
+            (27, "H28", "平成28年度", "https://toushouren.world.coocan.jp/shadan/27/1611091540_2_775.htm"),
+            (28, "H29", "平成29年度", "https://toushouren.world.coocan.jp/shadan/28/1802071815_1_1.htm"),
+            (29, "H30", "平成30年度", "https://toushouren.world.coocan.jp/shadan/29/1812061710_1_1.htm"),
+            (30, "R01", "令和元年度", "https://toushouren.world.coocan.jp/shadan/30/2009251507_1_1.htm"),
+            (32, "R05", "令和5年度", "https://toushouren.world.coocan.jp/shadan/32/32_ranking_1022.pdf"),
+            (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
+            (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_all.pdf"),
+        ],
+    },
+    {
+        "player_id": "player-15426",
+        "name": "矢島 遼大",
+        "reg_no": 15426,
+        "consent": "本人の同意により公開(2026-07-30)",
+        "sources": [
+            (32, "R05", "令和5年度", "https://toushouren.world.coocan.jp/shadan/32/32_ranking_1022.pdf"),
+            (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
+            (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_all.pdf"),
         ],
     },
 ]

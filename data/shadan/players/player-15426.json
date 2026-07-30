@@ -1,0 +1,38 @@
+{
+  "player_id": "player-15426",
+  "name": "矢島 遼大",
+  "reg_no": 15426,
+  "consent": "本人の同意により公開(2026-07-30)",
+  "history": [
+    {
+      "kai": 32,
+      "season": "R05",
+      "season_label": "令和5年度",
+      "team": "紫龍会",
+      "division": "5部白",
+      "rating": 1450,
+      "games": 6,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/32/32_ranking_1022.pdf"
+    },
+    {
+      "kai": 33,
+      "season": "R06",
+      "season_label": "令和6年度",
+      "team": "紫龍会",
+      "division": "5部白",
+      "rating": 1421,
+      "games": 14,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"
+    },
+    {
+      "kai": 34,
+      "season": "R07",
+      "season_label": "令和7年度",
+      "team": "立教大学紫龍会",
+      "division": "3部白",
+      "rating": 1414,
+      "games": 20,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_all.pdf"
+    }
+  ]
+}
