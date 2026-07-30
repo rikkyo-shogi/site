@@ -24,7 +24,11 @@ const PAD_T = 30;
 const PAD_B = 54;
 const H = 204;
 const plotH = H - PAD_T - PAD_B;
-const PX_PER_KAI = 44;
+// 横スクロールなしで全回を表示できるよう、回数の幅に応じて1回あたりの幅を可変にする
+// (在籍期間が長い人ほど1回あたりの幅を狭め、780pxを超えないようにする)
+const MAX_CHART_W = 780;
+const MIN_PX_PER_KAI = 18;
+const MAX_PX_PER_KAI = 44;
 
 function buildChart(history: ShadanPlayer['history']) {
   const ratings = history.map(h => h.rating);
@@ -37,9 +41,11 @@ function buildChart(history: ShadanPlayer['history']) {
   const kais = history.map(h => h.kai);
   const kaiMin = Math.min(...kais);
   const kaiMax = Math.max(...kais);
-  const W = PAD_L + PAD_R + Math.max(1, kaiMax - kaiMin) * PX_PER_KAI;
+  const range = Math.max(1, kaiMax - kaiMin);
+  const pxPerKai = Math.max(MIN_PX_PER_KAI, Math.min(MAX_PX_PER_KAI, (MAX_CHART_W - PAD_L - PAD_R) / range));
+  const W = PAD_L + PAD_R + range * pxPerKai;
 
-  const x = (kai: number) => (kaiMax === kaiMin ? PAD_L + (W - PAD_L - PAD_R) / 2 : PAD_L + (kai - kaiMin) * PX_PER_KAI);
+  const x = (kai: number) => (kaiMax === kaiMin ? PAD_L + (W - PAD_L - PAD_R) / 2 : PAD_L + (kai - kaiMin) * pxPerKai);
   const y = (r: number) => PAD_T + plotH - ((r - yMin) / (yMax - yMin)) * plotH;
 
   const points = history.map((h, i) => ({
