@@ -363,13 +363,14 @@ export async function loadShadanPlayers(): Promise<ShadanPlayer[]> {
   } catch {
     return [];
   }
-  const players: ShadanPlayer[] = [];
+  const withRegNo: (ShadanPlayer & { reg_no: number })[] = [];
   for (const file of files.filter(f => f.endsWith('.json'))) {
     const content = await readFile(join(SHADAN_PLAYERS_DIR, file), 'utf-8');
-    const { reg_no, ...player } = JSON.parse(content) as ShadanPlayer & { reg_no: number };
-    players.push(player);
+    withRegNo.push(JSON.parse(content) as ShadanPlayer & { reg_no: number });
   }
-  return players;
+  // 表示順はreg_no昇順(ページ自体には reg_no を出さない)
+  withRegNo.sort((a, b) => a.reg_no - b.reg_no);
+  return withRegNo.map(({ reg_no, ...player }) => player);
 }
 
 export function isHighlight(event: Event): boolean {
