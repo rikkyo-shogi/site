@@ -46,7 +46,7 @@ CONSENTED = [
             (27, "H28", "平成28年度", "https://toushouren.world.coocan.jp/shadan/27/1611091540_3_1540.htm"),
             (28, "H29", "平成29年度", "https://toushouren.world.coocan.jp/shadan/28/1802071815_2_770.htm"),
             (29, "H30", "平成30年度", "https://toushouren.world.coocan.jp/shadan/29/1812061710_2_772.htm"),
-            (30, "R01", "令和1年度", "https://toushouren.world.coocan.jp/shadan/30/2009251507_2_776.htm"),
+            (30, "R01", "令和元年度", "https://toushouren.world.coocan.jp/shadan/30/2009251507_2_776.htm"),
             (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
             (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_l6r.pdf"),
         ],

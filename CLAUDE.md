@@ -21,8 +21,8 @@
 ├── site/                 # Astro製の公開サイト本体
 │   ├── src/layouts/BaseLayout.astro   # head メタ・共通ヘッダー/フッターの一元管理
 │   ├── src/components/{TeamEvent,IndividualEvent,SeasonSection,LeagueTrend,ShadanPlayerRating}.astro
-│   ├── src/pages/{index,result/index,archives/index,shadan/index,shadan/player-rating}.astro
-│   │   # shadan/player-rating.astro は検証用の独立ページ（ナビ・shadan/index からリンクしない、noindex）
+│   ├── src/pages/{index,result/index,archives/index,shadan/index}.astro、shadan/<ランダム文字列>.astro
+│   │   # shadan/<ランダム文字列>.astro は検証用の独立ページ（ナビ・shadan/index からリンクしない、noindex）
 │   └── public/{robots.txt,ogp.png,...}
 └── .github/workflows/{deploy,validate,scrape}.yml
 ```
@@ -42,7 +42,7 @@
 - Google Analytics 4 の `GA_MEASUREMENT_ID`（`BaseLayout.astro`）は**設定済み**。プレースホルダに戻さない
 - 見た目に関わる変更をしたら、ビルド出力の差分（body DOM / CSS）で意図しない変化がないか確認する
 - 検証中で検索エンジンに出したくないページは `BaseLayout` に `noindex` を渡し、`astro.config.mjs` の
-  `sitemap({ filter })` にもパスを追加してサイトマップから除外する（`shadan/player-rating.astro` が前例）
+  `sitemap({ filter })` にもパスを追加してサイトマップから除外する（`shadan/<ランダム文字列>.astro` が前例）
 
 ## データを触る際の注意
 

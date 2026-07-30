@@ -10,8 +10,8 @@ export default defineConfig({
   output: 'static',
   integrations: [
     sitemap({
-      // 検証中で検索エンジンにインデックスさせたくないページを除外
-      filter: (page) => !page.includes('/shadan/player-rating'),
+      // 検証中で検索エンジンにインデックスさせたくないページを除外(推測しづらいランダムなURL)
+      filter: (page) => !page.includes('/shadan/7e17dd82aaf680d86043caf3'),
     }),
   ],
 });
