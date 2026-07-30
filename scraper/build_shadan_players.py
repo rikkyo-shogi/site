@@ -7,13 +7,15 @@
 公開ページには表示しない。
 
 レーティング(新持点)は2種類の資料形式で公開されている(2026-07 調査):
-  - PDF「全部門一覧」「部別ランキング」(第32〜34回): 表形式のテキスト抽出
+  - PDF「全部門一覧」「部別ランキング」(第32〜35回): 表形式のテキスト抽出
   - HTML「参加者全員のランキング」(第15〜30回): <PRE>タグの固定幅テキスト。
     第21回以降は最終節の順位表が複数ファイルに分割されている回があるため、
     人により掲載パートが異なる(sourcesの資料URLは対象者ごとに実際に見つかった
     パートを指す。同じ回でも別のURLになりうる)
   - 第31回は個人レーティング資料自体が存在しない(誰にとっても欠測・ハード欠測)。
     コロナ期個人戦(K1/K2)は社団戦本戦ではないため対象外
+  - 第35回(R08)は開催中で、`35_ranking_01_all.pdf` は第1節終了時点の暫定値
+    (season_labelに「(第1節時点)」と明記して確定値と区別する)
 """
 
 import io
@@ -52,6 +54,7 @@ CONSENTED = [
             (30, "R01", "令和元年度", "https://toushouren.world.coocan.jp/shadan/30/2009251507_2_776.htm"),
             (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
             (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_l6r.pdf"),
+            (35, "R08", "令和8年度(第1節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_01_all.pdf"),
         ],
     },
     {
@@ -80,6 +83,7 @@ CONSENTED = [
             (32, "R05", "令和5年度", "https://toushouren.world.coocan.jp/shadan/32/32_ranking_1022.pdf"),
             (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
             (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_all.pdf"),
+            (35, "R08", "令和8年度(第1節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_01_all.pdf"),
         ],
     },
     {
@@ -91,6 +95,7 @@ CONSENTED = [
             (32, "R05", "令和5年度", "https://toushouren.world.coocan.jp/shadan/32/32_ranking_1022.pdf"),
             (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
             (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_all.pdf"),
+            (35, "R08", "令和8年度(第1節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_01_all.pdf"),
         ],
     },
 ]
