@@ -20,9 +20,9 @@ const HARD_GAP_KAI = new Set([31]);
 
 const PAD_L = 40;
 const PAD_R = 24;
-const PAD_T = 30;
+const PAD_T = 36;
 const PAD_B = 54;
-const H = 204;
+const H = 210;
 const plotH = H - PAD_T - PAD_B;
 // 横スクロールなしで全回を表示できるよう、回数の幅に応じて1回あたりの幅を可変にする
 // (在籍期間が長い人ほど1回あたりの幅を狭め、780pxを超えないようにする)
@@ -124,9 +124,9 @@ const cards = players.map(p => ({ player: p, chart: buildChart(p.history) }));
                   <g>
                     <circle cx={p.cx} cy={p.cy} r="4.5" class="spr-point" />
                     <text x={p.cx} y={p.cy + p.labelDy} class="spr-value">R{p.rating}</text>
+                    {p.division && <text x={p.cx} y={p.cy + p.labelDy - 9} class="spr-division">{p.division}</text>}
                     <text x={p.cx} y={chart.baseline + 16} class="spr-label">第{p.kai}回</text>
                     <text x={p.cx} y={chart.baseline + 28} class="spr-sublabel">{p.season}</text>
-                    {p.division && <text x={p.cx} y={chart.baseline + 40} class="spr-division">{p.division}</text>}
                   </g>
                 ))}
               </svg>
