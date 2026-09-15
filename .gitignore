@@ -9,3 +9,6 @@ site/.astro/
 __pycache__/
 *.pyc
 .env
+PRIVATE_REPO_MIGRATION.md
+scraper/build_shadan_all_players.py
+scraper/render_shadan_all_players_local.py
