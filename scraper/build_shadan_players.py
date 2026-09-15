@@ -80,7 +80,7 @@ CONSENTED = [
             (28, "H29", "平成29年度", "https://toushouren.world.coocan.jp/shadan/28/1802071815_1_1.htm"),
             (29, "H30", "平成30年度", "https://toushouren.world.coocan.jp/shadan/29/1812061710_1_1.htm"),
             (30, "R01", "令和元年度", "https://toushouren.world.coocan.jp/shadan/30/2009251507_1_1.htm"),
-            (32, "R05", "令和5年度", "https://toushouren.world.coocan.jp/shadan/32/32_ranking_1022.pdf"),
+            (32, "R05", "令和5年度", "https://toushouren.world.coocan.jp/shadan/32/32_ranking_1022.pdf"),  # DIVISION_OVERRIDESで所属部を訂正(下記参照)
             (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
             (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_all.pdf"),
             (35, "R08", "令和8年度(第2節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_02_all.pdf"),
@@ -92,13 +92,23 @@ CONSENTED = [
         "reg_no": 15426,
         "consent": "本人の同意により公開(2026-07-30)",
         "sources": [
-            (32, "R05", "令和5年度", "https://toushouren.world.coocan.jp/shadan/32/32_ranking_1022.pdf"),
+            # 第32回(R05)は紫龍会(OB)不参加(32_ichiran_04.pdfで確認)。
+            # 32_ranking_1022.pdfにこの人の行はあるが翌回(第33回)の先行登録情報で
+            # 実際の第32回参加データではないため対象から外す(ソフト欠測扱い)。
             (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
             (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_all.pdf"),
             (35, "R08", "令和8年度(第2節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_02_all.pdf"),
         ],
     },
 ]
+
+# 第32回(R05)のみ "32_ranking_1022.pdf" のクラス列が翌回(第33回)の登録内容に
+# なっていることを確認した(32_ichiran_04.pdf・data/shadan/confirmed/R05.json・R06.json
+# と突き合わせ済み。2026-09)。持点・通算対局数はそのまま第32回時点の値として使えるが、
+# 所属部はこの回に限り正しい値へ上書きする。{(reg_no, kai): 正しい所属部}
+DIVISION_OVERRIDES = {
+    (40, 32): "4部赤",  # 32_ranking_1022.pdfは3部白(=第33回の所属)と誤表示
+}
 
 
 def find_in_pdf_ranking(pdf_bytes: bytes, reg_no: int) -> dict | None:
@@ -200,6 +210,7 @@ if __name__ == "__main__":
                     " 掲載形式の変更の可能性があるため停止。"
                 )
             division = normalize_division(row["division"] or division_from_url(url))
+            division = DIVISION_OVERRIDES.get((spec["reg_no"], kai), division)
             history.append({
                 "kai": kai, "season": season, "season_label": season_label,
                 "team": row["team"], "division": division,
