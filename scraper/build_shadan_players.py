@@ -14,8 +14,8 @@
     パートを指す。同じ回でも別のURLになりうる)
   - 第31回は個人レーティング資料自体が存在しない(誰にとっても欠測・ハード欠測)。
     コロナ期個人戦(K1/K2)は社団戦本戦ではないため対象外
-  - 第35回(R08)は開催中で、`35_ranking_01_all.pdf` は第1節終了時点の暫定値
-    (season_labelに「(第1節時点)」と明記して確定値と区別する)
+  - 第35回(R08)は開催中で、`35_ranking_NN_all.pdf` は当該節終了時点の暫定値
+    (season_labelに「(第N節時点)」と明記して確定値と区別する。最新の掲載節を都度反映)
 """
 
 import io
@@ -54,7 +54,7 @@ CONSENTED = [
             (30, "R01", "令和元年度", "https://toushouren.world.coocan.jp/shadan/30/2009251507_2_776.htm"),
             (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
             (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_l6r.pdf"),
-            (35, "R08", "令和8年度(第1節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_01_all.pdf"),
+            (35, "R08", "令和8年度(第2節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_02_all.pdf"),
         ],
     },
     {
@@ -83,7 +83,7 @@ CONSENTED = [
             (32, "R05", "令和5年度", "https://toushouren.world.coocan.jp/shadan/32/32_ranking_1022.pdf"),
             (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
             (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_all.pdf"),
-            (35, "R08", "令和8年度(第1節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_01_all.pdf"),
+            (35, "R08", "令和8年度(第2節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_02_all.pdf"),
         ],
     },
     {
@@ -95,7 +95,7 @@ CONSENTED = [
             (32, "R05", "令和5年度", "https://toushouren.world.coocan.jp/shadan/32/32_ranking_1022.pdf"),
             (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
             (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_all.pdf"),
-            (35, "R08", "令和8年度(第1節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_01_all.pdf"),
+            (35, "R08", "令和8年度(第2節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_02_all.pdf"),
         ],
     },
 ]
