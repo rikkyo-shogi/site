@@ -54,7 +54,7 @@ CONSENTED = [
             (30, "R01", "令和元年度", "https://toushouren.world.coocan.jp/shadan/30/2009251507_2_776.htm"),
             (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
             (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_l6r.pdf"),
-            (35, "R08", "令和8年度(第2節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_02_all.pdf"),
+            (35, "R08", "令和8年度(第3節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_03_all.pdf"),
         ],
     },
     {
@@ -83,7 +83,7 @@ CONSENTED = [
             (32, "R05", "令和5年度", "https://toushouren.world.coocan.jp/shadan/32/32_ranking_1022.pdf"),  # DIVISION_OVERRIDESで所属部を訂正(下記参照)
             (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
             (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_all.pdf"),
-            (35, "R08", "令和8年度(第2節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_02_all.pdf"),
+            (35, "R08", "令和8年度(第3節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_03_all.pdf"),
         ],
     },
     {
@@ -97,7 +97,7 @@ CONSENTED = [
             # 実際の第32回参加データではないため対象から外す(ソフト欠測扱い)。
             (33, "R06", "令和6年度", "https://toushouren.world.coocan.jp/shadan/33/33_ranking_04_all.pdf"),
             (34, "R07", "令和7年度", "https://toushouren.world.coocan.jp/shadan/34/34_ranking_04_all.pdf"),
-            (35, "R08", "令和8年度(第2節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_02_all.pdf"),
+            (35, "R08", "令和8年度(第3節時点)", "https://toushouren.world.coocan.jp/shadan/35/35_ranking_03_all.pdf"),
         ],
     },
 ]

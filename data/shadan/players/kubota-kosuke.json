@@ -137,12 +137,12 @@
     {
       "kai": 35,
       "season": "R08",
-      "season_label": "令和8年度(第2節時点)",
+      "season_label": "令和8年度(第3節時点)",
       "team": "立教大学紫龍会",
       "division": "4部白",
-      "rating": 1619,
-      "games": 137,
-      "source_url": "https://toushouren.world.coocan.jp/shadan/35/35_ranking_02_all.pdf"
+      "rating": 1583,
+      "games": 141,
+      "source_url": "https://toushouren.world.coocan.jp/shadan/35/35_ranking_03_all.pdf"
     }
   ]
 }
