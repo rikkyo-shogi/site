@@ -5,7 +5,7 @@
   "source": {
     "hub_url": "https://toushouren.world.coocan.jp",
     "league_pdf": [
-      "https://toushouren.world.coocan.jp/shadan/35/35_league_03_u.pdf"
+      "https://toushouren.world.coocan.jp/shadan/35/35_league_04_u.pdf"
     ]
   },
   "teams": [
@@ -15,29 +15,29 @@
       "kai": 35,
       "division": "4部白",
       "rank": 8,
-      "points": 7,
-      "wins": 40,
+      "points": 9,
+      "wins": 54,
       "promotion": null,
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/35/35_league_03_u.pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/35/35_league_04_u.pdf",
       "league_table": null,
-      "note": "第3節終了時点で7勝5敗(前節4位から8位へ後退)。"
+      "note": "第4節(最終節)終了時点で9勝6敗(前節から順位変わらず8位、残留圏)。"
     },
     {
       "team_id": "shiryukai",
       "team_name": "紫龍会",
       "kai": 35,
       "division": "6部白",
-      "rank": 13,
-      "points": 5,
-      "wins": 27,
+      "rank": 9,
+      "points": 8,
+      "wins": 40,
       "promotion": null,
       "source_type": "shadan_pdf",
-      "source_url": "https://toushouren.world.coocan.jp/shadan/35/35_league_03_u.pdf",
+      "source_url": "https://toushouren.world.coocan.jp/shadan/35/35_league_04_u.pdf",
       "league_table": null,
-      "note": "第3節終了時点で5勝7敗(前節から順位変わらず13位)。"
+      "note": "第4節(最終節)終了時点で8勝7敗(前節13位から9位へ上昇、調整圏で昇降未確定)。"
     }
   ],
   "status": "ongoing",
-  "note": "第3節終了時点の途中経過"
+  "note": "第4節(最終節)終了時点。入替戦・昇降級の調整は未確定"
 }
