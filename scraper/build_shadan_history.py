@@ -1,4 +1,4 @@
-"""社団戦(東将連) 過去回の確定データ生成 — 第12回(H13)〜第33回(R06)。
+"""社団戦(東将連) 過去回の確定データ生成 — 第12回(H13)〜第33回(R06)・第35回(R08)。
 
 資料の形式が回ごとに大きく異なるため(§ROADMAP 2-1「半自動＋目視」)、
 本スクリプトは「出典を目視確認した確定値」を records に保持し、
@@ -18,6 +18,8 @@
 - 第31回: オンライン開催。最終順位は 31/rankingA4.pdf(リーグ表A)の5部表から取得
 - 第32〜33回: NN_ichiran_04.pdf のテキスト抽出(第34回と同系式だが前年列なし)。
   出典リンクは成績順リーグ表(NN_league_04_g.pdf)を指す
+- 第35回: 35_league_04_g.pdf(成績順リーグ表)のページ画像を目視(チーム名列はテキスト抽出不可)。
+  ◆調整圏(自動昇降ではない調整枠)で終えたチームは promotion: "調整" とする
 - 第14回(H15)はリーグ表ページが連盟サイト上に現存しないため記録なし(ファイル自体を生成しない)
 - 昇降で「翌回の所属部より判定」と注記したものは、当該回の資料に昇降の記載が無く、
   翌回資料の所属部の変化から確定した事実
@@ -137,21 +139,27 @@ RECORDS = [
         (UNIV, "立教大学紫龍会", "3部白", 10, 8, 53, None, ""),
         (OB, "紫龍会", "5部白", 13, 4, 45, "降級", "第28回からの休会を経てこの回に5部で復帰(▼降)。"),
     ]),
+    (35, "R08", "令和8年度", "35/35_league_04_g.pdf", [
+        (UNIV, "立教大学紫龍会", "4部白", 8, 9, 54, None,
+         "9勝6敗。順位一覧の凡例(□残留5-9位)より残留確定。"),
+        (OB, "紫龍会", "6部白", 9, 8, 40, "調整",
+         "8勝7敗。順位一覧の凡例では◆調整7-12位(自動昇降ではない調整枠)。"),
+    ]),
 ]
 
 # 開催中の年度(途中経過)。リーグ表(成績順)の値を目視確認して更新する。
-# (kai, season, season_label, note, 出典相対パス, teams)
-ONGOING = (
-    35, "R08", "令和8年度", "第4節(最終節)終了時点。入替戦・昇降級の調整は未確定",
-    "35/35_league_04_u.pdf",
-    [
-        (UNIV, "立教大学紫龍会", "4部白", 8, 9, 54, None, "第4節(最終節)終了時点で9勝6敗(前節から順位変わらず8位、残留圏)。"),
-        (OB, "紫龍会", "6部白", 9, 8, 40, None, "第4節(最終節)終了時点で8勝7敗(前節13位から9位へ上昇、調整圏で昇降未確定)。"),
-    ],
-)
+# (kai, season, season_label, note, 出典相対パス, teams)。開催中の回がなければ None
+ONGOING = None
+
+
+# 年度ページ(sub9-*.htm)がまだ作られていない年度はトップページを指す
+# (第35回=R08は2026-10時点で sub9-R08.htm が404。作成されたら削除する)
+HUB_OVERRIDES = {"R08": SITE}
 
 
 def hub_url(season: str) -> str:
+    if season in HUB_OVERRIDES:
+        return HUB_OVERRIDES[season]
     # 第12〜20回(H13〜H21)の年度ページはサイト直下、H22以降は /shadan/ 配下
     era, num = season[0], int(season[1:])
     if era == "H" and num <= 21:
@@ -205,10 +213,12 @@ if __name__ == "__main__":
     for rec in RECORDS:
         _save(build_season(*rec))
 
-    kai, season, label, note, src_rel, teams = ONGOING
-    data = build_season(kai, season, label, src_rel, teams)
-    data["status"] = "ongoing"
-    data["note"] = note
-    data["source"] = {"hub_url": SITE, "league_pdf": [_abs_url(src_rel)]}
-    _save(data)
-    print(f"generated {len(RECORDS)} final + 1 ongoing season files in {OUT_DIR}")
+    if ONGOING is not None:
+        kai, season, label, note, src_rel, teams = ONGOING
+        data = build_season(kai, season, label, src_rel, teams)
+        data["status"] = "ongoing"
+        data["note"] = note
+        data["source"] = {"hub_url": SITE, "league_pdf": [_abs_url(src_rel)]}
+        _save(data)
+    n_ongoing = 0 if ONGOING is None else 1
+    print(f"generated {len(RECORDS)} final + {n_ongoing} ongoing season files in {OUT_DIR}")

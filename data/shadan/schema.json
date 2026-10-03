@@ -44,7 +44,8 @@
         "wins": { "type": ["number", "null"], "description": "勝数(全体の勝利対局数合計。半星があり小数可)" },
         "promotion": {
           "type": ["string", "null"],
-          "enum": ["昇級", "降級", null]
+          "enum": ["昇級", "降級", "調整", null],
+          "description": "null=残留(開催中は未確定)。調整=◆調整圏で終え、自動昇降ではない調整枠"
         },
         "source_type": { "type": "string", "enum": ["shadan_pdf"] },
         "source_url": { "type": "string", "format": "uri" },

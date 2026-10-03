@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { loadShadanSeasons, type ShadanTeam } from '../../utils/loadData';
 
 const seasons = await loadShadanSeasons();  // 新しい回順
-// 最新回(開催中の途中経過)を単独表示し、それ以外を歴代成績に載せる
+// 最新回(開催中なら途中経過)を単独表示し、それ以外を歴代成績に載せる
 const latest = seasons[0] ?? null;
 const pastSeasons = seasons.slice(1);
 const ongoing = latest?.status === 'ongoing';
@@ -21,7 +21,7 @@ const historyRows = pastSeasons.map(s => ({
 
 <BaseLayout
   title="社団戦結果 — 立教大学将棋部"
-  description="東京アマチュア将棋連盟 社会人団体リーグ戦(社団戦)における立教関係チーム「立教大学紫龍会」「紫龍会」の成績。今年度の途中経過と第12回(平成13年度)からの歴代成績を掲載しています。"
+  description="東京アマチュア将棋連盟 社会人団体リーグ戦(社団戦)における立教関係チーム「立教大学紫龍会」「紫龍会」の成績。最新回の成績と第12回(平成13年度)からの歴代成績を掲載しています。"
 >
   <main>
     <h2 class="page-title">社団戦結果</h2>
@@ -59,10 +59,13 @@ const historyRows = pastSeasons.map(s => ({
                     <dd>
                       {team.promotion === '昇級' && <span class="promo up">▲昇級</span>}
                       {team.promotion === '降級' && <span class="promo down">▼降級</span>}
+                      {team.promotion === '調整' && <span class="promo adjust">◆調整圏</span>}
                       {team.promotion == null && <span class="promo none">{ongoing ? '—' : '残留'}</span>}
                     </dd>
                   </div>
                 </dl>
+
+                {team.note && <p class="team-note">{team.note}</p>}
 
                 <p class="source-link">
                   出典: <a href={team.source_url} target="_blank" rel="noopener">
@@ -112,6 +115,7 @@ const historyRows = pastSeasons.map(s => ({
                         <td class="c-promo">
                           {team.promotion === '昇級' && <span class="promo up">▲昇級</span>}
                           {team.promotion === '降級' && <span class="promo down">▼降級</span>}
+                          {team.promotion === '調整' && <span class="promo adjust">◆調整圏</span>}
                         </td>
                       </>
                     ) : (
@@ -159,7 +163,9 @@ const historyRows = pastSeasons.map(s => ({
   .promo { font-size: 0.85rem; padding: 0.1rem 0.35rem; border-radius: 3px; }
   .promo.up { background: #e0ffe0; color: #066; }
   .promo.down { background: #ffe0e0; color: #600; }
+  .promo.adjust { background: #fff4d6; color: #7a5200; }
   .promo.none { color: #999; font-weight: normal; }
+  .team-note { margin: 0.6rem 0 0; font-size: 0.78rem; color: #666; line-height: 1.5; }
   .source-link { margin-top: 0.7rem; font-size: 0.75rem; }
   .source-link a { color: #888; }
   .source-link a:hover { color: #541a86; }

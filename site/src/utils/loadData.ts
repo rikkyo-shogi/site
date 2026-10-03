@@ -291,7 +291,8 @@ export interface ShadanTeam {
   rank: number | null;
   points: number | null;
   wins: number | null;
-  promotion: '昇級' | '降級' | null;
+  /** null=残留(開催中は未確定)、調整=◆調整圏(自動昇降ではない調整枠) */
+  promotion: '昇級' | '降級' | '調整' | null;
   source_type: string;
   source_url: string;
   league_table: ShadanLeagueTable | null;
